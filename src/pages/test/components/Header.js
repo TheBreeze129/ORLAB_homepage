@@ -6,29 +6,29 @@ import orlabLogo from "../../../assets/logo.svg";
 const navy = "#113275";
 
 const aboutItems = [
-  { id: "about", label: "About", to: "/test/about" },
-  { id: "contact", label: "Contact", to: "/test/about?tab=contact" },
+  { id: "about", label: "About", to: "/about" },
+  { id: "contact", label: "Contact", to: "/about?tab=contact" },
 ];
 
 const memberItems = [
-  { id: "professor", label: "PROFESSOR", to: "/test/member?tab=professor" },
+  { id: "professor", label: "PROFESSOR", to: "/member?tab=professor" },
   {
     id: "researchers",
     label: "RESEARCHERS",
-    to: "/test/member?tab=researchers",
+    to: "/member?tab=researchers",
   },
-  { id: "alumni", label: "ALUMNI", to: "/test/member?tab=alumni" },
+  { id: "alumni", label: "ALUMNI", to: "/member?tab=alumni" },
 ];
 
 const researchItems = [
-  { id: "project", label: "Project", to: "/test/research?tab=project" },
-  { id: "publication", label: "Publication", to: "/test/research?tab=publication" },
+  { id: "project", label: "Project", to: "/research?tab=project" },
+  { id: "publication", label: "Publication", to: "/research?tab=publication" },
 ];
 
 const boardNavItems = [
-  { id: "album", label: "ALBUM", to: "/test/board" },
-  { id: "seminar", label: "SEMINAR", to: "/test/board?board=seminar" },
-  { id: "workshop", label: "WORKSHOP", to: "/test/board?board=workshop" },
+  { id: "album", label: "ALBUM", to: "/board" },
+  { id: "seminar", label: "SEMINAR", to: "/board?board=seminar" },
+  { id: "workshop", label: "WORKSHOP", to: "/board?board=workshop" },
 ];
 
 const Header = ({
@@ -40,13 +40,13 @@ const Header = ({
 }) => {
   return (
     <>
-      <LogoLink to="/test" aria-label="ORLAB home">
+      <LogoLink to="/" aria-label="ORLAB home">
         <LogoImage src={orlabLogo} alt="ORLAB Operations Research Lab" />
       </LogoLink>
 
       <NavArea aria-label="Primary navigation">
         <DropdownNav>
-          <AboutButton to="/test/about" $active={activeSection === "about"}>
+          <AboutButton to="/about" $active={activeSection === "about"}>
             ABOUT
           </AboutButton>
           <DropdownMenu $width="118px" $left="-31px">
@@ -64,7 +64,7 @@ const Header = ({
 
         <DropdownNav>
           <MemberButton
-            to="/test/member?tab=professor"
+            to="/member?tab=professor"
             $active={activeSection === "member"}
           >
             MEMBERS
@@ -84,7 +84,7 @@ const Header = ({
 
         <DropdownNav>
           <ResearchButton
-            to="/test/research?tab=project"
+            to="/research?tab=project"
             $active={activeSection === "research"}
           >
             RESEARCH
@@ -103,7 +103,7 @@ const Header = ({
         </DropdownNav>
 
         <DropdownNav>
-          <BoardButton to="/test/board" $active={activeSection === "board"}>
+          <BoardButton to="/board" $active={activeSection === "board"}>
             BOARD
           </BoardButton>
           <DropdownMenu $width="132px" $left="-30px">

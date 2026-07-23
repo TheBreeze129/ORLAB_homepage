@@ -1,19 +1,10 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Landing from "./pages/Landing";
-import Professor from "./pages/members/Professor.js";
-import Student from "./pages/members/Student.js";
-import ResearchArea from "./pages/ResearchArea.js";
-import Alumni from "./pages/members/Alumni.js";
-import Seminar from "./pages/board/Seminar.js";
-import Publication from "./pages/Publication.js";
-import Photo from "./pages/board/Photo.js";
 import Lecture from "./pages/Lecture.js";
-import Workshop from "./pages/board/Workshop.js";
 import DPRL from "./pages/lectures/DPRL.js";
-import Project from "./pages/projects/Project.js";
 import SubProject from "./pages/projects/Subproject.js";
 import ADPRL from "./pages/lectures/ADPRL.js";
 import TestBoard from "./pages/test/TestBoard.js";
@@ -29,25 +20,44 @@ const App = () => {
       <Analytics />
       <SpeedInsights />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<TestLanding />} />
         <Route path="/wordpress" element={<Landing />} />
-        <Route path="/members/professor" element={<Professor />} />
-        <Route path="/members/researchers" element={<Student />} />
-        <Route path="/research" element={<ResearchArea />} />
-        <Route path="/members/alumni" element={<Alumni />} />
-        <Route path="/board/seminar" element={<Seminar />} />
-        <Route path="/publications" element={<Publication />} />
-        <Route path="/board/photo" element={<Photo />} />
-        <Route path="/project" element={<Project />} />
+        <Route path="/about" element={<TestAbout />} />
+        <Route path="/member" element={<TestMember />} />
+        <Route path="/research" element={<TestResearch />} />
+        <Route path="/board" element={<TestBoard />} />
+        <Route path="/board/photo/:notionId" element={<PhotoDetail />} />
+        <Route
+          path="/publications"
+          element={<Navigate to="/research?tab=publication" replace />}
+        />
+        <Route
+          path="/project"
+          element={<Navigate to="/research?tab=project" replace />}
+        />
+        <Route
+          path="/members/professor"
+          element={<Navigate to="/member?tab=professor" replace />}
+        />
+        <Route
+          path="/members/researchers"
+          element={<Navigate to="/member?tab=researchers" replace />}
+        />
+        <Route
+          path="/members/alumni"
+          element={<Navigate to="/member?tab=alumni" replace />}
+        />
+        <Route
+          path="/board/seminar"
+          element={<Navigate to="/board?board=seminar" replace />}
+        />
+        <Route path="/board/photo" element={<Navigate to="/board" replace />} />
+        <Route
+          path="/board/workshop"
+          element={<Navigate to="/board?board=workshop" replace />}
+        />
         <Route path="/subproject" element={<SubProject />} />
         <Route path="/academic_curriculum" element={<Lecture />} />
-        <Route path="/board/workshop" element={<Workshop />} />
-        <Route path="/test" element={<TestLanding />} />
-        <Route path="/test/board" element={<TestBoard />} />
-        <Route path="/test/board/photo/:notionId" element={<PhotoDetail />} />
-        <Route path="/test/about" element={<TestAbout />} />
-        <Route path="/test/member" element={<TestMember />} />
-        <Route path="/test/research" element={<TestResearch />} />
         <Route
           path="/academic_curriculum/dynamic_programming_and_reinforcement_learning_2022"
           element={<DPRL />}

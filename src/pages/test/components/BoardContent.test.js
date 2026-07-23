@@ -212,7 +212,7 @@ test("renders Supabase photo cards linked to their Notion detail", async () => {
   });
   expect(cardLink).toHaveAttribute(
     "href",
-    "/test/board/photo/notion-photo-11"
+    "/board/photo/notion-photo-11"
   );
   expect(cardLink).toHaveAttribute(
     "data-router-state",

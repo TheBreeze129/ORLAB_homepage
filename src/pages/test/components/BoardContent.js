@@ -315,7 +315,7 @@ const BoardContent = ({ activeBoard }) => {
                 dateText={album.dateText}
                 to={
                   album.notionId
-                    ? `/test/board/photo/${encodeURIComponent(album.notionId)}`
+                    ? `/board/photo/${encodeURIComponent(album.notionId)}`
                     : undefined
                 }
                 state={

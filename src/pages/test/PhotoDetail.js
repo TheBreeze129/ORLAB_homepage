@@ -111,7 +111,7 @@ const PhotoDetail = () => {
   }, [notionId, requestId, routePhoto]);
 
   const handleBoardChange = (boardId) => {
-    navigate(boardId === "album" ? "/test/board" : `/test/board?board=${boardId}`);
+    navigate(boardId === "album" ? "/board" : `/board?board=${boardId}`);
   };
   const bodyBlocks =
     photo?.thumbnail && blocks[0]?.type === "image" ? blocks.slice(1) : blocks;
