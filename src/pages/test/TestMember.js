@@ -783,12 +783,13 @@ const AlumniSection = styled.section`
 `;
 
 const MemberSectionTitle = styled.h2`
-  margin: 0 0 6px 4px;
+  margin: 8px 0 -1px 4px;
   color: ${navy};
   font-family: "Roboto", "Inter", sans-serif;
   font-size: 22px;
   font-weight: 800;
   line-height: 36px;
+  letter-spacing: 0px;
 `;
 
 const MemberSectionDivider = styled.div`

@@ -116,14 +116,17 @@ const ProjectTitle = styled.h1`
   position: absolute;
   left: 112px;
   top: 286px;
-  width: min(958px, calc(100% - 224px));
+  width: fit-content;
+  max-width: min(1184px, calc(100% - 224px));
   margin: 0;
   color: ${navy};
+  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
   font-size: 35px;
   font-weight: 700;
   line-height: 42.3579px;
   letter-spacing: -0.7px;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 
   @media (max-width: 780px) {
     position: static;
@@ -148,25 +151,34 @@ const ProjectMeta = styled.div`
 `;
 
 const SponsorBadge = styled.span`
-  width: 143px;
+  min-width: 143px;
   height: 41px;
+  padding: 0 24px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
+  box-sizing: border-box;
   border-radius: 8px;
   background: #e6e6e6;
   color: #000000;
+  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 24px;
+  letter-spacing: 0px;
   text-align: center;
+  white-space: nowrap;
 `;
 
 const ProjectPeriod = styled.span`
   color: #c3c3c3;
+  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 24px;
+  letter-spacing: 0px;
+  white-space: nowrap;
 `;
 
 const HeroDivider = styled.div`
