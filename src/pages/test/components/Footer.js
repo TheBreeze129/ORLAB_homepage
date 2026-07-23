@@ -40,8 +40,9 @@ const FooterFrame = styled.footer`
 const FooterDivider = styled.div`
   position: absolute;
   left: 85px;
+  right: 78px;
   top: 0;
-  width: 1280px;
+  width: auto;
   height: 1px;
   background: #d0d0d0;
 
@@ -74,17 +75,19 @@ const FooterLogo = styled.img`
 const ContactList = styled.div`
   position: absolute;
   left: 504px;
+  right: 78px;
   top: 56px;
-  width: 860px;
+  width: auto;
   color: #000000;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  line-height: 1.42;
+  line-height: 24px;
   letter-spacing: 0;
 
   @media (max-width: 980px) {
     left: 330px;
-    width: calc(100% - 378px);
+    right: 48px;
+    width: auto;
   }
 
   @media (max-width: 780px) {
@@ -96,11 +99,7 @@ const ContactList = styled.div`
 `;
 
 const ContactLine = styled.div`
-  white-space: nowrap;
-
-  @media (max-width: 980px) {
-    white-space: normal;
-  }
+  overflow-wrap: anywhere;
 `;
 
 export default Footer;

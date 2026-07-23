@@ -32,7 +32,7 @@ const BoardList = ({
         <ListItem key={row.id || `${row.date}-${row.name}-${row.title}`}>
           <Meta>
             <span>{formatDate(row.date)}</span>
-            <DividerText>|</DividerText>
+            <DividerText>｜</DividerText>
             <span>{row.name}</span>
           </Meta>
           {row.link && row.link !== "#" ? (
@@ -68,6 +68,12 @@ const List = styled.div`
   width: 959px;
   flex: 0 0 959px;
   margin-top: 50px;
+  min-width: 0;
+
+  @media (max-width: 1320px) {
+    width: 100%;
+    flex: 1 1 auto;
+  }
 `;
 
 const ListItem = styled.article`
@@ -81,7 +87,7 @@ const ListItem = styled.article`
     position: absolute;
     left: 0;
     bottom: 41px;
-    width: 959px;
+    width: 100%;
     height: 2px;
     background: #c6c6c6;
   }
@@ -99,24 +105,25 @@ const ListItem = styled.article`
 `;
 
 const Meta = styled.p`
-  margin: 0 0 36px;
+  margin: 0 0 32px;
   color: #b6b6b6;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.45;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 28.5px;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 `;
 
 const DividerText = styled.span`
-  margin: 0 14px;
+  margin: 0 5px;
 `;
 
 const TitleText = styled.h2`
   margin: 0;
   color: #000000;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 37.5px;
   letter-spacing: 0;
   overflow-wrap: anywhere;
 `;
@@ -124,9 +131,9 @@ const TitleText = styled.h2`
 const TitleLink = styled.a`
   display: block;
   color: #000000;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 37.5px;
   letter-spacing: 0;
   text-decoration: none;
   overflow-wrap: anywhere;
@@ -143,8 +150,9 @@ const EmptyState = styled.p`
   color: #a6a6a6;
   font-size: 18px;
   font-weight: 500;
+  overflow-wrap: anywhere;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1320px) {
     width: 100%;
     flex-basis: auto;
   }

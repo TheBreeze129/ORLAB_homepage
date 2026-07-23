@@ -2,25 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import {
-  FaBriefcase,
-  FaGraduationCap,
-  FaHandshake,
-  FaMedal,
-  FaUniversity,
-} from "react-icons/fa";
+  PiBank,
+  PiBriefcase,
+  PiGraduationCap,
+  PiHandshake,
+  PiMedal,
+} from "react-icons/pi";
 import { FiGlobe, FiMail } from "react-icons/fi";
 import { SiGooglescholar } from "react-icons/si";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import profMoImage from "../../assets/profmo.jpg";
+import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
+import alumniPlaceholder from "../../assets/figma/member-alumni-placeholder.png";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
 
 const memberTabs = [
-  { id: "professor", label: "PROFESSOR", width: "148px" },
-  { id: "researchers", label: "RESEARCHERS", width: "174px" },
-  { id: "alumni", label: "ALUMNI", width: "128px" },
+  { id: "professor", label: "Professor", width: "140px" },
+  { id: "researchers", label: "Researchers", width: "168px" },
+  { id: "alumni", label: "Alumni", width: "114px" },
 ];
 
 const researcherSections = [
@@ -38,7 +40,7 @@ const alumniSections = [
 const professorCards = [
   {
     title: "Education",
-    icon: FaGraduationCap,
+    icon: PiGraduationCap,
     items: [
       "Ph.D., University of California, Berkeley",
       "M.S., University of California, Berkeley",
@@ -47,7 +49,7 @@ const professorCards = [
   },
   {
     title: "Professional Experience",
-    icon: FaBriefcase,
+    icon: PiBriefcase,
     items: [
       "Professor, Yonsei University",
       "KAIST",
@@ -57,7 +59,7 @@ const professorCards = [
   },
   {
     title: "Academic Leadership",
-    icon: FaMedal,
+    icon: PiMedal,
     wide: true,
     items: [
       "2026: President, Korea Media Management Association",
@@ -76,7 +78,7 @@ const professorCards = [
   },
   {
     title: "Public Activities",
-    icon: FaUniversity,
+    icon: PiBank,
     wide: true,
     items: [
       "2024: Program Director, Engineering Management Program, Graduate School of Engineering, Yonsei University",
@@ -92,7 +94,7 @@ const professorCards = [
   },
   {
     title: "Industrial Cooperation",
-    icon: FaHandshake,
+    icon: PiHandshake,
     wide: true,
     items: [
       "2021: Big Data Advisor, Samsung Electronics",
@@ -205,7 +207,7 @@ const TestMember = () => {
               key={item.id}
               type="button"
               $active={activeTab === item.id}
-              $width={item.width+30}
+              $width={item.width}
               onClick={() => handleTabChange(item.id)}
             >
               {item.label}
@@ -241,7 +243,7 @@ function makeDummyResearchers(prefix, count) {
     Name: "Hyomin Choi",
     Email: "abc@abc.com",
     interests: "VLM, Smart Factory",
-    image: profMoImage,
+    image: researcherPlaceholder,
   }));
 }
 
@@ -252,7 +254,7 @@ function makeDummyAlumni(prefix, count) {
     Email: "minjeong.kim@yonsei.ac.kr",
     outdate: "August 2021",
     To_go: "Professor at Pukyong National University",
-    image: profMoImage,
+    image: alumniPlaceholder,
   }));
 }
 
@@ -283,7 +285,7 @@ const ProfessorContent = () => (
             <span>Personal Homepage</span>
           </ProfessorLink>
           <ProfessorLink
-            href="https://scholar.google.com/"
+            href="https://scholar.google.com/citations?user=t624_PoAAAAJ&hl=en"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -296,11 +298,11 @@ const ProfessorContent = () => (
 
     <ContentDivider />
 
-    <ProfessorCardGrid>
-      {professorCards.map((card) => {
+    <ProfessorSummaryGrid>
+      {professorCards.slice(0, 2).map((card) => {
         const Icon = card.icon;
         return (
-          <ProfessorCard key={card.title} $wide={card.wide}>
+          <ProfessorSummaryBlock key={card.title}>
             <CardHeader>
               <Icon aria-hidden="true" />
               <CardTitle>{card.title}</CardTitle>
@@ -310,10 +312,31 @@ const ProfessorContent = () => (
                 <li key={item}>{highlightProfessorText(item)}</li>
               ))}
             </CardList>
-          </ProfessorCard>
+          </ProfessorSummaryBlock>
         );
       })}
-    </ProfessorCardGrid>
+    </ProfessorSummaryGrid>
+
+    <ProfessorActivityList>
+      {professorCards.slice(2).map((card) => {
+        const Icon = card.icon;
+        return (
+          <ProfessorActivitySection key={card.title}>
+            <ActivityIcon>
+              <Icon aria-hidden="true" />
+            </ActivityIcon>
+            <ActivityBody>
+              <CardTitle>{card.title}</CardTitle>
+              <CardList>
+                {card.items.map((item) => (
+                  <li key={item}>{highlightProfessorText(item)}</li>
+                ))}
+              </CardList>
+            </ActivityBody>
+          </ProfessorActivitySection>
+        );
+      })}
+    </ProfessorActivityList>
   </ProfessorFrame>
 );
 
@@ -444,12 +467,14 @@ const HeroTitle = styled.h1`
   position: absolute;
   left: 111px;
   top: 258px;
+  width: 733px;
+  height: 58px;
   margin: 0;
   color: ${navy};
   font-size: 48px;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
+  line-height: 58.09px;
+  letter-spacing: -0.96px;
 
   @media (max-width: 780px) {
     position: static;
@@ -479,6 +504,7 @@ const TopTabButton = styled.button`
   border-radius: 8px;
   background: ${(props) => (props.$active ? navy : soft)};
   color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
+  font-family: inherit;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
@@ -494,114 +520,128 @@ const TopTabButton = styled.button`
 `;
 
 const ProfessorFrame = styled.section`
-  width: min(1280px, calc(100% - 76px));
-  min-height: 1685px;
+  width: min(1137px, calc(100% - 96px));
+  min-height: 1796px;
   margin: 0 auto;
-  padding: 42px 0 64px;
+  padding: 38px 0 64px;
   box-sizing: border-box;
+
+  @media (max-width: 980px) {
+    width: calc(100% - 48px);
+  }
 `;
 
 const ProfessorIntro = styled.div`
   display: grid;
-  grid-template-columns: 255px 1fr;
-  gap: 42px;
-  align-items: center;
-  padding: 70px 40px 35px;
+  grid-template-columns: 246px 1fr;
+  gap: 61px;
+  align-items: start;
+  padding: 0 0 0;
 
   @media (max-width: 820px) {
     grid-template-columns: 1fr;
-    padding: 44px 0 35px;
   }
 `;
 
 const ProfessorImage = styled.img`
-  width: 255px;
-  height: 344px;
+  width: 246px;
+  height: 339px;
   object-fit: cover;
   border-radius: 4px;
 `;
 
 const ProfessorInfo = styled.div`
-  max-width: 760px;
+  max-width: 830px;
+  padding-top: 83px;
+
+  @media (max-width: 820px) {
+    padding-top: 0;
+  }
 `;
 
 const ProfessorName = styled.h2`
-  margin: 0 0 32px;
+  margin: 0 0 35px;
   color: ${navy};
-  font-size: 42px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-family: "Roboto", "Inter", sans-serif;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 52px;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 `;
 
 const ProfessorRole = styled.p`
-  margin: 0 0 18px;
-  padding-bottom: 20px;
-  border-bottom: 2px solid ${navy};
+  margin: 0 0 17px;
+  padding-bottom: 23px;
+  border-bottom: 3px solid ${navy};
   color: #202020;
-  font-size: 22px;
+  font-family: "Roboto", "Inter", sans-serif;
+  font-size: 24px;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 32px;
+  overflow-wrap: anywhere;
 `;
 
 const ProfessorLinks = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 26px;
+  gap: 24px;
 `;
 
 const ProfessorLink = styled.a`
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   color: #555555;
-  font-size: 22px;
-  font-weight: 400;
-  line-height: 1.35;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 36px;
   text-decoration: underline;
   text-underline-offset: 3px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 
   svg {
     color: ${navy};
-    font-size: 28px;
+    width: 30px;
+    height: 30px;
     flex: 0 0 auto;
   }
 `;
 
 const ContentDivider = styled.div`
-  width: 100%;
+  width: min(1366px, calc(100vw - 76px));
   height: 1px;
-  margin: 0 0 36px;
+  margin: 83px 0 0
+    calc((1137px - min(1366px, calc(100vw - 76px))) / 2 + 7.5px);
   background: #d0d0d0;
-`;
 
-const ProfessorCardGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  padding: 0 8px;
-
-  @media (max-width: 820px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 980px) {
+    width: 100%;
+    margin-left: 0;
   }
 `;
 
-const ProfessorCard = styled.article`
-  grid-column: ${(props) => (props.$wide ? "1 / -1" : "auto")};
-  min-height: ${(props) => (props.$wide ? "auto" : "242px")};
-  padding: 32px 30px 28px;
-  border: 1px solid #d2d2d2;
-  border-radius: 8px;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  box-sizing: border-box;
+const ProfessorSummaryGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 104px;
+  margin-top: 65px;
+  padding: 0 42px;
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 0;
+  }
 `;
 
 const CardHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 34px;
-  margin-bottom: 34px;
+  gap: 24px;
+  margin-bottom: 22px;
   color: ${navy};
 
   svg {
@@ -614,18 +654,21 @@ const CardHeader = styled.div`
 const CardTitle = styled.h3`
   margin: 0;
   color: ${navy};
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 36.3068px;
+  letter-spacing: -0.6px;
+  overflow-wrap: anywhere;
 `;
 
 const CardList = styled.ul`
   margin: 0;
   padding-left: 18px;
-  color: #4f4f4f;
-  font-size: 18px;
+  color: #333333;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
 
   strong {
     color: #242424;
@@ -633,51 +676,144 @@ const CardList = styled.ul`
   }
 `;
 
+const ProfessorSummaryBlock = styled.article`
+  min-width: 0;
+
+  ${CardList} {
+    margin-left: 29px;
+    padding-left: 30px;
+    border-left: 3px solid ${navy};
+  }
+`;
+
+const ProfessorActivityList = styled.div`
+  margin-top: 68px;
+  padding: 0 0 0 42px;
+
+  @media (max-width: 820px) {
+    padding: 0;
+  }
+`;
+
+const ProfessorActivitySection = styled.section`
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 24px;
+  padding: 0 0 56px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 27.5px;
+    top: 64px;
+    bottom: 18px;
+    width: 3px;
+    background: #113275;
+    opacity: 0.75;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+`;
+
+const ActivityIcon = styled.div`
+  position: relative;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: ${navy};
+
+  svg {
+    width: 60px;
+    height: 60px;
+  }
+`;
+
+const ActivityBody = styled.div`
+  min-width: 0;
+
+  ${CardTitle} {
+    margin: 6px 0 22px;
+  }
+
+  ${CardList} {
+    margin-left: -30px;
+    padding-left: 18px;
+    list-style: disc;
+  }
+
+  @media (max-width: 820px) {
+    ${CardList} {
+      margin-left: 0;
+    }
+  }
+`;
+
 const MembersFrame = styled.section`
-  width: min(1120px, calc(100% - 160px));
+  width: min(1177px, calc(100% - 96px));
   min-height: ${(props) => props.$minHeight || "1600px"};
-  margin: 0 auto;
-  padding: 32px 0 80px;
+  margin: -16px auto 0;
+  padding: 0 0 80px;
   box-sizing: border-box;
+
+  @media (min-width: 981px) {
+    width: 1177px;
+    margin-left: max(48px, calc((100% - 1177px) / 2 + 7px));
+    margin-right: auto;
+  }
 
   @media (max-width: 980px) {
     width: calc(100% - 48px);
+    margin: 0 auto;
   }
 `;
 
 const ResearcherSection = styled.section`
-  margin-bottom: 66px;
+  margin-bottom: 45px;
 `;
 
 const AlumniSection = styled.section`
-  margin-bottom: 78px;
+  margin-bottom: 73px;
 `;
 
 const MemberSectionTitle = styled.h2`
-  margin: 0 0 6px;
+  margin: 0 0 6px 4px;
   color: ${navy};
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.25;
+  font-family: "Roboto", "Inter", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 36px;
 `;
 
 const MemberSectionDivider = styled.div`
-  width: 100%;
+  width: calc(100% - 4px);
   height: 1px;
+  margin-left: 4px;
   margin-bottom: 28px;
   background: #303030;
 `;
 
 const ResearcherGrid = styled.div`
+  width: 1064px;
+  max-width: 100%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 54px 120px;
-  padding: 0 58px;
+  grid-template-columns: repeat(3, 236px);
+  justify-content: space-between;
+  gap: 0;
+  padding: 0;
 
   @media (max-width: 980px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 46px 40px;
-    padding: 0;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 236px), 236px));
+    justify-content: center;
+    gap: 45px 64px;
   }
 
   @media (max-width: 640px) {
@@ -686,10 +822,16 @@ const ResearcherGrid = styled.div`
 `;
 
 const ResearcherCard = styled.article`
+  width: 236px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  min-width: 0;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 
 const ResearcherImage = styled.img`
@@ -704,10 +846,13 @@ const ResearcherImage = styled.img`
 const ResearcherName = styled.h3`
   margin: 0 0 14px;
   color: #000000;
+  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
   font-size: 30px;
   font-weight: 800;
-  line-height: 1.15;
-  text-transform: uppercase;
+  line-height: 36px;
+  letter-spacing: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 `;
 
 const ResearcherMeta = styled.p`
@@ -715,49 +860,60 @@ const ResearcherMeta = styled.p`
   color: #1f1f1f;
   font-size: 20px;
   font-weight: 400;
-  line-height: 1.22;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 `;
 
 const AlumniGrid = styled.div`
+  width: 1177px;
+  max-width: 100%;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 378px);
-  justify-content: center;
-  gap: 28px 36px;
+  grid-template-columns: repeat(3, 368px);
+  justify-content: space-between;
+  gap: 36px 0;
   padding: 0;
 
-  @media (max-width: 980px) {
-    grid-template-columns: repeat(2, 378px);
+  @media (max-width: 1180px) {
+    grid-template-columns: repeat(auto-fit, 368px);
+    justify-content: center;
+    gap: 36px;
   }
 
-  @media (max-width: 820px) {
-    grid-template-columns: minmax(0, 378px);
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 `;
 
 const AlumniCard = styled.article`
-  width: 378px;
-  min-height: 205px;
+  width: 368px;
+  height: 200px;
   display: grid;
-  grid-template-columns: 112px 1fr;
+  grid-template-columns: 83px 1fr;
   grid-template-rows: auto 1fr;
   gap: 0 22px;
   align-items: start;
-  padding: 24px 16px 19px 20px;
-  border: 1.5px solid ${navy};
-  border-radius: 14px;
+  padding: 23px 10px 16px 34px;
+  border: 1px solid ${navy};
+  border-radius: 15px;
   box-sizing: border-box;
 
   @media (max-width: 430px) {
     width: 100%;
-    grid-template-columns: 104px 1fr;
+    height: auto;
+    min-height: 200px;
+    grid-template-columns: 83px 1fr;
+    padding-right: 14px;
   }
 `;
 
 const AlumniImage = styled.img`
-  width: 104px;
-  height: 104px;
-  border: 1px solid #dfdfdf;
-  border-radius: 50%;
+  width: 83px;
+  height: 107px;
+  border: 0;
+  border-radius: 0;
   object-fit: cover;
   object-position: center top;
   grid-row: 1;
@@ -765,35 +921,42 @@ const AlumniImage = styled.img`
 
 const AlumniDetails = styled.div`
   min-width: 0;
-  padding-top: 15px;
+  padding-top: 10px;
 `;
 
 const AlumniName = styled.h3`
-  margin: 0 0 17px;
+  margin: 0 0 8px;
   color: #000000;
-  font-size: 24px;
+  font-family: "Roboto", "Inter", sans-serif;
+  font-size: 22px;
   font-weight: 800;
-  line-height: 1.12;
-  text-transform: uppercase;
+  line-height: 36px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
 `;
 
 const AlumniMeta = styled.p`
   margin: 0 0 8px;
   color: #222222;
+  font-family: "Roboto", "Inter", sans-serif;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 1.22;
-  white-space: nowrap;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.25px;
+  overflow-wrap: anywhere;
 `;
 
 const AlumniDestination = styled.p`
   grid-column: 1 / -1;
-  margin: 12px 0 0 20px;
+  margin: 12px 0 0 -7px;
   color: ${navy};
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.08;
+  font-family: "Roboto", "Inter", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.25px;
   max-width: 300px;
+  overflow-wrap: anywhere;
 `;
 
 const StatusText = styled.div`

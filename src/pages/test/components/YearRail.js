@@ -21,13 +21,18 @@ const YearRail = ({ years, activeYear, onYearChange }) => {
 };
 
 const Rail = styled.nav`
-  width: 260px;
-  flex: 0 0 260px;
+  width: 285px;
+  flex: 0 0 285px;
+
+  @media (max-width: 1080px) {
+    width: 100%;
+    flex-basis: auto;
+  }
 `;
 
 const YearButton = styled.button`
   position: relative;
-  width: 260px;
+  width: 285px;
   height: 54px;
   padding: 0;
   display: flex;
@@ -38,10 +43,11 @@ const YearButton = styled.button`
   font: inherit;
   font-size: 24px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 36px;
   letter-spacing: 0;
   text-align: left;
   cursor: pointer;
+  overflow-wrap: anywhere;
 
   &:hover {
     color: ${navy};
@@ -52,9 +58,17 @@ const YearButton = styled.button`
     position: absolute;
     left: 0;
     top: 35px;
-    width: 260px;
+    width: 285px;
     height: 1px;
     background: ${(props) => (props.$active ? navy : "#e6e6e6")};
+  }
+
+  @media (max-width: 1080px) {
+    width: 100%;
+
+    &::after {
+      width: 100%;
+    }
   }
 `;
 

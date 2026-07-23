@@ -39,8 +39,8 @@ const HeroTitle = styled.h1`
   color: ${navy};
   font-size: 48px;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
+  line-height: 58.09px;
+  letter-spacing: -0.96px;
 
   @media (max-width: 780px) {
     position: static;
@@ -80,6 +80,7 @@ const CategoryButton = styled.button`
   border-radius: 8px;
   background: ${(props) => (props.$active ? navy : soft)};
   color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
+  font-family: inherit;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
@@ -103,8 +104,9 @@ const CategoryButton = styled.button`
 const Divider = styled.div`
   position: absolute;
   left: 38px;
+  right: 38px;
   top: 451px;
-  width: 1366px;
+  width: auto;
   height: 1px;
   background: #c3c3c3;
 
