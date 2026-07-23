@@ -40,11 +40,11 @@ const FooterFrame = styled.footer`
 const FooterDivider = styled.div`
   position: absolute;
   left: 85px;
-  right: 78px;
-  top: 0;
+  right: 77px;
+  top: 1px;
   width: auto;
   height: 1px;
-  background: #d0d0d0;
+  background: #e6e6e6;
 
   @media (max-width: 780px) {
     left: 24px;
@@ -56,10 +56,10 @@ const FooterDivider = styled.div`
 
 const FooterLogo = styled.img`
   position: absolute;
-  left: 83px;
-  top: 52px;
-  width: 180px;
-  height: 70px;
+  left: 85px;
+  top: 56px;
+  width: 169px;
+  height: 59px;
   display: block;
   object-fit: contain;
   object-position: left center;

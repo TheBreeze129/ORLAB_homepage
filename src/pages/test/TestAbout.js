@@ -9,7 +9,7 @@ import quoteRightIcon from "../../assets/quote_right.svg";
 import stepOneIcon from "../../assets/figma/step-1.svg";
 import stepTwoIcon from "../../assets/figma/step-2.svg";
 import stepThreeIcon from "../../assets/figma/step-3.svg";
-import stepFourIcon from "../../assets/figma/step-4.svg";
+import stepFourIcon from "../../assets/figma/step-4.png";
 import aboutDiagram from "../../assets/figma/about-diagram.svg";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";

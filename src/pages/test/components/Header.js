@@ -133,8 +133,8 @@ const Header = ({
 
 const LogoLink = styled(Link)`
   position: absolute;
-  left: 115px;
-  top: 88px;
+  left: 123px;
+  top: 82px;
   width: 115px;
   height: 40px;
   display: block;

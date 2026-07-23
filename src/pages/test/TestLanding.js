@@ -6,7 +6,7 @@ import Footer from "./components/Footer.js";
 import LandingPopup from "./components/LandingPopup.js";
 import { landingPopupEvent } from "./data/landingPopup.js";
 import landingBackground from "../../assets/figma/landing-background.png";
-import buildingIcon from "../../assets/building_icon.svg";
+import companyIcon from "../../assets/figma/company-icon.svg";
 import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
 import landingProjectLges from "../../assets/figma/landing-project-lges.png";
 
@@ -111,7 +111,7 @@ const TestLanding = () => (
                 ))}
               </TagList>
               <Partner>
-                <PartnerIcon src={buildingIcon} alt="" aria-hidden="true" />
+                <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
                 <span>{project.partner}</span>
               </Partner>
             </ProjectCard>
@@ -228,9 +228,9 @@ const IntroText = styled.div`
   left: max(0px, calc((100% - 1282px) / 2));
   top: 946px;
   width: 1282px;
-  color: #1f1f1f;
+  color: #000000;
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 30px;
   letter-spacing: 0;
 
@@ -304,11 +304,14 @@ const ProjectLink = styled(Link)`
 `;
 
 const ProjectCard = styled.article`
+  position: relative;
   width: 404px;
+  height: 529px;
   min-width: 0;
 
   @media (max-width: 900px) {
     width: 100%;
+    height: auto;
   }
 `;
 
@@ -328,28 +331,38 @@ const ProjectImage = styled.img`
 const ProjectTitle = styled.h3`
   width: 415px;
   max-width: calc(100% + 11px);
-  min-height: 120px;
+  height: 120px;
   margin: 35px 0 0;
   color: #111111;
   font-size: 24px;
   font-weight: 500;
   line-height: 36px;
   letter-spacing: 0;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
 
   @media (max-width: 900px) {
-    min-height: auto;
+    height: auto;
     margin-top: 24px;
   }
 `;
 
 const TagList = styled.div`
+  position: absolute;
+  left: 0;
+  top: 430px;
   min-height: 81px;
-  margin-top: 21px;
+  margin-top: 0;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 10px 23px;
+
+  @media (max-width: 900px) {
+    position: static;
+    min-height: auto;
+    margin-top: 24px;
+  }
 `;
 
 const ProjectTag = styled.span`
@@ -368,10 +381,13 @@ const ProjectTag = styled.span`
 `;
 
 const Partner = styled.div`
-  margin-top: 24px;
+  position: absolute;
+  left: 0;
+  top: 493px;
+  margin-top: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6.45px;
   color: #111111;
   font-size: 20px;
   font-weight: 500;
@@ -379,13 +395,18 @@ const Partner = styled.div`
 
   span {
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+  }
+
+  @media (max-width: 900px) {
+    position: static;
+    margin-top: 24px;
   }
 `;
 
 const PartnerIcon = styled.img`
-  width: 34px;
-  height: 34px;
+  width: 33.9068px;
+  height: 33.9068px;
   object-fit: contain;
   flex: 0 0 auto;
 `;

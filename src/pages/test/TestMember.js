@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import {
-  PiBank,
-  PiBriefcase,
-  PiGraduationCap,
-  PiHandshake,
-  PiMedal,
-} from "react-icons/pi";
-import { FiGlobe, FiMail } from "react-icons/fi";
-import { SiGooglescholar } from "react-icons/si";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import profMoImage from "../../assets/profmo.jpg";
 import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
 import alumniPlaceholder from "../../assets/figma/member-alumni-placeholder.png";
+import professorMailIcon from "../../assets/figma/professor-mail.png";
+import professorWebIcon from "../../assets/figma/professor-web.png";
+import professorScholarIcon from "../../assets/figma/professor-scholar.png";
+import professorEducationIcon from "../../assets/figma/professor-education.png";
+import professorBriefcaseIcon from "../../assets/figma/professor-briefcase.png";
+import professorMedalIcon from "../../assets/figma/professor-medal.png";
+import professorTempleIcon from "../../assets/figma/professor-temple.png";
+import professorHandshakeIcon from "../../assets/figma/professor-handshake.png";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
@@ -40,7 +39,8 @@ const alumniSections = [
 const professorCards = [
   {
     title: "Education",
-    icon: PiGraduationCap,
+    icon: professorEducationIcon,
+    iconSize: "60px",
     items: [
       "Ph.D., University of California, Berkeley",
       "M.S., University of California, Berkeley",
@@ -49,7 +49,8 @@ const professorCards = [
   },
   {
     title: "Professional Experience",
-    icon: PiBriefcase,
+    icon: professorBriefcaseIcon,
+    iconSize: "55px",
     items: [
       "Professor, Yonsei University",
       "KAIST",
@@ -59,7 +60,10 @@ const professorCards = [
   },
   {
     title: "Academic Leadership",
-    icon: PiMedal,
+    icon: professorMedalIcon,
+    iconSize: "55px",
+    lineTop: "75.5px",
+    lineHeight: "284px",
     wide: true,
     items: [
       "2026: President, Korea Media Management Association",
@@ -78,7 +82,10 @@ const professorCards = [
   },
   {
     title: "Public Activities",
-    icon: PiBank,
+    icon: professorTempleIcon,
+    iconSize: "55px",
+    lineTop: "80.5px",
+    lineHeight: "208px",
     wide: true,
     items: [
       "2024: Program Director, Engineering Management Program, Graduate School of Engineering, Yonsei University",
@@ -94,7 +101,10 @@ const professorCards = [
   },
   {
     title: "Industrial Cooperation",
-    icon: PiHandshake,
+    icon: professorHandshakeIcon,
+    iconSize: "60px",
+    lineTop: "85px",
+    lineHeight: "106px",
     wide: true,
     items: [
       "2021: Big Data Advisor, Samsung Electronics",
@@ -273,7 +283,7 @@ const ProfessorContent = () => (
         </ProfessorRole>
         <ProfessorLinks aria-label="Professor contact links">
           <ProfessorLink href="mailto:j.mo@yonsei.ac.kr">
-            <FiMail aria-hidden="true" />
+            <ProfessorLinkIcon src={professorMailIcon} alt="" aria-hidden="true" />
             <span>j.mo@yonsei.ac.kr</span>
           </ProfessorLink>
           <ProfessorLink
@@ -281,7 +291,7 @@ const ProfessorContent = () => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <FiGlobe aria-hidden="true" />
+            <ProfessorLinkIcon src={professorWebIcon} alt="" aria-hidden="true" />
             <span>Personal Homepage</span>
           </ProfessorLink>
           <ProfessorLink
@@ -289,7 +299,7 @@ const ProfessorContent = () => (
             target="_blank"
             rel="noopener noreferrer"
           >
-            <SiGooglescholar aria-hidden="true" />
+            <ProfessorLinkIcon src={professorScholarIcon} alt="" aria-hidden="true" />
             <span>Google Scholar</span>
           </ProfessorLink>
         </ProfessorLinks>
@@ -300,11 +310,15 @@ const ProfessorContent = () => (
 
     <ProfessorSummaryGrid>
       {professorCards.slice(0, 2).map((card) => {
-        const Icon = card.icon;
         return (
           <ProfessorSummaryBlock key={card.title}>
             <CardHeader>
-              <Icon aria-hidden="true" />
+              <CardIcon
+                src={card.icon}
+                alt=""
+                aria-hidden="true"
+                $size={card.iconSize}
+              />
               <CardTitle>{card.title}</CardTitle>
             </CardHeader>
             <CardList>
@@ -319,11 +333,19 @@ const ProfessorContent = () => (
 
     <ProfessorActivityList>
       {professorCards.slice(2).map((card) => {
-        const Icon = card.icon;
         return (
-          <ProfessorActivitySection key={card.title}>
+          <ProfessorActivitySection
+            key={card.title}
+            $lineTop={card.lineTop}
+            $lineHeight={card.lineHeight}
+          >
             <ActivityIcon>
-              <Icon aria-hidden="true" />
+              <CardIcon
+                src={card.icon}
+                alt=""
+                aria-hidden="true"
+                $size={card.iconSize}
+              />
             </ActivityIcon>
             <ActivityBody>
               <CardTitle>{card.title}</CardTitle>
@@ -601,13 +623,13 @@ const ProfessorLink = styled.a`
   text-underline-offset: 3px;
   min-width: 0;
   overflow-wrap: anywhere;
+`;
 
-  svg {
-    color: ${navy};
-    width: 30px;
-    height: 30px;
-    flex: 0 0 auto;
-  }
+const ProfessorLinkIcon = styled.img`
+  width: 30px;
+  height: 30px;
+  flex: 0 0 auto;
+  object-fit: contain;
 `;
 
 const ContentDivider = styled.div`
@@ -643,12 +665,13 @@ const CardHeader = styled.div`
   gap: 24px;
   margin-bottom: 22px;
   color: ${navy};
+`;
 
-  svg {
-    width: 60px;
-    height: 60px;
-    flex: 0 0 auto;
-  }
+const CardIcon = styled.img`
+  width: ${(props) => props.$size};
+  height: ${(props) => props.$size};
+  flex: 0 0 auto;
+  object-fit: contain;
 `;
 
 const CardTitle = styled.h3`
@@ -706,9 +729,9 @@ const ProfessorActivitySection = styled.section`
     content: "";
     position: absolute;
     left: 27.5px;
-    top: 64px;
-    bottom: 18px;
+    top: ${(props) => props.$lineTop};
     width: 3px;
+    height: ${(props) => props.$lineHeight};
     background: #113275;
     opacity: 0.75;
   }
@@ -728,11 +751,6 @@ const ActivityIcon = styled.div`
   justify-content: center;
   background: #ffffff;
   color: ${navy};
-
-  svg {
-    width: 60px;
-    height: 60px;
-  }
 `;
 
 const ActivityBody = styled.div`
