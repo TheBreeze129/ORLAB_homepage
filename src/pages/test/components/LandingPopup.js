@@ -106,8 +106,10 @@ const PopupDialog = styled.div`
   position: relative;
   width: min(843px, 100%);
   min-height: 641px;
-  padding: 45px 22px 100px;
+  padding: 45px 22px 23px;
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25),
     inset 0 4px 4px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
@@ -123,6 +125,7 @@ const PopupImageFrame = styled.figure`
   width: min(679px, 100%);
   height: 412px;
   margin: 0 auto;
+  display: grid;
   overflow: hidden;
   border-radius: 8px;
   background: #f7f7f7;
@@ -134,6 +137,7 @@ const PopupImageFrame = styled.figure`
 `;
 
 const PopupImage = styled.img`
+  grid-area: 1 / 1;
   width: 100%;
   height: 100%;
   display: block;
@@ -141,10 +145,11 @@ const PopupImage = styled.img`
 `;
 
 const PopupImageLabel = styled.figcaption`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 28px;
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: stretch;
+  z-index: 1;
+  margin-top: 28px;
   color: #000000;
   font-size: 24px;
   font-weight: 700;
@@ -164,11 +169,9 @@ const PopupTitle = styled.p`
 `;
 
 const CloseButton = styled.button`
-  position: absolute;
-  right: 22px;
-  bottom: 23px;
   width: 100px;
   height: 50px;
+  margin: auto 0 0 auto;
   border: 0;
   background: #113275;
   color: #ffffff;

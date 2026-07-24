@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import projectPlaceholder from "../../assets/board-album-placeholder.png";
 
@@ -53,12 +54,18 @@ const ProjectDetail = () => {
     <PageShell>
       <DetailTopFrame aria-label="Project detail header">
         <Header activeSection="research" activeResearch="project" />
-        <ProjectTitle>{title}</ProjectTitle>
-        <ProjectMeta>
-          <SponsorBadge>{sponsor}</SponsorBadge>
-          <ProjectPeriod>{period}</ProjectPeriod>
-        </ProjectMeta>
-        <HeroDivider />
+        <Hero
+          title={title}
+          topGap={159}
+          titleSize={35}
+          titleLineHeight="42.3579px"
+          meta={
+            <>
+              <SponsorBadge>{sponsor}</SponsorBadge>
+              <ProjectPeriod>{period}</ProjectPeriod>
+            </>
+          }
+        />
       </DetailTopFrame>
 
       <DetailContent data-project-id={notionId || "preview"}>
@@ -97,56 +104,15 @@ const PageShell = styled.main`
 `;
 
 const DetailTopFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
-    min-height: 452px;
     padding: 36px 24px 44px;
     box-sizing: border-box;
-  }
-`;
-
-const ProjectTitle = styled.h1`
-  position: absolute;
-  left: 112px;
-  top: 286px;
-  width: fit-content;
-  max-width: min(1184px, calc(100% - 224px));
-  margin: 0;
-  color: ${navy};
-  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
-  font-size: 35px;
-  font-weight: 700;
-  line-height: 42.3579px;
-  letter-spacing: -0.7px;
-  overflow-wrap: break-word;
-  word-break: normal;
-
-  @media (max-width: 780px) {
-    position: static;
-    width: auto;
-    margin-bottom: 28px;
-    font-size: 30px;
-  }
-`;
-
-const ProjectMeta = styled.div`
-  position: absolute;
-  left: 115px;
-  top: 369px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
-  @media (max-width: 780px) {
-    position: static;
-    flex-wrap: wrap;
   }
 `;
 
@@ -179,24 +145,6 @@ const ProjectPeriod = styled.span`
   line-height: 24px;
   letter-spacing: 0px;
   white-space: nowrap;
-`;
-
-const HeroDivider = styled.div`
-  position: absolute;
-  left: 38px;
-  right: 38px;
-  top: 451px;
-  width: auto;
-  height: 1px;
-  background: #c3c3c3;
-
-  @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: auto;
-    bottom: 0;
-    width: auto;
-  }
 `;
 
 const DetailContent = styled.section`
@@ -254,10 +202,10 @@ const SectionBody = styled.p`
 `;
 
 const PreviewImageFrame = styled.figure`
-  position: relative;
   width: 482px;
   height: 285px;
   margin: 36px auto 0;
+  display: grid;
   overflow: hidden;
   border-radius: 8px;
   background: #e6e6e6;
@@ -271,6 +219,7 @@ const PreviewImageFrame = styled.figure`
 `;
 
 const PreviewImage = styled.img`
+  grid-area: 1 / 1;
   width: 100%;
   height: 100%;
   display: block;
@@ -278,10 +227,11 @@ const PreviewImage = styled.img`
 `;
 
 const PreviewImageLabel = styled.figcaption`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 31px;
+  grid-area: 1 / 1;
+  align-self: start;
+  justify-self: stretch;
+  margin: 31px 0 0;
+  z-index: 1;
   color: #000000;
   font-size: 24px;
   font-weight: 700;

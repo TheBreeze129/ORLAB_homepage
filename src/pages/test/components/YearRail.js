@@ -31,44 +31,38 @@ const Rail = styled.nav`
 `;
 
 const YearButton = styled.button`
-  position: relative;
   width: 285px;
-  height: 54px;
-  padding: 0;
+  height: 58px;
+  padding: 0 3px;
+
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+
+  box-sizing: border-box;
   border: 0;
+  border-bottom: 1px solid
+    ${(props) => (props.$active ? navy : "#e6e6e6")};
+
   background: transparent;
   color: ${(props) => (props.$active ? navy : "#a6a6a6")};
+
   font: inherit;
   font-size: 24px;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 1;
   letter-spacing: 0;
+
   text-align: left;
+  white-space: nowrap;
   cursor: pointer;
-  overflow-wrap: anywhere;
 
   &:hover {
     color: ${navy};
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 35px;
-    width: 285px;
-    height: 1px;
-    background: ${(props) => (props.$active ? navy : "#e6e6e6")};
-  }
-
   @media (max-width: 1080px) {
     width: 100%;
-
-    &::after {
-      width: 100%;
-    }
   }
 `;
 

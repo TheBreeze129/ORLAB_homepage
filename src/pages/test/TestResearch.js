@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaBuilding } from "react-icons/fa";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import Pagination from "./components/Pagination.js";
 import projectThumbnail from "../../assets/figma/project-ocr-thumbnail.jpg";
@@ -236,20 +237,13 @@ const TestResearch = () => {
     <PageShell>
       <HeaderHeroFrame aria-label="Research header and hero">
         <Header activeSection="research" activeResearch={activeTab} />
-        <HeroTitle>Research</HeroTitle>
-        <TopTabs aria-label="Research section selector">
-          {researchTabs.map((item) => (
-            <TopTabButton
-              key={item.id}
-              type="button"
-              $active={activeTab === item.id}
-              onClick={() => handleResearchTabChange(item.id)}
-            >
-              {item.label}
-            </TopTabButton>
-          ))}
-        </TopTabs>
-        <HeroDivider />
+        <Hero
+          title="Research"
+          items={researchTabs}
+          activeId={activeTab}
+          onChange={handleResearchTabChange}
+          ariaLabel="Research section selector"
+        />
       </HeaderHeroFrame>
 
       <ContentFrame
@@ -347,7 +341,6 @@ const TestResearch = () => {
 };
 
 const ProjectCard = ({ item }) => {
-  const projectId = item.notionId || item.url || item.id || "preview";
   const organizationLogo =
     item.organizationLogo || (isImageUrl(item.organization) ? item.organization : "");
   const organizationText =
@@ -364,7 +357,6 @@ const ProjectCard = ({ item }) => {
       <ProjectCardBody>
         <ProjectCardTitle>{item.name || item.Name}</ProjectCardTitle>
         <ProjectMetaRow>
-          <ProjectDate>{item.date}</ProjectDate>
           {organizationLogo || organizationText ? (
             organizationLogo ? (
               <OrganizationLogo
@@ -405,85 +397,15 @@ const PageShell = styled.main`
 `;
 
 const HeaderHeroFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
-    min-height: 452px;
     padding: 36px 24px 44px;
     box-sizing: border-box;
-  }
-`;
-
-const HeroTitle = styled.h1`
-  position: absolute;
-  left: 111px;
-  top: 258px;
-  width: 733px;
-  height: 58px;
-  margin: 0;
-  color: ${navy};
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 58.09px;
-  letter-spacing: -0.96px;
-
-  @media (max-width: 780px) {
-    position: static;
-    margin-bottom: 40px;
-  }
-`;
-
-const TopTabs = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 357px;
-  display: flex;
-  align-items: center;
-  gap: 23px;
-
-  @media (max-width: 780px) {
-    position: static;
-  }
-`;
-
-const TopTabButton = styled.button`
-  min-width: 116px;
-  height: 54px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 8px;
-  background: ${(props) => (props.$active ? navy : soft)};
-  color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
-  font-family: inherit;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-`;
-
-const HeroDivider = styled.div`
-  position: absolute;
-  left: 38px;
-  right: 38px;
-  top: 451px;
-  width: auto;
-  height: 1px;
-  background: #c3c3c3;
-
-  @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: auto;
-    bottom: 0;
-    width: auto;
   }
 `;
 
@@ -686,49 +608,41 @@ const CategoryRail = styled.nav`
 `;
 
 const CategoryButton = styled.button`
-  position: relative;
   width: 285px;
-  height: 54px;
-  padding: 0;
+  height: 58px;
+  padding: 0 3px;
+
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start;
+
+  box-sizing: border-box;
   border: 0;
+  border-bottom: 1px solid
+    ${(props) => (props.$active ? navy : "#e6e6e6")};
+
   background: transparent;
   color: ${(props) => (props.$active ? navy : "#a9a9a9")};
+
   font: inherit;
   font-size: 24px;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 1;
   letter-spacing: 0;
+
   text-align: left;
   white-space: nowrap;
-  overflow-wrap: normal;
   cursor: pointer;
 
   &:hover {
     color: ${navy};
   }
 
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 35px;
-    width: 285px;
-    height: 1px;
-    background: ${(props) => (props.$active ? navy : "#e6e6e6")};
-  }
-
   @media (max-width: 980px) {
     width: 100%;
     font-size: 20px;
-
-    &::after {
-      width: 100%;
-    }
   }
 `;
-
 const PublicationList = styled.div`
   width: auto;
   flex: 1 1 auto;
@@ -743,36 +657,17 @@ const PublicationList = styled.div`
 `;
 
 const PublicationItem = styled.article`
-  position: relative;
   min-height: 191px;
-  padding: 0 0 51px 23px;
+  padding: 0 0 20px 23px;
   box-sizing: border-box;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 31px;
-    width: 100%;
-    height: 1px;
-    background: #c6c6c6;
-  }
-
-  @media (max-width: 1360px) {
-    &::after {
-      width: 100%;
-    }
-  }
+  border-bottom: 1px solid #c6c6c6;
+  margin-bottom: 31px;
 
   @media (max-width: 980px) {
     width: 100%;
     min-height: 150px;
-    padding: 0 0 76px;
-
-    &::after {
-      bottom: 32px;
-      width: 100%;
-    }
+    padding: 0 0 44px;
+    margin-bottom: 32px;
   }
 `;
 

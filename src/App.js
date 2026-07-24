@@ -23,6 +23,7 @@ import TestResearch from "./pages/test/TestResearch.js";
 import TestAbout from "./pages/test/TestAbout.js";
 import TestLanding from "./pages/test/TestLanding.js";
 import TestSubProject from "./pages/test/TestSubProject.js";
+import ProjectDetail from "./pages/test/ProjectDetail.js";
 
 const App = () => {
   return (

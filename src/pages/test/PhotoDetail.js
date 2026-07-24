@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import NotionContent from "./components/NotionContent.js";
 import { boardItems } from "./data/boardContent.js";
@@ -152,9 +153,14 @@ const PhotoDetail = () => {
           boardItems={boardItems}
           onBoardChange={handleBoardChange}
         />
-        <DetailTitle>{photo?.subject || "Photo"}</DetailTitle>
-        {photo?.date ? <DateBadge>{photo.date}</DateBadge> : null}
-        <HeroDivider />
+        <Hero
+          title={photo?.subject || "Photo"}
+          topGap={141}
+          dividerGap={61}
+          titleSize={38}
+          titleLineHeight="1.2"
+          meta={photo?.date ? <DateBadge>{photo.date}</DateBadge> : null}
+        />
       </DetailTopFrame>
 
       <DetailContent aria-busy={isLoading} aria-live="polite">
@@ -199,47 +205,23 @@ const isLocalApiHtmlFallback = (error) =>
   /Unexpected token '<'|not valid JSON/i.test(error.message || "");
 
 const DetailTopFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
     min-height: 520px;
     padding: 36px 24px 64px;
     box-sizing: border-box;
   }
 `;
 
-const DetailTitle = styled.h1`
-  position: absolute;
-  left: 111px;
-  top: 268px;
-  max-width: 900px;
-  margin: 0;
-  color: #113275;
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
-  overflow-wrap: anywhere;
-
-  @media (max-width: 780px) {
-    position: static;
-    margin-bottom: 30px;
-    font-size: 32px;
-  }
-`;
-
 const DateBadge = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 348px;
   min-width: 213px;
   height: 42px;
+  margin: 0;
   padding: 0 20px;
   display: inline-flex;
   align-items: center;
@@ -254,27 +236,8 @@ const DateBadge = styled.div`
   overflow-wrap: anywhere;
 
   @media (max-width: 780px) {
-    position: static;
     min-width: 0;
     width: fit-content;
-  }
-`;
-
-const HeroDivider = styled.div`
-  position: absolute;
-  left: 38px;
-  right: 38px;
-  top: 451px;
-  width: auto;
-  height: 1px;
-  background: #c3c3c3;
-
-  @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: auto;
-    bottom: 0;
-    width: auto;
   }
 `;
 

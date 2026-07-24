@@ -25,58 +25,42 @@ const Footer = () => {
 const FooterFrame = styled.footer`
   position: relative;
   width: min(100%, 1442px);
-  height: 171px;
   margin: 0 auto;
+  padding: 56px 78px 56px 85px;
   background: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  gap: 250px;
+  box-sizing: border-box;
+  border-top: 1px solid #e6e6e6;
 
   @media (max-width: 780px) {
-    height: auto;
     margin-top: 0;
     padding: 40px 24px 44px;
-    box-sizing: border-box;
+    flex-direction: column;
+    gap: 28px;
   }
 `;
 
 const FooterDivider = styled.div`
-  position: absolute;
-  left: 85px;
-  right: 77px;
-  top: 1px;
-  width: auto;
-  height: 1px;
-  background: #e6e6e6;
-
-  @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: 0;
-    width: auto;
-  }
+  display: none;
 `;
 
 const FooterLogo = styled.img`
-  position: absolute;
-  left: 85px;
-  top: 56px;
   width: 169px;
   height: 59px;
+  flex: 0 0 auto;
   display: block;
   object-fit: contain;
   object-position: left center;
 
   @media (max-width: 780px) {
-    position: static;
     width: 180px;
     height: 70px;
-    margin-bottom: 28px;
   }
 `;
 
 const ContactList = styled.div`
-  position: absolute;
-  left: 504px;
-  right: 78px;
-  top: 56px;
   width: auto;
   color: #000000;
   font-size: 16px;
@@ -85,13 +69,11 @@ const ContactList = styled.div`
   letter-spacing: 0;
 
   @media (max-width: 980px) {
-    left: 330px;
-    right: 48px;
     width: auto;
+    flex: 1 1 auto;
   }
 
   @media (max-width: 780px) {
-    position: static;
     width: auto;
     font-size: 15px;
     line-height: 1.6;

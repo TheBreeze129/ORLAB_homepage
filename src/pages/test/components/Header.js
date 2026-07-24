@@ -26,9 +26,9 @@ const researchItems = [
 ];
 
 const boardNavItems = [
-  { id: "album", label: "ALBUM", to: "/test/board" },
-  { id: "seminar", label: "SEMINAR", to: "/test/board?board=seminar" },
-  { id: "workshop", label: "WORKSHOP", to: "/test/board?board=workshop" },
+  { id: "album", label: "Album", to: "/test/board" },
+  { id: "seminar", label: "Seminar", to: "/test/board?board=seminar" },
+  { id: "workshop", label: "Workshop", to: "/test/board?board=workshop" },
 ];
 
 const Header = ({
@@ -39,7 +39,7 @@ const Header = ({
   activeSection = "board",
 }) => {
   return (
-    <>
+    <HeaderFrame>
       <LogoLink to="/test" aria-label="ORLAB home">
         <LogoImage src={orlabLogo} alt="ORLAB Operations Research Lab" />
       </LogoLink>
@@ -49,7 +49,7 @@ const Header = ({
           <AboutButton to="/test/about" $active={activeSection === "about"}>
             ABOUT
           </AboutButton>
-          <DropdownMenu $width="118px" $left="-31px">
+          <DropdownMenu $width="139px">
             {aboutItems.map((item) => (
               <DropdownLink
                 key={item.to}
@@ -69,7 +69,7 @@ const Header = ({
           >
             MEMBERS
           </MemberButton>
-          <DropdownMenu $width="174px" $left="-42px">
+          <DropdownMenu $width="139px">
             {memberItems.map((item) => (
               <DropdownLink
                 key={item.to}
@@ -89,7 +89,7 @@ const Header = ({
           >
             RESEARCH
           </ResearchButton>
-          <DropdownMenu $width="132px" $left="-24px">
+          <DropdownMenu $width="139px">
             {researchItems.map((item) => (
               <DropdownLink
                 key={item.to}
@@ -106,7 +106,7 @@ const Header = ({
           <BoardButton to="/test/board" $active={activeSection === "board"}>
             BOARD
           </BoardButton>
-          <DropdownMenu $width="132px" $left="-30px">
+          <DropdownMenu $width="139px">
             {boardNavItems.map((item) => (
               <DropdownLink
                 key={item.to}
@@ -127,22 +127,39 @@ const Header = ({
           OPTNTECH
         </OptntechLink>
       </NavArea>
-    </>
+    </HeaderFrame>
   );
 };
 
+const HeaderFrame = styled.header`
+  width: min(1282px, calc(100% - 220px));
+  height: 127px;
+  margin: 0 auto;
+  padding-top: 77px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 48px;
+  box-sizing: border-box;
+
+  @media (max-width: 780px) {
+    width: 100%;
+    height: auto;
+    padding-top: 0;
+    flex-direction: column;
+    gap: 34px;
+  }
+`;
+
 const LogoLink = styled(Link)`
-  position: absolute;
-  left: 123px;
-  top: 82px;
   width: 115px;
   height: 40px;
+  flex: 0 0 auto;
   display: block;
   text-decoration: none;
 
   @media (max-width: 780px) {
-    position: static;
-    margin-bottom: 34px;
+    margin-bottom: 0;
   }
 `;
 
@@ -154,9 +171,6 @@ const LogoImage = styled.img`
 `;
 
 const NavArea = styled.nav`
-  position: absolute;
-  left: 688px;
-  top: 77px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -166,35 +180,26 @@ const NavArea = styled.nav`
   line-height: 1.5;
   white-space: nowrap;
 
-  @media (max-width: 1320px) {
-    left: 320px;
-    right: 48px;
+  @media (max-width: 1180px) {
     width: auto;
-    gap: 28px;
+    gap: 30px;
     font-size: 16px;
     justify-content: flex-end;
   }
 
   @media (max-width: 780px) {
-    position: static;
     height: auto;
     flex-wrap: wrap;
     gap: 20px 28px;
-    margin-bottom: 78px;
+    margin-bottom: 0;
   }
 `;
 
 const DropdownNav = styled.div`
   position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: -48px;
-    top: 100%;
-    width: calc(100% + 96px);
-    height: 72px;
-  }
+  height: 100%;
+  display: flex;
+  align-items: center;
 
   &:hover > div,
   &:focus-within > div {
@@ -205,8 +210,11 @@ const DropdownNav = styled.div`
 `;
 
 const NavLinkBase = styled(Link)`
+  height: 100%;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+
   color: #050505;
   text-decoration: none;
   font: inherit;
@@ -236,26 +244,27 @@ const BoardButton = styled(NavLinkBase)`
 
 const DropdownMenu = styled.div`
   position: absolute;
-  top: 66.5px;
-  left: ${(props) => props.$left || "-29px"};
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
   width: ${(props) => props.$width || "139px"};
   background: #ffffff;
   border-radius: 5px;
+
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 4px 8px 3px rgba(0, 0, 0, 0.15);
+
   z-index: 10;
 
-  @media (max-width: 1320px) {
-    top: 58px;
-  }
-
   @media (max-width: 780px) {
-    left: auto;
-    right: 0;
-    top: 36px;
+    top: calc(100% + 12px);
   }
 `;
 

@@ -4,19 +4,18 @@ import styled from "styled-components";
 import schoolIcon from "../../assets/school.svg";
 import mailIcon from "../../assets/mail.svg";
 import phoneIcon from "../../assets/phone.svg";
-import quoteLeftIcon from "../../assets/quote_left.svg";
-import quoteRightIcon from "../../assets/quote_right.svg";
-import stepOneIcon from "../../assets/figma/step-1.svg";
-import stepTwoIcon from "../../assets/figma/step-2.svg";
-import stepThreeIcon from "../../assets/figma/step-3.svg";
+import quoteLeftIcon from "../../assets/quote_left.png";
+import quoteRightIcon from "../../assets/quote_right.png";
+import stepOneIcon from "../../assets/figma/step-1.png";
+import stepTwoIcon from "../../assets/figma/step-2.png";
+import stepThreeIcon from "../../assets/figma/step-3.png";
 import stepFourIcon from "../../assets/figma/step-4.png";
 import aboutDiagram from "../../assets/figma/about-diagram.svg";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 
 const navy = "#113275";
-const soft = "#e6e6e6";
-
 const aboutTabs = [
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
@@ -61,20 +60,13 @@ const TestAbout = () => {
     <PageShell>
       <HeaderHeroFrame aria-label="About header and hero">
         <Header activeSection="about" activeAbout={activeTab} />
-        <HeroTitle>Operations Research Lab</HeroTitle>
-        <TopTabs aria-label="About section selector">
-          {aboutTabs.map((item) => (
-            <TopTabButton
-              key={item.id}
-              type="button"
-              $active={activeTab === item.id}
-              onClick={() => handleTabChange(item.id)}
-            >
-              {item.label}
-            </TopTabButton>
-          ))}
-        </TopTabs>
-        <HeroDivider />
+        <Hero
+          title="Operations Research Lab"
+          items={aboutTabs}
+          activeId={activeTab}
+          onChange={handleTabChange}
+          ariaLabel="About section selector"
+        />
       </HeaderHeroFrame>
 
       {activeTab === "contact" ? <ContactContent /> : <AboutContent />}
@@ -135,7 +127,10 @@ const ContactContent = () => (
           <Pictogram src={schoolIcon} alt="" aria-hidden="true" />
         </IconWrap>
         <ContactLabel $address>VISIT US</ContactLabel>
-        <ContactValue $address>
+        <ContactValue
+          $address
+          style={{ letterSpacing: "-0.8px" }}
+        >
           D1008, 4th Engineering bldg,
           <br />
           50 Yonsei-ro, Seodaemun-gu, Seoul, Republic of Korea
@@ -256,87 +251,15 @@ const PageShell = styled.main`
 `;
 
 const HeaderHeroFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
-    min-height: 452px;
     padding: 36px 24px 44px;
     box-sizing: border-box;
-  }
-`;
-
-const HeroTitle = styled.h1`
-  position: absolute;
-  left: 111px;
-  top: 258px;
-  width: 733px;
-  height: 58px;
-  margin: 0;
-  color: ${navy};
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 58.09px;
-  letter-spacing: -0.96px;
-
-  @media (max-width: 780px) {
-    position: static;
-    margin-bottom: 40px;
-    font-size: 40px;
-  }
-`;
-
-const TopTabs = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 357px;
-  display: flex;
-  align-items: center;
-  gap: 23px;
-
-  @media (max-width: 780px) {
-    position: static;
-    flex-wrap: wrap;
-  }
-`;
-
-const TopTabButton = styled.button`
-  min-width: 120px;
-  height: 54px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 8px;
-  background: ${(props) => (props.$active ? navy : soft)};
-  color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
-  font-family: inherit;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-`;
-
-const HeroDivider = styled.div`
-  position: absolute;
-  left: 38px;
-  right: 38px;
-  top: 451px;
-  width: auto;
-  height: 1px;
-  background: #c3c3c3;
-
-  @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: auto;
-    bottom: 0;
-    width: auto;
   }
 `;
 
@@ -408,22 +331,23 @@ const ContactFrame = styled.section`
 `;
 
 const ContactCards = styled.div`
-  position: relative;
-  width: 100%;
-  height: 304px;
+  width: min(1239px, calc(100% - 190px));
+  margin: 0 auto;
+  min-height: 304px;
+  display: grid;
+  grid-template-columns: 355px 481px 372px;
+  justify-content: center;
 
   @media (max-width: 900px) {
-    height: auto;
-    display: grid;
+    width: 100%;
+    min-height: auto;
     grid-template-columns: 1fr;
     gap: 34px;
   }
 `;
 
 const ContactCard = styled.article`
-  position: absolute;
-  top: 0;
-  height: 304px;
+  min-height: 304px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -431,25 +355,8 @@ const ContactCard = styled.article`
   border-left: ${(props) => (props.$withBorder ? "1px solid #e4e4e4" : "0")};
   text-align: center;
 
-  &:nth-child(1) {
-    left: 95px;
-    width: 355px;
-  }
-
-  &:nth-child(2) {
-    left: 481px;
-    width: 481px;
-  }
-
-  &:nth-child(3) {
-    left: 962px;
-    width: 372px;
-  }
-
   @media (max-width: 900px) {
-    position: static;
     width: 100%;
-    height: auto;
     min-height: auto;
     padding: 0 0 34px;
     border-left: 0;
@@ -493,17 +400,24 @@ const ContactValue = styled.p`
   font-size: 24px;
   font-weight: 400;
   line-height: ${(props) => (props.$address ? "29.0455px" : "36px")};
-  letter-spacing: ${(props) => (props.$address ? "-0.48px" : "0")};
+  letter-spacing: ${(props) => (props.$address ? "-0.8px" : "0")};
   overflow-wrap: anywhere;
 `;
 
 const ApplicationNote = styled.section`
   position: relative;
+
   width: 1237px;
   max-width: calc(100% - 48px);
-  min-height: 365px;
+  min-height: 260px;
   margin: 0 0 0 97px;
-  padding: 89px 60px 56px 51px;
+  padding: 56px 47px 40px 76px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 28px;
+
   box-sizing: border-box;
 
   @media (max-width: 1340px) {
@@ -514,68 +428,63 @@ const ApplicationNote = styled.section`
   @media (max-width: 900px) {
     width: 100%;
     min-height: auto;
-    padding: 72px 0 56px;
+    padding: 48px 48px 48px;
+    row-gap: 24px;
   }
 `;
 
 const QuoteLeftIcon = styled.img`
   position: absolute;
-  left: 0;
-  top: 89px;
+  top: 24px;
+  left: 0px;
+
   width: 40px;
   height: 40px;
+  display: block;
   object-fit: contain;
-
-  @media (max-width: 900px) {
-    left: 0;
-    top: 40px;
-  }
 `;
 
 const QuoteRightIcon = styled.img`
   position: absolute;
-  right: 0;
-  top: 321px;
+  right: 0px;
+  bottom: 10px;
+
   width: 40px;
   height: 40px;
+  display: block;
   object-fit: contain;
-
-  @media (max-width: 900px) {
-    right: 0;
-    top: auto;
-    bottom: 20px;
-  }
 `;
 
 const ApplicationIntro = styled.p`
-  margin: 0 0 38px;
+  grid-column: 1;
+  grid-row: 1;
+
+  margin: 0;
   color: #000000;
   font-size: 22px;
   font-weight: 500;
-  line-height: 33px;
-  letter-spacing: 0;
-  overflow-wrap: anywhere;
-
-  @media (min-width: 1181px) {
-    white-space: nowrap;
-  }
+  line-height: 27px;
 `;
 
 const ApplicationList = styled.ul`
+  grid-column: 1;
+  grid-row: 2;
+
   margin: 0;
-  padding: 0 0 0 3px;
+  padding: 0;
   list-style: none;
 `;
 
 const ApplicationItem = styled.li`
   display: flex;
-  align-items: flex-start;
-  gap: 31px;
+  align-items: center;
+  gap: 24px;
+
+  min-width: 0;
   color: #000000;
   font-size: 20px;
   font-weight: ${(props) => (props.$emphasized ? 600 : 400)};
-  line-height: 30px;
-  min-width: 0;
+  line-height: 24px;
 
   span {
     min-width: 0;
@@ -583,7 +492,7 @@ const ApplicationItem = styled.li`
   }
 
   & + & {
-    margin-top: 15px;
+    margin-top: 14px;
   }
 
   @media (min-width: 1181px) {
@@ -591,12 +500,18 @@ const ApplicationItem = styled.li`
       white-space: nowrap;
     }
   }
+
+  @media (max-width: 900px) {
+    align-items: flex-start;
+    gap: 16px;
+  }
 `;
 
 const StepIcon = styled.span`
   width: 35px;
-  min-width: 35px;
+  min-width: 28px;
   height: 35px;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -604,8 +519,8 @@ const StepIcon = styled.span`
 
 const StepImage = styled.img`
   display: block;
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
 `;
 

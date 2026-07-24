@@ -46,16 +46,13 @@ const PageShell = styled.main`
 `;
 
 const HeaderHeroFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
-    min-height: 452px;
     padding: 36px 24px 44px;
     box-sizing: border-box;
   }

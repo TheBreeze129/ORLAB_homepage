@@ -4,62 +4,102 @@ import styled from "styled-components";
 const navy = "#113275";
 const soft = "#e6e6e6";
 
-const Hero = ({ activeBoard, boardItems, onBoardChange }) => {
+const Hero = ({
+  title = "Board",
+  items,
+  activeId,
+  onChange,
+  ariaLabel,
+  meta,
+  topGap = 131,
+  dividerGap = 40,
+  showDivider = true,
+  titleSize = 48,
+  titleLineHeight,
+  activeBoard,
+  boardItems,
+  onBoardChange,
+}) => {
+  const resolvedItems = items || boardItems || [];
+  const resolvedActiveId = activeId || activeBoard;
+  const handleChange = onChange || onBoardChange;
   const activeLabel =
-    boardItems.find((item) => item.id === activeBoard)?.label || "SEMINAR";
+    resolvedItems.find((item) => item.id === resolvedActiveId)?.label || title;
 
   return (
-    <>
-      <HeroTitle>Board</HeroTitle>
-      <CategoryTabs aria-label={`Current board category: ${activeLabel}`}>
-        {boardItems.map((item) => (
-          <CategoryButton
-            key={item.id}
-            type="button"
-            $active={activeBoard === item.id}
-            $itemId={item.id}
-            onClick={() => onBoardChange(item.id)}
-          >
-            {item.label}
-          </CategoryButton>
-        ))}
-      </CategoryTabs>
-      <Divider />
-    </>
+    <HeroFrame $topGap={topGap}>
+      <HeroTitle $size={titleSize} $lineHeight={titleLineHeight}>
+        {title}
+      </HeroTitle>
+      {meta ? <MetaSlot>{meta}</MetaSlot> : null}
+      {resolvedItems.length > 0 ? (
+        <CategoryTabs aria-label={ariaLabel || `Current section: ${activeLabel}`}>
+          {resolvedItems.map((item) => (
+            <CategoryButton
+              key={item.id}
+              type="button"
+              $active={resolvedActiveId === item.id}
+              $width={item.width}
+              onClick={() => handleChange?.(item.id)}
+            >
+              {item.label}
+            </CategoryButton>
+          ))}
+        </CategoryTabs>
+      ) : null}
+      {showDivider ? <Divider $gap={dividerGap} /> : null}
+    </HeroFrame>
   );
 };
 
-const HeroTitle = styled.h1`
-  position: absolute;
-  left: 111px;
-  top: 258px;
-  width: 733px;
-  height: 58px;
-  margin: 0;
-  color: ${navy};
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 58.09px;
-  letter-spacing: -0.96px;
+const HeroFrame = styled.div`
+  margin: ${(props) => props.$topGap}px 38px 0;
 
   @media (max-width: 780px) {
-    position: static;
+    margin: 78px 0 0;
+  }
+`;
+
+const HeroTitle = styled.h1`
+  max-width: calc(100% - 73px);
+  margin: 0 0 0 73px;
+  color: ${navy};
+  font-size: ${(props) => props.$size}px;
+  font-weight: 700;
+  line-height: ${(props) => props.$lineHeight || "1.21"};
+  letter-spacing: -0.96px;
+  overflow-wrap: break-word;
+
+  @media (max-width: 780px) {
+    max-width: 100%;
     width: auto;
     height: auto;
-    margin-bottom: 40px;
+    margin: 0;
+    font-size: min(${(props) => props.$size}px, 40px);
+    line-height: 1.2;
+  }
+`;
+
+const MetaSlot = styled.div`
+  margin: 30px 0 0 73px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 780px) {
+    margin-left: 0;
   }
 `;
 
 const CategoryTabs = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 357px;
+  margin: 41px 0 0 73px;
   display: flex;
   align-items: center;
   gap: 23px;
 
   @media (max-width: 780px) {
-    position: static;
+    margin-left: 0;
   }
 
   @media (max-width: 640px) {
@@ -69,11 +109,8 @@ const CategoryTabs = styled.div`
 `;
 
 const CategoryButton = styled.button`
-  width: ${(props) => {
-    if (props.$itemId === "album") return "120px";
-    if (props.$itemId === "seminar") return "139px";
-    return "165px";
-  }};
+  width: ${(props) => props.$width || "auto"};
+  min-width: ${(props) => (props.$width ? "0" : "106px")};
   height: 54px;
   padding: 0 24px;
   border: 0;
@@ -102,19 +139,12 @@ const CategoryButton = styled.button`
 `;
 
 const Divider = styled.div`
-  position: absolute;
-  left: 38px;
-  right: 38px;
-  top: 451px;
   width: auto;
   height: 1px;
+  margin-top: ${(props) => props.$gap}px;
   background: #c3c3c3;
 
   @media (max-width: 780px) {
-    left: 24px;
-    right: 24px;
-    top: auto;
-    bottom: 0;
     width: auto;
   }
 `;

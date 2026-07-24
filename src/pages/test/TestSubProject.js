@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import structureImage from "../../assets/dualtwinfork-structure.jpg";
 import conferenceImage from "../../assets/dualtwinfork-conference.png";
@@ -298,14 +299,14 @@ const TestSubProject = () => {
       <ProjectFrame>
         <Header activeSection="research" activeResearch="project" />
 
-        <HeroBlock>
-          <ProjectTitle>{project.title}</ProjectTitle>
-          <MetaRow>
-            <OrganizationPill>{project.organization}</OrganizationPill>
-          </MetaRow>
-        </HeroBlock>
-
-        <HeroDivider />
+        <Hero
+          title={project.title}
+          topGap={162}
+          dividerGap={61}
+          titleSize={35}
+          titleLineHeight="1.25"
+          meta={<OrganizationPill>{project.organization}</OrganizationPill>}
+        />
 
         <ContentFrame data-pagecode={pageCode || dualTwinForkPageCode}>
           {project.sections.map((section) => (
@@ -366,10 +367,9 @@ const PageShell = styled.main`
 `;
 
 const ProjectFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
   margin: 0 auto;
-  padding-top: 542px;
+  padding-top: 0;
   padding-bottom: 118px;
   background: #ffffff;
   box-sizing: border-box;
@@ -377,39 +377,6 @@ const ProjectFrame = styled.section`
   @media (max-width: 860px) {
     padding: 36px 24px 80px;
   }
-`;
-
-const HeroBlock = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 289px;
-  width: 1210px;
-
-  @media (max-width: 860px) {
-    position: static;
-    width: auto;
-    margin-top: 80px;
-  }
-`;
-
-const ProjectTitle = styled.h1`
-  margin: 0;
-  color: ${navy};
-  font-size: 35px;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: 0;
-
-  @media (max-width: 860px) {
-    font-size: 30px;
-  }
-`;
-
-const MetaRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 23px;
-  margin-top: 31px;
 `;
 
 const OrganizationPill = styled.span`
@@ -426,21 +393,6 @@ const OrganizationPill = styled.span`
   font-weight: 700;
   line-height: 1.5;
   box-sizing: border-box;
-`;
-
-const HeroDivider = styled.div`
-  position: absolute;
-  left: 38px;
-  top: 492px;
-  width: 1366px;
-  height: 1px;
-  background: #c3c3c3;
-
-  @media (max-width: 860px) {
-    position: static;
-    width: 100%;
-    margin: 36px 0 0;
-  }
 `;
 
 const ContentFrame = styled.article`

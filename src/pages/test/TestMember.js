@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
+import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import profMoImage from "../../assets/profmo.jpg";
 import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
@@ -16,7 +17,6 @@ import professorTempleIcon from "../../assets/figma/professor-temple.png";
 import professorHandshakeIcon from "../../assets/figma/professor-handshake.png";
 
 const navy = "#113275";
-const soft = "#e6e6e6";
 
 const memberTabs = [
   { id: "professor", label: "Professor", width: "140px" },
@@ -103,7 +103,7 @@ const professorCards = [
     title: "Industrial Cooperation",
     icon: professorHandshakeIcon,
     iconSize: "60px",
-    lineTop: "85px",
+    lineTop: "70px",
     lineHeight: "106px",
     wide: true,
     items: [
@@ -210,20 +210,14 @@ const TestMember = () => {
     <PageShell>
       <HeaderHeroFrame aria-label="Members header and hero">
         <Header activeSection="member" activeMember={activeTab} />
-        <HeroTitle>Members</HeroTitle>
-        <TopTabs aria-label="Member section selector">
-          {memberTabs.map((item) => (
-            <TopTabButton
-              key={item.id}
-              type="button"
-              $active={activeTab === item.id}
-              $width={item.width}
-              onClick={() => handleTabChange(item.id)}
-            >
-              {item.label}
-            </TopTabButton>
-          ))}
-        </TopTabs>
+        <Hero
+          title="Members"
+          items={memberTabs}
+          activeId={activeTab}
+          onChange={handleTabChange}
+          ariaLabel="Member section selector"
+          showDivider={false}
+        />
       </HeaderHeroFrame>
 
       {activeTab === "professor" ? (
@@ -334,11 +328,7 @@ const ProfessorContent = () => (
     <ProfessorActivityList>
       {professorCards.slice(2).map((card) => {
         return (
-          <ProfessorActivitySection
-            key={card.title}
-            $lineTop={card.lineTop}
-            $lineHeight={card.lineHeight}
-          >
+          <ProfessorActivitySection key={card.title}>
             <ActivityIcon>
               <CardIcon
                 src={card.icon}
@@ -470,74 +460,15 @@ const PageShell = styled.main`
 `;
 
 const HeaderHeroFrame = styled.section`
-  position: relative;
   width: min(100%, 1442px);
-  height: 452px;
+  min-height: 452px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
 
   @media (max-width: 780px) {
-    height: auto;
-    min-height: 452px;
     padding: 36px 24px 44px;
     box-sizing: border-box;
-  }
-`;
-
-const HeroTitle = styled.h1`
-  position: absolute;
-  left: 111px;
-  top: 258px;
-  width: 733px;
-  height: 58px;
-  margin: 0;
-  color: ${navy};
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 58.09px;
-  letter-spacing: -0.96px;
-
-  @media (max-width: 780px) {
-    position: static;
-    margin-bottom: 40px;
-  }
-`;
-
-const TopTabs = styled.div`
-  position: absolute;
-  left: 111px;
-  top: 357px;
-  display: flex;
-  align-items: center;
-  gap: 23px;
-
-  @media (max-width: 780px) {
-    position: static;
-    flex-wrap: wrap;
-  }
-`;
-
-const TopTabButton = styled.button`
-  width: ${(props) => props.$width};
-  height: 54px;
-  padding: 0 24px;
-  border: 0;
-  border-radius: 8px;
-  background: ${(props) => (props.$active ? navy : soft)};
-  color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
-  font-family: inherit;
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0;
-  cursor: pointer;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-  @media (max-width: 640px) {
-    width: auto;
-    height: 48px;
-    font-size: 16px;
   }
 `;
 
@@ -686,7 +617,7 @@ const CardTitle = styled.h3`
 
 const CardList = styled.ul`
   margin: 0;
-  padding-left: 18px;
+  padding-left: 30px;
   color: #333333;
   font-size: 16px;
   font-weight: 400;
@@ -703,9 +634,22 @@ const ProfessorSummaryBlock = styled.article`
   min-width: 0;
 
   ${CardList} {
-    margin-left: 29px;
-    padding-left: 30px;
-    border-left: 3px solid ${navy};
+    position: relative;
+    margin: 0;
+    padding-left: 75px;
+
+    &::before {
+      content: "";
+      position: absolute;
+
+      left: 28px;
+      top: 0;
+      bottom: 0;
+
+      width: 3px;
+      transform: translateX(-50%);
+      background: ${navy};
+    }
   }
 `;
 
@@ -719,22 +663,10 @@ const ProfessorActivityList = styled.div`
 `;
 
 const ProfessorActivitySection = styled.section`
-  position: relative;
   display: grid;
   grid-template-columns: 58px minmax(0, 1fr);
   gap: 24px;
   padding: 0 0 56px;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 27.5px;
-    top: ${(props) => props.$lineTop};
-    width: 3px;
-    height: ${(props) => props.$lineHeight};
-    background: #113275;
-    opacity: 0.75;
-  }
 
   &:last-child {
     padding-bottom: 0;
@@ -754,22 +686,28 @@ const ActivityIcon = styled.div`
 `;
 
 const ActivityBody = styled.div`
+  position: relative;
   min-width: 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+
+    left: -54px;   /* 아이콘 중심 */
+    top: 68px;     /* 제목 아래부터 */
+    bottom: 0;
+
+    width: 3px;
+    background: ${navy};
+  }
 
   ${CardTitle} {
     margin: 6px 0 22px;
   }
 
   ${CardList} {
-    margin-left: -30px;
-    padding-left: 18px;
-    list-style: disc;
-  }
-
-  @media (max-width: 820px) {
-    ${CardList} {
-      margin-left: 0;
-    }
+    margin: 0;
+    padding-left: 0;
   }
 `;
 

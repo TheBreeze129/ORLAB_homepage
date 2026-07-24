@@ -77,30 +77,17 @@ const List = styled.div`
 `;
 
 const ListItem = styled.article`
-  position: relative;
   min-height: 185px;
-  padding: 0 0 91px 23px;
+  padding: 0 0 50px 23px;
   box-sizing: border-box;
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 41px;
-    width: 100%;
-    height: 2px;
-    background: #c6c6c6;
-  }
+  border-bottom: 2px solid #c6c6c6;
+  margin-bottom: 41px;
 
   @media (max-width: 980px) {
     width: 100%;
     min-height: 150px;
-    padding: 0 0 76px;
-
-    &::after {
-      bottom: 32px;
-      width: 100%;
-    }
+    padding: 0 0 44px;
+    margin-bottom: 32px;
   }
 `;
 
