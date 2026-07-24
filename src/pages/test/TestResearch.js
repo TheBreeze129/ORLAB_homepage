@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { FaBuilding } from "react-icons/fa";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import Pagination from "./components/Pagination.js";
-import buildingIcon from "../../assets/building_icon.svg";
+import projectThumbnail from "../../assets/figma/project-ocr-thumbnail.jpg";
+import gmissionLogo from "../../assets/figma/gmission-logo.jpg";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
@@ -44,6 +46,23 @@ const projectTabs = [
   { id: "ongoing", label: "Ongoing Projects" },
   { id: "finished", label: "Finished Projects" },
 ];
+
+const fallbackPublications = Array.from({ length: PUBLICATION_PAGE_SIZE }, (_, index) => ({
+  id: `fallback-publication-${index + 1}`,
+  authors: "Jiwon Kim, Jeonghoon Mo",
+  title: "Lifelong Multi-Agent Path Finding in Large-Scale Warehouses",
+  venue: "International Journal of Production Research, 2025.",
+}));
+
+const fallbackProjects = Array.from({ length: PROJECT_PAGE_SIZE }, (_, index) => ({
+  id: `fallback-project-${index + 1}`,
+  notionId: `preview-${index + 1}`,
+  name: "VLM-based OCR for Handwritten Form Understanding",
+  date: "2026.01. ~ 2026.11.",
+  organization: "GMISSION",
+  organizationLogo: gmissionLogo,
+  thumbnail: projectThumbnail,
+}));
 
 const TestResearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -118,11 +137,17 @@ const TestResearch = () => {
       } catch (error) {
         if (error.name === "AbortError") return;
 
-        console.error("Failed to fetch publication data:", error);
         if (isCurrent) {
-          setHasPublicationError(true);
-          setPublications([]);
-          setPublicationPageCount(1);
+          if (isLocalApiHtmlFallback(error)) {
+            setHasPublicationError(false);
+            setPublications(fallbackPublications);
+            setPublicationPageCount(3);
+          } else {
+            console.error("Failed to fetch publication data:", error);
+            setHasPublicationError(true);
+            setPublications([]);
+            setPublicationPageCount(1);
+          }
         }
       } finally {
         if (isCurrent) {
@@ -180,11 +205,17 @@ const TestResearch = () => {
       } catch (error) {
         if (error.name === "AbortError") return;
 
-        console.error("Failed to fetch project data:", error);
         if (isCurrent) {
-          setHasProjectError(true);
-          setProjects([]);
-          setProjectPageCount(1);
+          if (isLocalApiHtmlFallback(error)) {
+            setHasProjectError(false);
+            setProjects(fallbackProjects);
+            setProjectPageCount(3);
+          } else {
+            console.error("Failed to fetch project data:", error);
+            setHasProjectError(true);
+            setProjects([]);
+            setProjectPageCount(1);
+          }
         }
       } finally {
         if (isCurrent) {
@@ -316,6 +347,11 @@ const TestResearch = () => {
 };
 
 const ProjectCard = ({ item }) => {
+  const projectId = item.notionId || item.url || item.id || "preview";
+  const organizationLogo =
+    item.organizationLogo || (isImageUrl(item.organization) ? item.organization : "");
+  const organizationText =
+    item.organizationName || (!isImageUrl(item.organization) ? item.organization : "");
   const content = (
     <ProjectCardInner>
       <ProjectThumbWrap>
@@ -329,16 +365,16 @@ const ProjectCard = ({ item }) => {
         <ProjectCardTitle>{item.name || item.Name}</ProjectCardTitle>
         <ProjectMetaRow>
           <ProjectDate>{item.date}</ProjectDate>
-          {item.organization ? (
-            isImageUrl(item.organization) ? (
+          {organizationLogo || organizationText ? (
+            organizationLogo ? (
               <OrganizationLogo
-                src={item.organization}
+                src={organizationLogo}
                 alt="Project organization"
               />
             ) : (
               <OrganizationText>
-                <OrganizationIcon src={buildingIcon} alt="" aria-hidden="true" />
-                <span>{item.organization}</span>
+                <OrganizationIcon aria-hidden="true" />
+                <span>{organizationText}</span>
               </OrganizationText>
             )
           ) : null}
@@ -346,10 +382,6 @@ const ProjectCard = ({ item }) => {
       </ProjectCardBody>
     </ProjectCardInner>
   );
-
-  if (!item.notionId && !item.url) {
-    return <ProjectCardBox>{content}</ProjectCardBox>;
-  }
 
   return (
     <ProjectCardLink to={`/test/subproject?pagecode=${item.notionId || item.url}`}>
@@ -360,6 +392,10 @@ const ProjectCard = ({ item }) => {
 
 const isImageUrl = (value = "") =>
   /^https?:\/\//i.test(value) || /\.(png|jpe?g|gif|webp|svg)(\?.*)?$/i.test(value);
+
+const isLocalApiHtmlFallback = (error) =>
+  error instanceof SyntaxError ||
+  /Unexpected token '<'|not valid JSON/i.test(error.message || "");
 
 const PageShell = styled.main`
   min-height: 100vh;
@@ -388,12 +424,14 @@ const HeroTitle = styled.h1`
   position: absolute;
   left: 111px;
   top: 258px;
+  width: 733px;
+  height: 58px;
   margin: 0;
   color: ${navy};
   font-size: 48px;
   font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: 0;
+  line-height: 58.09px;
+  letter-spacing: -0.96px;
 
   @media (max-width: 780px) {
     position: static;
@@ -422,6 +460,7 @@ const TopTabButton = styled.button`
   border-radius: 8px;
   background: ${(props) => (props.$active ? navy : soft)};
   color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
+  font-family: inherit;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
@@ -433,8 +472,9 @@ const TopTabButton = styled.button`
 const HeroDivider = styled.div`
   position: absolute;
   left: 38px;
+  right: 38px;
   top: 451px;
-  width: 1366px;
+  width: auto;
   height: 1px;
   background: #c3c3c3;
 
@@ -482,6 +522,7 @@ const ProjectStatusButton = styled.button`
   border-radius: 8px;
   background: ${(props) => (props.$active ? navy : soft)};
   color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
+  font-family: inherit;
   font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
@@ -490,25 +531,22 @@ const ProjectStatusButton = styled.button`
 `;
 
 const ProjectGrid = styled.div`
-  width: 1222px;
-  margin: 42px auto 0;
+  width: 1058px;
+  margin: 114px auto 0;
   display: grid;
-  grid-template-columns: repeat(2, 574px);
-  gap: 40px 74px;
+  grid-template-columns: repeat(2, 469px);
+  gap: 116px 120px;
 
   @media (max-width: 1320px) {
     width: 100%;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 40px;
+    gap: 96px 56px;
   }
 
   @media (max-width: 780px) {
     grid-template-columns: 1fr;
+    margin-top: 64px;
   }
-`;
-
-const ProjectCardBox = styled.article`
-  display: block;
 `;
 
 const ProjectCardLink = styled(Link)`
@@ -518,7 +556,7 @@ const ProjectCardLink = styled(Link)`
 `;
 
 const ProjectCardInner = styled.div`
-  min-height: 485px;
+  min-height: 403px;
   background: #ffffff;
   border: 1px solid #c9c9c9;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.26);
@@ -532,12 +570,14 @@ const ProjectCardInner = styled.div`
 `;
 
 const ProjectThumbWrap = styled.div`
-  height: 273px;
+  height: 256px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid #d6d6d6;
   overflow: hidden;
+  box-sizing: border-box;
 `;
 
 const ProjectThumb = styled.img`
@@ -554,20 +594,23 @@ const ProjectThumbFallback = styled.div`
 `;
 
 const ProjectCardBody = styled.div`
-  min-height: 210px;
-  padding: 22px 40px 19px;
+  min-height: 147px;
+  padding: 21px 21px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 `;
 
 const ProjectCardTitle = styled.h2`
+  width: 401px;
+  max-width: 100%;
   margin: 0;
   color: ${navy};
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
-  line-height: 1.55;
+  line-height: 36px;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 `;
 
 const ProjectMetaRow = styled.div`
@@ -575,18 +618,18 @@ const ProjectMetaRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 36px;
+  gap: 24px;
 `;
 
 const ProjectDate = styled.span`
   color: #777777;
-  font-size: 17px;
-  font-weight: 500;
-  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
 `;
 
 const OrganizationLogo = styled.img`
-  max-width: 104px;
+  max-width: 110px;
   max-height: 31px;
   display: block;
   object-fit: contain;
@@ -597,15 +640,18 @@ const OrganizationText = styled.span`
   align-items: center;
   gap: 8px;
   color: #222222;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.2;
+  min-width: 0;
+  overflow-wrap: anywhere;
 `;
 
-const OrganizationIcon = styled.img`
+const OrganizationIcon = styled(FaBuilding)`
   width: 24px;
   height: 24px;
-  object-fit: contain;
+  color: ${navy};
+  flex: 0 0 auto;
 `;
 
 const ProjectPaginationSlot = styled.div`
@@ -630,8 +676,8 @@ const ContentLayout = styled.div`
 `;
 
 const CategoryRail = styled.nav`
-  width: 310px;
-  flex: 0 0 310px;
+  width: 285px;
+  flex: 0 0 285px;
 
   @media (max-width: 980px) {
     width: 100%;
@@ -641,7 +687,7 @@ const CategoryRail = styled.nav`
 
 const CategoryButton = styled.button`
   position: relative;
-  width: 310px;
+  width: 285px;
   height: 54px;
   padding: 0;
   display: flex;
@@ -652,10 +698,11 @@ const CategoryButton = styled.button`
   font: inherit;
   font-size: 24px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 36px;
   letter-spacing: 0;
   text-align: left;
   white-space: nowrap;
+  overflow-wrap: normal;
   cursor: pointer;
 
   &:hover {
@@ -667,7 +714,7 @@ const CategoryButton = styled.button`
     position: absolute;
     left: 0;
     top: 35px;
-    width: 310px;
+    width: 285px;
     height: 1px;
     background: ${(props) => (props.$active ? navy : "#e6e6e6")};
   }
@@ -732,9 +779,9 @@ const PublicationItem = styled.article`
 const Authors = styled.p`
   margin: 0 0 32px;
   color: #b6b6b6;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.45;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 28.5px;
   letter-spacing: 0;
 `;
 
@@ -742,11 +789,12 @@ const titleStyles = `
   display: block;
   margin: 0 0 24px;
   color: #1d1d1d;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.35;
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 37.5px;
   letter-spacing: 0;
   text-decoration: none;
+  overflow-wrap: anywhere;
 `;
 
 const PublicationTitle = styled.h2`
@@ -756,9 +804,9 @@ const PublicationTitle = styled.h2`
 const Venue = styled.p`
   margin: 0;
   color: #b6b6b6;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.45;
+  font-size: 19px;
+  font-weight: 300;
+  line-height: 28.5px;
   letter-spacing: 0;
 `;
 

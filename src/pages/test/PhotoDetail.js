@@ -5,6 +5,22 @@ import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import NotionContent from "./components/NotionContent.js";
 import { boardItems } from "./data/boardContent.js";
+import albumPlaceholder from "../../assets/everyone_withprofmo.jpg";
+
+const previewPhoto = {
+  subject: "2026 춘계공동학술대회",
+  date: "2026.06.04. ~ 2026.06.05.",
+  thumbnail: albumPlaceholder,
+  notionId: "preview",
+};
+
+const previewBlocks = [
+  {
+    type: "paragraph",
+    text:
+      "Operations Research Lab members gathered for the 2026 spring joint conference. This preview content is shown only when the local development server returns the React app shell for /api requests.",
+  },
+];
 
 const PhotoDetail = () => {
   const { notionId } = useParams();
@@ -12,7 +28,8 @@ const PhotoDetail = () => {
   const navigate = useNavigate();
   const routePhoto =
     location.state?.photo?.notionId === notionId ? location.state.photo : null;
-  const [photo, setPhoto] = useState(routePhoto);
+  const isPreviewPhoto = notionId?.startsWith("preview");
+  const [photo, setPhoto] = useState(routePhoto || (isPreviewPhoto ? previewPhoto : null));
   const [blocks, setBlocks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -35,7 +52,7 @@ const PhotoDetail = () => {
     const fetchPhotoDetail = async () => {
       setIsLoading(true);
       setHasError(false);
-      setPhoto(routePhoto);
+      setPhoto(routePhoto || (isPreviewPhoto ? previewPhoto : null));
       setBlocks([]);
 
       const photoRequest = fetch(
@@ -61,9 +78,15 @@ const PhotoDetail = () => {
         })
         .catch((error) => {
           if (error.name === "AbortError") return;
-          console.error("Failed to fetch photo metadata:", error);
-          if (isCurrent && !routePhoto) {
-            setHasError(true);
+          if (isCurrent) {
+            if (isLocalApiHtmlFallback(error) && (routePhoto || isPreviewPhoto)) {
+              setPhoto(routePhoto || previewPhoto);
+            } else {
+              console.error("Failed to fetch photo metadata:", error);
+              if (!routePhoto) {
+                setHasError(true);
+              }
+            }
           }
         });
 
@@ -88,9 +111,13 @@ const PhotoDetail = () => {
         })
         .catch((error) => {
           if (error.name === "AbortError") return;
-          console.error("Failed to fetch photo body:", error);
           if (isCurrent) {
-            setHasError(true);
+            if (isLocalApiHtmlFallback(error) && (routePhoto || isPreviewPhoto)) {
+              setBlocks(previewBlocks);
+            } else {
+              console.error("Failed to fetch photo body:", error);
+              setHasError(true);
+            }
           }
         })
         .finally(() => {
@@ -108,7 +135,7 @@ const PhotoDetail = () => {
       isCurrent = false;
       controller.abort();
     };
-  }, [notionId, requestId, routePhoto]);
+  }, [isPreviewPhoto, notionId, requestId, routePhoto]);
 
   const handleBoardChange = (boardId) => {
     navigate(boardId === "album" ? "/test/board" : `/test/board?board=${boardId}`);
@@ -167,6 +194,10 @@ const PageShell = styled.main`
   font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
 `;
 
+const isLocalApiHtmlFallback = (error) =>
+  error instanceof SyntaxError ||
+  /Unexpected token '<'|not valid JSON/i.test(error.message || "");
+
 const DetailTopFrame = styled.section`
   position: relative;
   width: min(100%, 1442px);
@@ -194,6 +225,7 @@ const DetailTitle = styled.h1`
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 
   @media (max-width: 780px) {
     position: static;
@@ -219,6 +251,7 @@ const DateBadge = styled.div`
   font-size: 16px;
   font-weight: 600;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 
   @media (max-width: 780px) {
     position: static;
@@ -230,8 +263,9 @@ const DateBadge = styled.div`
 const HeroDivider = styled.div`
   position: absolute;
   left: 38px;
+  right: 38px;
   top: 451px;
-  width: 1366px;
+  width: auto;
   height: 1px;
   background: #c3c3c3;
 

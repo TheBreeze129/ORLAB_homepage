@@ -54,7 +54,7 @@ const ImageFrame = styled.div`
   aspect-ratio: 446 / 278;
   background: #e6e6e6;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: 8px;
 `;
 
 const CardImage = styled.img`
@@ -65,23 +65,25 @@ const CardImage = styled.img`
 `;
 
 const CardTitle = styled.h2`
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   color: #000000;
   font-size: 18px;
-  font-weight: 800;
-  line-height: 1.25;
+  font-weight: 700;
+  line-height: 27px;
   letter-spacing: 0;
   text-align: center;
+  overflow-wrap: anywhere;
 `;
 
 const CardDate = styled.p`
-  margin: 3px 0 0;
+  margin: 0;
   color: #b4b4b4;
   font-size: 14px;
-  font-weight: 500;
-  line-height: 1.25;
+  font-weight: 400;
+  line-height: 21px;
   letter-spacing: 0;
   text-align: center;
+  overflow-wrap: anywhere;
 `;
 
 export default BoardCard;

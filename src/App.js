@@ -51,6 +51,10 @@ const App = () => {
         <Route path="/test/research" element={<TestResearch />} />
         <Route path="/test/subproject" element={<TestSubProject />} />
         <Route
+          path="/test/research/project/:notionId"
+          element={<ProjectDetail />}
+        />
+        <Route
           path="/academic_curriculum/dynamic_programming_and_reinforcement_learning_2022"
           element={<DPRL />}
         />

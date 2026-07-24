@@ -1,31 +1,37 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
-import landingBackground from "../../assets/lannding_background.png";
-import buildingIcon from "../../assets/building_icon.svg";
-import albumImage from "../../assets/board-album-placeholder.png";
-import publicationImage from "../../assets/publication.jpg";
+import LandingPopup from "./components/LandingPopup.js";
+import { landingPopupEvent } from "./data/landingPopup.js";
+import landingBackground from "../../assets/figma/landing-background.png";
+import companyIcon from "../../assets/figma/company-icon.svg";
+import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
+import landingProjectLges from "../../assets/figma/landing-project-lges.png";
 
 const navy = "#113275";
 
 const projectCards = [
   {
+    notionId: "landing-project-multimodal-surveillance",
     title:
       "Development of Multi-Modal Foundational Models and AI Accelerators for Zero-shot Intelligent Surveillance System",
-    image: albumImage,
-    tags: ["Vision AI", "Large Multi-Modal Model", "Zero-shot"],
+    image: landingProjectKiat,
+    tags: ["Vision AI", "Large Multi-Modal Model"],
     partner: "KIAT",
   },
   {
+    notionId: "landing-project-stocker-crane",
     title: "Dual Twin Fork Stocker Crane Scheduling Optimization",
-    image: publicationImage,
+    image: landingProjectLges,
     tags: ["Optimization", "Logistics"],
     partner: "LG Energy Solution",
   },
   {
+    notionId: "landing-project-battery-assignment",
     title: "Battery Charging/Discharging Equipment Assignment Optimization",
-    image: publicationImage,
+    image: landingProjectLges,
     tags: ["Optimization", "Smart Factory"],
     partner: "LG Energy Solution",
   },
@@ -85,23 +91,36 @@ const TestLanding = () => (
       <ProjectsTitle>Ongoing Projects</ProjectsTitle>
       <ProjectGrid>
         {projectCards.map((project) => (
-          <ProjectCard key={project.title}>
-            <ProjectImage src={project.image} alt="" aria-hidden="true" />
-            <ProjectTitle>{project.title}</ProjectTitle>
-            <TagList>
-              {project.tags.map((tag) => (
-                <ProjectTag key={tag}>{tag}</ProjectTag>
-              ))}
-            </TagList>
-            <Partner>
-              <PartnerIcon src={buildingIcon} alt="" aria-hidden="true" />
-              <span>{project.partner}</span>
-            </Partner>
-          </ProjectCard>
+          <ProjectLink
+            key={project.title}
+            to={`/test/research/project/${project.notionId}`}
+            state={{
+              project: {
+                name: project.title,
+                organization: project.partner,
+              },
+            }}
+            aria-label={`${project.title} project detail`}
+          >
+            <ProjectCard>
+              <ProjectImage src={project.image} alt="" aria-hidden="true" />
+              <ProjectTitle>{project.title}</ProjectTitle>
+              <TagList>
+                {project.tags.map((tag) => (
+                  <ProjectTag key={tag}>{tag}</ProjectTag>
+                ))}
+              </TagList>
+              <Partner>
+                <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
+                <span>{project.partner}</span>
+              </Partner>
+            </ProjectCard>
+          </ProjectLink>
         ))}
       </ProjectGrid>
     </LandingFrame>
     <Footer />
+    <LandingPopup event={landingPopupEvent} />
   </PageShell>
 );
 
@@ -115,7 +134,7 @@ const PageShell = styled.main`
 const LandingFrame = styled.section`
   position: relative;
   width: min(100%, 1442px);
-  min-height: 2204px;
+  min-height: 2248px;
   margin: 0 auto;
   background: #ffffff;
   overflow: visible;
@@ -130,8 +149,8 @@ const LandingFrame = styled.section`
 
 const HeroCopy = styled.div`
   position: absolute;
-  left: 48px;
-  top: 201px;
+  left: max(15px, calc((100% - 1282px) / 2));
+  top: 196px;
 
   @media (max-width: 900px) {
     position: static;
@@ -140,12 +159,12 @@ const HeroCopy = styled.div`
 `;
 
 const KoreanTitle = styled.h1`
-  margin: 0 0 5px;
+  margin: 0;
   color: #000000;
-  font-size: 45px;
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: 0;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48.4091px;
+  letter-spacing: -0.8px;
 
   @media (max-width: 900px) {
     font-size: 36px;
@@ -154,10 +173,10 @@ const KoreanTitle = styled.h1`
 
 const EnglishTitle = styled.div`
   color: #616161;
-  font-size: 45px;
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: 0;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48.4091px;
+  letter-spacing: -0.8px;
 
   @media (max-width: 900px) {
     font-size: 36px;
@@ -170,14 +189,15 @@ const BlueText = styled.span`
 
 const GhostCopy = styled.div`
   position: absolute;
-  right: 46px;
-  top: 204px;
+  right: max(15px, calc((100% - 1282px) / 2));
+  top: 196px;
+  width: 587px;
   color: #eeeeee;
-  font-size: 43px;
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 48.4091px;
   text-align: right;
-  letter-spacing: 0;
+  letter-spacing: -0.8px;
 
   @media (max-width: 900px) {
     display: none;
@@ -186,13 +206,13 @@ const GhostCopy = styled.div`
 
 const HeroImage = styled.img`
   position: absolute;
-  left: 38px;
-  top: 354px;
-  width: 1366px;
-  height: 592px;
+  left: max(0px, calc((100% - 1282px) / 2));
+  top: 324px;
+  width: 1282px;
+  height: 590px;
   display: block;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 8px;
 
   @media (max-width: 900px) {
     position: static;
@@ -205,13 +225,13 @@ const HeroImage = styled.img`
 
 const IntroText = styled.div`
   position: absolute;
-  left: 38px;
-  top: 1006px;
-  width: 1366px;
-  color: #1f1f1f;
+  left: max(0px, calc((100% - 1282px) / 2));
+  top: 946px;
+  width: 1282px;
+  color: #000000;
   font-size: 20px;
-  font-weight: 500;
-  line-height: 1.35;
+  font-weight: 400;
+  line-height: 30px;
   letter-spacing: 0;
 
   p {
@@ -219,11 +239,11 @@ const IntroText = styled.div`
   }
 
   p + p {
-    margin-top: 34px;
+    margin-top: 30px;
   }
 
   strong {
-    font-weight: 800;
+    font-weight: 700;
   }
 
   @media (max-width: 900px) {
@@ -237,14 +257,14 @@ const IntroText = styled.div`
 
 const ProjectsTitle = styled.h2`
   position: absolute;
-  left: 48px;
-  top: 1364px;
+  left: max(8px, calc((100% - 1282px) / 2 + 8px));
+  top: 1340px;
   margin: 0;
   color: ${navy};
-  font-size: 38px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: 0;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48.4091px;
+  letter-spacing: -0.8px;
 
   @media (max-width: 900px) {
     position: static;
@@ -255,12 +275,19 @@ const ProjectsTitle = styled.h2`
 
 const ProjectGrid = styled.div`
   position: absolute;
-  left: 38px;
-  top: 1442px;
-  width: 1366px;
+  left: max(0px, calc((100% - 1282px) / 2));
+  top: 1423px;
+  width: 1282px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 38px;
+  grid-template-columns: repeat(3, 404px);
+  gap: 35px;
+
+  @media (max-width: 1180px) {
+    left: 24px;
+    width: calc(100% - 48px);
+    grid-template-columns: repeat(2, minmax(0, 404px));
+    gap: 56px 35px;
+  }
 
   @media (max-width: 900px) {
     position: static;
@@ -270,74 +297,118 @@ const ProjectGrid = styled.div`
   }
 `;
 
+const ProjectLink = styled(Link)`
+  display: block;
+  color: inherit;
+  text-decoration: none;
+`;
+
 const ProjectCard = styled.article`
+  position: relative;
+  width: 404px;
+  height: 529px;
   min-width: 0;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const ProjectImage = styled.img`
   width: 100%;
-  height: 342px;
+  height: 227px;
   display: block;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 8px;
 
   @media (max-width: 900px) {
     height: auto;
-    aspect-ratio: 431 / 342;
+    aspect-ratio: 404 / 227;
   }
 `;
 
 const ProjectTitle = styled.h3`
-  min-height: 86px;
-  margin: 34px 0 0;
+  width: 415px;
+  max-width: calc(100% + 11px);
+  height: 120px;
+  margin: 35px 0 0;
   color: #111111;
-  font-size: 25px;
-  font-weight: 700;
-  line-height: 1.28;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
   letter-spacing: 0;
+  overflow-wrap: normal;
+  word-break: normal;
 
   @media (max-width: 900px) {
-    min-height: auto;
+    height: auto;
     margin-top: 24px;
   }
 `;
 
 const TagList = styled.div`
+  position: absolute;
+  left: 0;
+  top: 430px;
   min-height: 81px;
-  margin-top: 21px;
+  margin-top: 0;
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
   gap: 10px 23px;
+
+  @media (max-width: 900px) {
+    position: static;
+    min-height: auto;
+    margin-top: 24px;
+  }
 `;
 
 const ProjectTag = styled.span`
   display: inline-flex;
   align-items: center;
-  height: 28px;
-  padding: 0 12px;
+  justify-content: center;
+  height: 32px;
+  padding: 0 0;
   background: #dedede;
   color: #111111;
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: center;
+  overflow-wrap: anywhere;
 `;
 
 const Partner = styled.div`
-  margin-top: 24px;
+  position: absolute;
+  left: 0;
+  top: 493px;
+  margin-top: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6.45px;
   color: #111111;
   font-size: 20px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-weight: 500;
+  line-height: 30px;
+
+  span {
+    min-width: 0;
+    overflow-wrap: normal;
+  }
+
+  @media (max-width: 900px) {
+    position: static;
+    margin-top: 24px;
+  }
 `;
 
 const PartnerIcon = styled.img`
-  width: 27px;
-  height: 27px;
+  width: 33.9068px;
+  height: 33.9068px;
   object-fit: contain;
+  flex: 0 0 auto;
 `;
 
 export default TestLanding;

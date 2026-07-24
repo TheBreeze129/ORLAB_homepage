@@ -5,9 +5,32 @@ import BoardList from "./BoardList.js";
 import Pagination from "./Pagination.js";
 import YearRail from "./YearRail.js";
 import { seminarYears, workshopYears } from "../data/boardContent.js";
+import albumPlaceholder from "../../../assets/everyone_withprofmo.jpg";
 
 const ALBUM_PAGE_SIZE = 9;
 const LIST_PAGE_SIZE = 6;
+
+const fallbackAlbumRows = Array.from({ length: ALBUM_PAGE_SIZE }, (_, index) => ({
+  id: `fallback-album-${index + 1}`,
+  title: "2026 춘계공동학술대회",
+  dateText: "2026.06.04. ~ 2026.06.05.",
+  imageUrl: albumPlaceholder,
+  notionId: `preview-${index + 1}`,
+  order: ALBUM_PAGE_SIZE - index,
+}));
+
+const fallbackEventRows = (eventType, activeYear) =>
+  Array.from({ length: LIST_PAGE_SIZE }, (_, index) => ({
+    id: `fallback-${eventType}-${activeYear}-${index + 1}`,
+    date: `${activeYear}-07-08`,
+    name: "Hayoung Ji",
+    title:
+      eventType === "workshop"
+        ? "Operations Research Lab Workshop"
+        : "Lifelong Multi-Agent Path Finding in Large-Scale Warehouses",
+    link: "#",
+    year: activeYear,
+  }));
 
 const BoardContent = ({ activeBoard }) => {
   const [albumPages, setAlbumPages] = useState({});
@@ -119,12 +142,25 @@ const BoardContent = ({ activeBoard }) => {
       } catch (error) {
         if (error.name === "AbortError") return;
 
-        console.error("Failed to fetch album data:", error);
         if (isCurrent) {
-          setAlbumErrors((current) => ({
-            ...current,
-            [currentPage]: true,
-          }));
+          if (isLocalApiHtmlFallback(error)) {
+            setAlbumPages((current) => ({
+              ...current,
+              [currentPage]: fallbackAlbumRows,
+            }));
+            setAlbumPageCount(3);
+            setAlbumErrors((current) => {
+              const next = { ...current };
+              delete next[currentPage];
+              return next;
+            });
+          } else {
+            console.error("Failed to fetch album data:", error);
+            setAlbumErrors((current) => ({
+              ...current,
+              [currentPage]: true,
+            }));
+          }
         }
       } finally {
         if (isCurrent) {
@@ -213,12 +249,28 @@ const BoardContent = ({ activeBoard }) => {
       } catch (error) {
         if (error.name === "AbortError") return;
 
-        console.error(`Failed to fetch ${eventType} data:`, error);
         if (isCurrent) {
-          setEventErrors((current) => ({
-            ...current,
-            [eventPageKey]: true,
-          }));
+          if (isLocalApiHtmlFallback(error)) {
+            setEventPages((current) => ({
+              ...current,
+              [eventPageKey]: fallbackEventRows(eventType, activeYear),
+            }));
+            setEventPageCounts((current) => ({
+              ...current,
+              [eventContentKey]: 3,
+            }));
+            setEventErrors((current) => {
+              const next = { ...current };
+              delete next[eventPageKey];
+              return next;
+            });
+          } else {
+            console.error(`Failed to fetch ${eventType} data:`, error);
+            setEventErrors((current) => ({
+              ...current,
+              [eventPageKey]: true,
+            }));
+          }
         }
       } finally {
         if (isCurrent) {
@@ -379,6 +431,10 @@ const paginate = (items, page, pageSize) => {
   return items.slice(startIndex, startIndex + pageSize);
 };
 
+const isLocalApiHtmlFallback = (error) =>
+  error instanceof SyntaxError ||
+  /Unexpected token '<'|not valid JSON/i.test(error.message || "");
+
 const ContentFrame = styled.section`
   position: relative;
   width: min(1366px, calc(100% - 76px));
@@ -446,10 +502,14 @@ const ListLayout = styled.div`
   gap: 69px;
   padding: 18px 0 0 26px;
 
-  @media (max-width: 980px) {
+  @media (max-width: 1320px) {
+    gap: 44px;
+    padding-left: 0;
+  }
+
+  @media (max-width: 1080px) {
     flex-direction: column;
     gap: 34px;
-    padding-left: 0;
 
     > nav,
     > div {

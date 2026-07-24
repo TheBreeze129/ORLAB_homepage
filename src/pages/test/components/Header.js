@@ -11,13 +11,13 @@ const aboutItems = [
 ];
 
 const memberItems = [
-  { id: "professor", label: "PROFESSOR", to: "/test/member?tab=professor" },
+  { id: "professor", label: "Professor", to: "/test/member?tab=professor" },
   {
     id: "researchers",
-    label: "RESEARCHERS",
+    label: "Researchers",
     to: "/test/member?tab=researchers",
   },
-  { id: "alumni", label: "ALUMNI", to: "/test/member?tab=alumni" },
+  { id: "alumni", label: "Alumni", to: "/test/member?tab=alumni" },
 ];
 
 const researchItems = [
@@ -133,8 +133,8 @@ const Header = ({
 
 const LogoLink = styled(Link)`
   position: absolute;
-  left: 115px;
-  top: 88px;
+  left: 123px;
+  top: 82px;
   width: 115px;
   height: 40px;
   display: block;
@@ -155,7 +155,7 @@ const LogoImage = styled.img`
 
 const NavArea = styled.nav`
   position: absolute;
-  left: 680px;
+  left: 688px;
   top: 77px;
   height: 50px;
   display: flex;
@@ -165,6 +165,15 @@ const NavArea = styled.nav`
   font-weight: 500;
   line-height: 1.5;
   white-space: nowrap;
+
+  @media (max-width: 1320px) {
+    left: 320px;
+    right: 48px;
+    width: auto;
+    gap: 28px;
+    font-size: 16px;
+    justify-content: flex-end;
+  }
 
   @media (max-width: 780px) {
     position: static;
@@ -239,6 +248,10 @@ const DropdownMenu = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
   z-index: 10;
 
+  @media (max-width: 1320px) {
+    top: 58px;
+  }
+
   @media (max-width: 780px) {
     left: auto;
     right: 0;
@@ -255,9 +268,11 @@ const DropdownLink = styled(Link)`
   box-sizing: border-box;
   color: ${(props) => (props.$active ? "#ffffff" : "#000000")};
   text-decoration: none;
+  font-family: "Roboto", "Inter", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
+  letter-spacing: 0.1px;
   background: ${(props) => (props.$active ? navy : "#ffffff")};
 
   &:hover {
@@ -283,6 +298,12 @@ const OptntechLink = styled.a`
   letter-spacing: 0;
   box-sizing: border-box;
   transition: background 0.18s ease, color 0.18s ease;
+
+  @media (max-width: 1320px) {
+    width: 112px;
+    height: 46px;
+    font-size: 16px;
+  }
 
   &:hover {
     background: #111111;
