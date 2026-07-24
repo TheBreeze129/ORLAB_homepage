@@ -22,6 +22,7 @@ import TestMember from "./pages/test/TestMember.js";
 import TestResearch from "./pages/test/TestResearch.js";
 import TestAbout from "./pages/test/TestAbout.js";
 import TestLanding from "./pages/test/TestLanding.js";
+import TestSubProject from "./pages/test/TestSubProject.js";
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
         <Route path="/test/about" element={<TestAbout />} />
         <Route path="/test/member" element={<TestMember />} />
         <Route path="/test/research" element={<TestResearch />} />
+        <Route path="/test/subproject" element={<TestSubProject />} />
         <Route
           path="/academic_curriculum/dynamic_programming_and_reinforcement_learning_2022"
           element={<DPRL />}
