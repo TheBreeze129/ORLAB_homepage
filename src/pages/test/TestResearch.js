@@ -384,10 +384,7 @@ const ProjectCard = ({ item }) => {
   );
 
   return (
-    <ProjectCardLink
-      to={`/test/research/project/${encodeURIComponent(projectId)}`}
-      state={{ project: item }}
-    >
+    <ProjectCardLink to={`/test/subproject?pagecode=${item.notionId || item.url}`}>
       {content}
     </ProjectCardLink>
   );
