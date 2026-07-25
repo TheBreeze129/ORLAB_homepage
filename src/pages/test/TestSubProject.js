@@ -398,10 +398,12 @@ const OrganizationPill = styled.span`
 const ContentFrame = styled.article`
   width: 1280px;
   margin: 0 auto;
+  padding-top: 58px;
+  box-sizing: border-box;
 
   @media (max-width: 860px) {
     width: 100%;
-    margin-top: 42px;
+    padding-top: 42px;
   }
 `;
 
