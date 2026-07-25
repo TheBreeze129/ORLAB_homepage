@@ -543,13 +543,6 @@ const ProjectMetaRow = styled.div`
   gap: 24px;
 `;
 
-const ProjectDate = styled.span`
-  color: #777777;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-`;
-
 const OrganizationLogo = styled.img`
   max-width: 110px;
   max-height: 31px;
