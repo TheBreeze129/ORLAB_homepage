@@ -11,7 +11,6 @@ const navy = "#113275";
 const previewProject = {
   title: "VLM-based OCR for Handwritten Form Understanding",
   sponsor: "GMISSION",
-  period: "2026.01 ~ 2026.11",
   image: projectPlaceholder,
 };
 
@@ -43,7 +42,6 @@ const ProjectDetail = () => {
     project.organizationName ||
     (isImageUrl(project.organization) ? previewProject.sponsor : project.organization) ||
     previewProject.sponsor;
-  const period = project.date || previewProject.period;
   const image = project.detailImage || project.image || previewProject.image;
 
   useEffect(() => {
@@ -59,12 +57,7 @@ const ProjectDetail = () => {
           topGap={159}
           titleSize={35}
           titleLineHeight="42.3579px"
-          meta={
-            <>
-              <SponsorBadge>{sponsor}</SponsorBadge>
-              <ProjectPeriod>{period}</ProjectPeriod>
-            </>
-          }
+          meta={<SponsorBadge>{sponsor}</SponsorBadge>}
         />
       </DetailTopFrame>
 
@@ -134,16 +127,6 @@ const SponsorBadge = styled.span`
   line-height: 24px;
   letter-spacing: 0px;
   text-align: center;
-  white-space: nowrap;
-`;
-
-const ProjectPeriod = styled.span`
-  color: #c3c3c3;
-  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
-  letter-spacing: 0px;
   white-space: nowrap;
 `;
 

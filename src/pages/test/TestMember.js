@@ -401,8 +401,8 @@ const AlumniContent = ({ data, errors, loading }) => (
                   {member.outdate ? `${section.title}, Graduated on ${member.outdate}` : section.title}
                 </AlumniMeta>
                 <AlumniMeta>{member.Email}</AlumniMeta>
+                <AlumniDestination>{member.To_go}</AlumniDestination>
               </AlumniDetails>
-              <AlumniDestination>{member.To_go}</AlumniDestination>
             </AlumniCard>
           ))}
         </AlumniGrid>
@@ -828,13 +828,12 @@ const AlumniGrid = styled.div`
   max-width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 368px);
-  justify-content: space-between;
-  gap: 36px 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 42px 54px;
   padding: 0;
 
   @media (max-width: 1180px) {
-    grid-template-columns: repeat(auto-fit, 368px);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 560px), 1fr));
     justify-content: center;
     gap: 36px;
   }
@@ -845,75 +844,95 @@ const AlumniGrid = styled.div`
 `;
 
 const AlumniCard = styled.article`
-  width: 368px;
-  height: 200px;
+  width: 100%;
+  min-height: 327px;
   display: grid;
-  grid-template-columns: 83px 1fr;
-  grid-template-rows: auto 1fr;
-  gap: 0 22px;
-  align-items: start;
-  padding: 23px 10px 16px 34px;
-  border: 1px solid ${navy};
-  border-radius: 15px;
+  grid-template-columns: 204px minmax(0, 1fr);
+  gap: 0 30px;
+  align-items: center;
+  padding: 34px 28px 34px 16px;
+  border: 2px solid ${navy};
+  border-radius: 22px;
   box-sizing: border-box;
 
-  @media (max-width: 430px) {
-    width: 100%;
-    height: auto;
-    min-height: 200px;
-    grid-template-columns: 83px 1fr;
-    padding-right: 14px;
+  @media (max-width: 680px) {
+    grid-template-columns: 160px minmax(0, 1fr);
+    min-height: 260px;
+    gap: 0 22px;
+    padding: 26px 22px 26px 14px;
+  }
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 24px;
+    padding: 28px 20px;
   }
 `;
 
 const AlumniImage = styled.img`
-  width: 83px;
-  height: 107px;
+  width: 204px;
+  height: 247px;
   border: 0;
-  border-radius: 0;
+  border-radius: 14px;
   object-fit: cover;
   object-position: center top;
-  grid-row: 1;
+
+  @media (max-width: 680px) {
+    width: 160px;
+    height: 194px;
+  }
 `;
 
 const AlumniDetails = styled.div`
   min-width: 0;
-  padding-top: 10px;
 `;
 
 const AlumniName = styled.h3`
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: #000000;
   font-family: "Roboto", "Inter", sans-serif;
-  font-size: 22px;
+  font-size: 36px;
   font-weight: 800;
-  line-height: 36px;
+  line-height: 1.15;
   letter-spacing: 0;
   overflow-wrap: anywhere;
+
+  @media (max-width: 680px) {
+    font-size: 28px;
+  }
 `;
 
 const AlumniMeta = styled.p`
-  margin: 0 0 8px;
+  margin: 0 0 12px;
   color: #222222;
   font-family: "Roboto", "Inter", sans-serif;
-  font-size: 14px;
+  font-size: 23px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 1.35;
   letter-spacing: 0.25px;
   overflow-wrap: anywhere;
+
+  @media (max-width: 680px) {
+    font-size: 17px;
+  }
 `;
 
 const AlumniDestination = styled.p`
-  grid-column: 1 / -1;
-  margin: 12px 0 0 -7px;
+  margin: 31px 0 0;
   color: ${navy};
   font-family: "Roboto", "Inter", sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 20px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.08;
   letter-spacing: 0.25px;
-  max-width: 300px;
   overflow-wrap: anywhere;
+
+  @media (max-width: 680px) {
+    margin-top: 22px;
+    font-size: 24px;
+  }
 `;
 
 const StatusText = styled.div`

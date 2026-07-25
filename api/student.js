@@ -13,29 +13,29 @@ export async function GET(req) {
     }
 
     // stdType → Supabase 조건 매핑
-    let category = null;
+    let categoryOptions = [];
     let is_current = true;
 
     if (stdType === "phd") {
-      category = "PhD";
+      categoryOptions = ["PhD", "Ph.D.", "Ph. D.", "Ph. D"];
       is_current = true;
     } else if (stdType === "ms") {
-      category = "MS";
+      categoryOptions = ["MS", "M.S.", "M. S.", "M. S"];
       is_current = true;
     } else if (stdType === "intern") {
-      category = "Intern";
+      categoryOptions = ["Intern"];
       is_current = true;
     } else if (stdType === "alumni_phd") {
-      category = "PhD";
+      categoryOptions = ["PhD", "Ph.D.", "Ph. D.", "Ph. D"];
       is_current = false;
     } else if (stdType === "alumni_ms") {
-      category = "MS";
+      categoryOptions = ["MS", "M.S.", "M. S.", "M. S"];
       is_current = false;
     } else if (stdType === "pd") {
-      category = "PD"
+      categoryOptions = ["PD", "Post Doc.", "PostDoc"]
     }
 
-    if (!category) {
+    if (categoryOptions.length === 0) {
       return Response.json({ error: "Invalid stdType" }, { status: 400 });
     }
 
@@ -43,7 +43,7 @@ export async function GET(req) {
     const { data, error } = await supabase
       .from("member")
       .select("*")
-      .eq("category", category)
+      .in("category", categoryOptions)
       .eq("is_current", is_current)
       .order("N", { ascending: false });
 

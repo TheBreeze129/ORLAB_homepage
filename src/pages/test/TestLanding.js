@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
-import LandingPopup from "./components/LandingPopup.js";
-import { landingPopupEvent } from "./data/landingPopup.js";
 import landingBackground from "../../assets/figma/landing-background.png";
 import companyIcon from "../../assets/figma/company-icon.svg";
 import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
@@ -124,7 +122,6 @@ const TestLanding = () => (
       </ContentRail>
     </LandingFrame>
     <Footer />
-    <LandingPopup event={landingPopupEvent} />
   </PageShell>
 );
 
