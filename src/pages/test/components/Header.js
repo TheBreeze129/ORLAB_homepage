@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import orlabLogo from "../../../assets/logo.svg";
@@ -38,6 +38,23 @@ const Header = ({
   activeResearch,
   activeSection = "board",
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   return (
     <HeaderFrame>
       <LogoLink to="/test" aria-label="ORLAB home">
@@ -127,6 +144,115 @@ const Header = ({
           OPTNTECH
         </OptntechLink>
       </NavArea>
+
+      <HamburgerButton
+        type="button"
+        aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={isMobileMenuOpen}
+        onClick={() => setIsMobileMenuOpen((current) => !current)}
+      >
+        <HamburgerLine />
+        <HamburgerLine />
+        <HamburgerLine />
+      </HamburgerButton>
+
+      <MobileBackdrop
+        $open={isMobileMenuOpen}
+        aria-hidden="true"
+        onClick={closeMobileMenu}
+      />
+      <MobileDrawer $open={isMobileMenuOpen} aria-hidden={!isMobileMenuOpen}>
+        <MobileNav aria-label="Mobile navigation">
+          <MobileNavGroup>
+            <MobileNavLink
+              to="/test/about"
+              $active={activeSection === "about"}
+              onClick={closeMobileMenu}
+            >
+              ABOUT
+            </MobileNavLink>
+            {aboutItems.map((item) => (
+              <MobileSubLink
+                key={item.to}
+                to={item.to}
+                $active={activeAbout === item.id}
+                onClick={closeMobileMenu}
+              >
+                {item.label}
+              </MobileSubLink>
+            ))}
+          </MobileNavGroup>
+
+          <MobileNavGroup>
+            <MobileNavLink
+              to="/test/member?tab=professor"
+              $active={activeSection === "member"}
+              onClick={closeMobileMenu}
+            >
+              MEMBERS
+            </MobileNavLink>
+            {memberItems.map((item) => (
+              <MobileSubLink
+                key={item.to}
+                to={item.to}
+                $active={activeMember === item.id}
+                onClick={closeMobileMenu}
+              >
+                {item.label}
+              </MobileSubLink>
+            ))}
+          </MobileNavGroup>
+
+          <MobileNavGroup>
+            <MobileNavLink
+              to="/test/research?tab=project"
+              $active={activeSection === "research"}
+              onClick={closeMobileMenu}
+            >
+              RESEARCH
+            </MobileNavLink>
+            {researchItems.map((item) => (
+              <MobileSubLink
+                key={item.to}
+                to={item.to}
+                $active={activeResearch === item.id}
+                onClick={closeMobileMenu}
+              >
+                {item.label}
+              </MobileSubLink>
+            ))}
+          </MobileNavGroup>
+
+          <MobileNavGroup>
+            <MobileNavLink
+              to="/test/board"
+              $active={activeSection === "board"}
+              onClick={closeMobileMenu}
+            >
+              BOARD
+            </MobileNavLink>
+            {boardNavItems.map((item) => (
+              <MobileSubLink
+                key={item.to}
+                to={item.to}
+                $active={activeBoard === item.id}
+                onClick={closeMobileMenu}
+              >
+                {item.label}
+              </MobileSubLink>
+            ))}
+          </MobileNavGroup>
+
+          <MobileExternalLink
+            href="https://www.optntech.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={closeMobileMenu}
+          >
+            OPTNTECH
+          </MobileExternalLink>
+        </MobileNav>
+      </MobileDrawer>
     </HeaderFrame>
   );
 };
@@ -144,10 +270,11 @@ const HeaderFrame = styled.header`
 
   @media (max-width: 780px) {
     width: 100%;
-    height: auto;
+    height: 50px;
     padding-top: 0;
-    flex-direction: column;
-    gap: 34px;
+    align-items: center;
+    flex-direction: row;
+    gap: 24px;
   }
 `;
 
@@ -188,10 +315,7 @@ const NavArea = styled.nav`
   }
 
   @media (max-width: 780px) {
-    height: auto;
-    flex-wrap: wrap;
-    gap: 20px 28px;
-    margin-bottom: 0;
+    display: none;
   }
 `;
 
@@ -318,6 +442,114 @@ const OptntechLink = styled.a`
     background: #111111;
     color: #ffffff;
   }
+`;
+
+const HamburgerButton = styled.button`
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0 0 auto;
+
+  @media (max-width: 780px) {
+    display: inline-flex;
+  }
+`;
+
+const HamburgerLine = styled.span`
+  width: 25px;
+  height: 2px;
+  border-radius: 999px;
+  background: #111111;
+`;
+
+const MobileBackdrop = styled.div`
+  display: none;
+
+  @media (max-width: 780px) {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    opacity: ${(props) => (props.$open ? 1 : 0)};
+    pointer-events: ${(props) => (props.$open ? "auto" : "none")};
+    transition: opacity 0.24s ease;
+    z-index: 90;
+  }
+`;
+
+const MobileDrawer = styled.aside`
+  display: none;
+
+  @media (max-width: 780px) {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(320px, calc(100vw - 48px));
+    height: 100vh;
+    padding: 84px 28px 32px;
+    background: #ffffff;
+    box-shadow: -8px 0 28px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+    transform: translateX(${(props) => (props.$open ? "0" : "100%")});
+    visibility: ${(props) => (props.$open ? "visible" : "hidden")};
+    pointer-events: ${(props) => (props.$open ? "auto" : "none")};
+    transition: transform 0.28s ease;
+    z-index: 100;
+    overflow-y: auto;
+  }
+`;
+
+const MobileNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+`;
+
+const MobileNavGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const MobileNavLink = styled(Link)`
+  color: ${(props) => (props.$active ? navy : "#050505")};
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+`;
+
+const MobileSubLink = styled(Link)`
+  color: ${(props) => (props.$active ? navy : "#666666")};
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: ${(props) => (props.$active ? 700 : 500)};
+  line-height: 1.3;
+`;
+
+const MobileExternalLink = styled.a`
+  min-height: 46px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  color: #000000;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
 `;
 
 export default Header;

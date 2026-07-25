@@ -444,13 +444,7 @@ const highlightProfessorText = (value) => {
   );
 };
 
-const normalizeName = (value = "") =>
-  value
-    .toLowerCase()
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ") || "No Name";
+const normalizeName = (value = "") => value.trim() || "No Name";
 
 const PageShell = styled.main`
   min-height: 100vh;
