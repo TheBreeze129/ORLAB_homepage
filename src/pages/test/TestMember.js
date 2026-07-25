@@ -444,7 +444,34 @@ const highlightProfessorText = (value) => {
   );
 };
 
-const normalizeName = (value = "") => value.trim() || "No Name";
+const normalizeName = (value = "") => {
+  const normalized = value.trim().replace(/\s+/g, " ");
+  if (!normalized) return "No Name";
+
+  return normalized
+    .split(" ")
+    .map(formatNameToken)
+    .join(" ")
+    .replace(/\bPh\.\s+D\./g, "Ph. D.")
+    .replace(/\bM\.\s+S\./g, "M. S.");
+};
+
+const formatNameToken = (token = "") =>
+  token
+    .split("-")
+    .map((part) => {
+      const match = part.match(/^([A-Za-z]+)([^A-Za-z]*)$/);
+      if (!match) return part;
+
+      const [, letters, suffix] = match;
+      const formattedLetters =
+        letters.length === 1
+          ? letters.toUpperCase()
+          : letters.charAt(0).toUpperCase() + letters.slice(1).toLowerCase();
+
+      return `${formattedLetters}${suffix}`;
+    })
+    .join("-");
 
 const PageShell = styled.main`
   min-height: 100vh;

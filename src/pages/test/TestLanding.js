@@ -141,7 +141,7 @@ const LandingFrame = styled.section`
 
   @media (max-width: 900px) {
     width: 100%;
-    padding: 36px 0 80px;
+    padding: 36px 24px 80px;
     box-sizing: border-box;
   }
 `;
@@ -151,11 +151,11 @@ const ContentRail = styled.div`
   margin: 0 auto;
 
   @media (max-width: 900px) {
-    width: calc(100% - 48px);
+    width: 100%;
   }
 
   @media (max-width: 520px) {
-    width: calc(100% - 32px);
+    width: 100%;
   }
 `;
 
