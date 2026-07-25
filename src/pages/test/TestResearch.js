@@ -404,7 +404,8 @@ const HeaderHeroFrame = styled.section`
   overflow: visible;
 
   @media (max-width: 780px) {
-    padding: 36px 24px 44px;
+    min-height: auto;
+    padding: 36px 24px 24px;
     box-sizing: border-box;
   }
 `;
@@ -420,7 +421,7 @@ const ContentFrame = styled.section`
   @media (max-width: 980px) {
     width: calc(100% - 48px);
     min-height: 900px;
-    padding-top: 54px;
+    padding-top: 16px;
   }
 `;
 

@@ -270,8 +270,9 @@ const HeaderFrame = styled.header`
 
   @media (max-width: 780px) {
     width: 100%;
-    height: 50px;
+    height: 44px;
     padding-top: 0;
+    position: relative;
     align-items: center;
     flex-direction: row;
     gap: 24px;
@@ -286,6 +287,9 @@ const LogoLink = styled(Link)`
   text-decoration: none;
 
   @media (max-width: 780px) {
+    height: 44px;
+    display: flex;
+    align-items: center;
     margin-bottom: 0;
   }
 `;
@@ -460,10 +464,15 @@ const HamburgerButton = styled.button`
 
   @media (max-width: 780px) {
     display: inline-flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-2px);
   }
 `;
 
 const HamburgerLine = styled.span`
+  display: block;
   width: 25px;
   height: 2px;
   border-radius: 999px;

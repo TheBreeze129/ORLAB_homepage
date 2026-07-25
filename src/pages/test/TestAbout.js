@@ -258,7 +258,8 @@ const HeaderHeroFrame = styled.section`
   overflow: visible;
 
   @media (max-width: 780px) {
-    padding: 36px 24px 44px;
+    min-height: auto;
+    padding: 36px 24px 24px;
     box-sizing: border-box;
   }
 `;

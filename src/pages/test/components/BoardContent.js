@@ -446,7 +446,7 @@ const ContentFrame = styled.section`
   @media (max-width: 980px) {
     width: calc(100% - 48px);
     min-height: 900px;
-    padding-top: 54px;
+    padding-top: 16px;
   }
 `;
 
@@ -510,6 +510,7 @@ const ListLayout = styled.div`
   @media (max-width: 1080px) {
     flex-direction: column;
     gap: 34px;
+    padding-top: 0;
 
     > nav,
     > div {
