@@ -527,6 +527,7 @@ const ProjectCardBody = styled.div`
 const ProjectCardTitle = styled.h2`
   width: 401px;
   max-width: 100%;
+  min-height: 108px;
   margin: 0;
   color: ${navy};
   font-size: 20px;

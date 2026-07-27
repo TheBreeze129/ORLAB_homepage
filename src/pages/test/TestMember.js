@@ -15,6 +15,8 @@ import professorBriefcaseIcon from "../../assets/figma/professor-briefcase.png";
 import professorMedalIcon from "../../assets/figma/professor-medal.png";
 import professorTempleIcon from "../../assets/figma/professor-temple.png";
 import professorHandshakeIcon from "../../assets/figma/professor-handshake.png";
+import memberInterestIcon from "../../assets/figma/member-interest.png";
+import memberEmailIcon from "../../assets/figma/member-email.png";
 
 const navy = "#113275";
 
@@ -369,8 +371,20 @@ const ResearchersContent = ({ data, errors, loading }) => (
             <ResearcherCard key={member.id || member.Email || member.Name}>
               <ResearcherImage src={member.image} alt={member.Name} />
               <ResearcherName>{normalizeName(member.Name)}</ResearcherName>
-              <ResearcherMeta>{member.interests}</ResearcherMeta>
-              <ResearcherMeta>{member.Email}</ResearcherMeta>
+              <ResearcherInfoList>
+                <ResearcherInfoRow>
+                  <ResearcherIconWrap aria-hidden="true">
+                    <ResearcherIcon src={memberInterestIcon} alt="" />
+                  </ResearcherIconWrap>
+                  <ResearcherMeta>{member.interests}</ResearcherMeta>
+                </ResearcherInfoRow>
+                <ResearcherInfoRow>
+                  <ResearcherIconWrap aria-hidden="true">
+                    <ResearcherIcon src={memberEmailIcon} alt="" />
+                  </ResearcherIconWrap>
+                  <ResearcherMeta>{member.Email}</ResearcherMeta>
+                </ResearcherInfoRow>
+              </ResearcherInfoList>
             </ResearcherCard>
           ))}
         </ResearcherGrid>
@@ -539,9 +553,9 @@ const ProfessorName = styled.h2`
   color: ${navy};
   font-family: "Roboto", "Inter", sans-serif;
   font-size: 45px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 52px;
-  letter-spacing: 0;
+  letter-spacing: 0.2px;
   overflow-wrap: anywhere;
 `;
 
@@ -783,14 +797,14 @@ const ResearcherGrid = styled.div`
   max-width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(3, 236px);
+  grid-template-columns: repeat(3, 286px);
   justify-content: space-between;
   gap: 0;
   padding: 0;
 
   @media (max-width: 980px) {
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 236px), 236px));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 286px), 286px));
     justify-content: center;
     gap: 45px 64px;
   }
@@ -801,7 +815,7 @@ const ResearcherGrid = styled.div`
 `;
 
 const ResearcherCard = styled.article`
-  width: 236px;
+  width: 286px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -814,33 +828,69 @@ const ResearcherCard = styled.article`
 `;
 
 const ResearcherImage = styled.img`
-  width: 190px;
-  height: 244px;
+  width: 210px;
+  height: 254px;
   object-fit: cover;
   object-position: center top;
-  border-radius: 15px;
-  margin-bottom: 25px;
+  border-radius: 0 0 12px 12px;
+  margin-bottom: 29px;
 `;
 
 const ResearcherName = styled.h3`
-  margin: 0 0 14px;
+  margin: 0 0 24px;
   color: #000000;
-  font-family: "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
-  font-size: 30px;
+  font-family: "Roboto", "Inter", "Pretendard", "Helvetica Neue", Arial, sans-serif;
+  font-size: 32px;
   font-weight: 800;
-  line-height: 36px;
+  line-height: 1.15;
   letter-spacing: 0;
   max-width: 100%;
   overflow-wrap: anywhere;
 `;
 
+const ResearcherInfoList = styled.div`
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  align-items: stretch;
+`;
+
+const ResearcherInfoRow = styled.div`
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+`;
+
+const ResearcherIconWrap = styled.span`
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+`;
+
+const ResearcherIcon = styled.img`
+  width: 25px;
+  height: 25px;
+  display: block;
+  object-fit: contain;
+`;
+
 const ResearcherMeta = styled.p`
   margin: 0;
-  color: #1f1f1f;
-  font-size: 20px;
+  color: #000000;
+  font-size: 22px;
   font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0.25px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: center;
+  flex: 0 1 auto;
   max-width: 100%;
   overflow-wrap: anywhere;
 `;

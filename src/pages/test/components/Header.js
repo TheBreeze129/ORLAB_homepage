@@ -54,6 +54,16 @@ const Header = ({
   }, [isMobileMenuOpen]);
 
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+  const clearDropdownFocus = (event) => {
+    const currentTarget = event.currentTarget;
+
+    window.setTimeout(() => {
+      const activeElement = document.activeElement;
+      if (activeElement instanceof HTMLElement && currentTarget.contains(activeElement)) {
+        activeElement.blur();
+      }
+    }, 0);
+  };
 
   return (
     <HeaderFrame>
@@ -62,7 +72,10 @@ const Header = ({
       </LogoLink>
 
       <NavArea aria-label="Primary navigation">
-        <DropdownNav>
+        <DropdownNav
+          onContextMenu={clearDropdownFocus}
+          onMouseLeave={clearDropdownFocus}
+        >
           <AboutButton to="/test/about" $active={activeSection === "about"}>
             ABOUT
           </AboutButton>
@@ -79,7 +92,10 @@ const Header = ({
           </DropdownMenu>
         </DropdownNav>
 
-        <DropdownNav>
+        <DropdownNav
+          onContextMenu={clearDropdownFocus}
+          onMouseLeave={clearDropdownFocus}
+        >
           <MemberButton
             to="/test/member?tab=professor"
             $active={activeSection === "member"}
@@ -99,7 +115,10 @@ const Header = ({
           </DropdownMenu>
         </DropdownNav>
 
-        <DropdownNav>
+        <DropdownNav
+          onContextMenu={clearDropdownFocus}
+          onMouseLeave={clearDropdownFocus}
+        >
           <ResearchButton
             to="/test/research?tab=project"
             $active={activeSection === "research"}
@@ -119,7 +138,10 @@ const Header = ({
           </DropdownMenu>
         </DropdownNav>
 
-        <DropdownNav>
+        <DropdownNav
+          onContextMenu={clearDropdownFocus}
+          onMouseLeave={clearDropdownFocus}
+        >
           <BoardButton to="/test/board" $active={activeSection === "board"}>
             BOARD
           </BoardButton>
@@ -329,8 +351,7 @@ const DropdownNav = styled.div`
   display: flex;
   align-items: center;
 
-  &:hover > div,
-  &:focus-within > div {
+  &:hover > div {
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
