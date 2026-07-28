@@ -77,7 +77,7 @@ const List = styled.div`
 `;
 
 const ListItem = styled.article`
-  min-height: 185px;
+  min-height: 100px;
   padding: 0 0 50px 23px;
   box-sizing: border-box;
   border-bottom: 2px solid #c6c6c6;

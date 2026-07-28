@@ -248,7 +248,7 @@ function makeDummyResearchers(prefix, count) {
     id: `${prefix}-dummy-${index + 1}`,
     Name: "Hyomin Choi",
     Email: "abc@abc.com",
-    interests: "VLM, Smart Factory",
+    interests: "Large multi-Modal Models, Deep Learning",
     image: researcherPlaceholder,
   }));
 }
@@ -828,8 +828,8 @@ const ResearcherCard = styled.article`
 `;
 
 const ResearcherImage = styled.img`
-  width: 210px;
-  height: 254px;
+  width: 190px;
+  height: 244px;
   object-fit: cover;
   object-position: center top;
   border-radius: 0 0 12px 12px;
@@ -885,11 +885,11 @@ const ResearcherIcon = styled.img`
 const ResearcherMeta = styled.p`
   margin: 0;
   color: #000000;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: 0;
-  text-align: center;
+  text-align: left;
   flex: 0 1 auto;
   max-width: 100%;
   overflow-wrap: anywhere;
@@ -921,9 +921,9 @@ const AlumniCard = styled.article`
   height: 200px;
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
-  gap: 0 18px;
+  gap: 0 10px;
   align-items: start;
-  padding: 22px 14px 18px 16px;
+  padding: 20px 10px 18px 10px;
   border: 1px solid ${navy};
   border-radius: 15px;
   box-sizing: border-box;
@@ -938,7 +938,7 @@ const AlumniCard = styled.article`
 
 const AlumniImage = styled.img`
   width: 120px;
-  height: 146px;
+  height: 160px;
   border: 0;
   border-radius: 8px;
   object-fit: cover;
@@ -971,7 +971,7 @@ const AlumniName = styled.h3`
 `;
 
 const AlumniMeta = styled.p`
-  margin: 0 0 6px;
+  margin: 0 0 5px;
   color: #222222;
   font-family: "Roboto", "Inter", sans-serif;
   font-size: 14px;
@@ -986,11 +986,11 @@ const AlumniMeta = styled.p`
 `;
 
 const AlumniDestination = styled.p`
-  margin: 17px 0 0;
+  margin: 20px 0 0;
   color: ${navy};
   font-family: "Roboto", "Inter", sans-serif;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.08;
   letter-spacing: 0.25px;
   overflow-wrap: anywhere;

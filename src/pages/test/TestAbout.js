@@ -410,9 +410,9 @@ const ApplicationNote = styled.section`
 
   width: 1237px;
   max-width: calc(100% - 48px);
-  min-height: 260px;
+  min-height: 300px;
   margin: 0 0 0 97px;
-  padding: 56px 47px 40px 76px;
+  padding: 86px 47px 40px 76px;
 
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -429,20 +429,27 @@ const ApplicationNote = styled.section`
   @media (max-width: 900px) {
     width: 100%;
     min-height: auto;
-    padding: 48px 48px 48px;
+    padding: 48px 32px 56px 72px;
+    grid-template-columns: minmax(0, 1fr);
     row-gap: 24px;
   }
 `;
 
 const QuoteLeftIcon = styled.img`
   position: absolute;
-  top: 24px;
+  top: 54px;
   left: 0px;
 
   width: 40px;
   height: 40px;
   display: block;
   object-fit: contain;
+
+  @media (max-width: 900px) {
+    position: absolute;
+    top: 46px;
+    left: 24px;
+  }
 `;
 
 const QuoteRightIcon = styled.img`
@@ -454,6 +461,13 @@ const QuoteRightIcon = styled.img`
   height: 40px;
   display: block;
   object-fit: contain;
+
+  @media (max-width: 900px) {
+    position: absolute;
+    right: 28px;
+    bottom: 24px;
+    margin-top: 0;
+  }
 `;
 
 const ApplicationIntro = styled.p`
@@ -465,6 +479,10 @@ const ApplicationIntro = styled.p`
   font-size: 22px;
   font-weight: 500;
   line-height: 27px;
+
+  @media (max-width: 900px) {
+    grid-column: 1;
+  }
 `;
 
 const ApplicationList = styled.ul`
@@ -474,6 +492,10 @@ const ApplicationList = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (max-width: 900px) {
+    grid-column: 1;
+  }
 `;
 
 const ApplicationItem = styled.li`

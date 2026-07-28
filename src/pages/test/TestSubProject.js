@@ -18,6 +18,8 @@ import inodepCollaboratorsLogo from "../../assets/inodep-page4-image1.png";
 import ocrEmbeddingImage from "../../assets/ocr-page1-image1.jpg";
 import ocrGmissionLogo from "../../assets/ocr-page3-image1.png";
 import ocrDocumentAiImage from "../../assets/ocr-page3-image2.jpg";
+import travutOverviewImage from "../../assets/travut-overview.png";
+import ssrcEncoreImage from "../../assets/ssrc-encore.png";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
@@ -25,6 +27,8 @@ const dualTwinForkPageCode = "38fd35be31ec804f8fefc71bc74b3dae";
 const batteryPageCode = "38fd35be31ec809d8c1dc0099da807ed";
 const inodepPageCode = "1ced35be31ec8003a633f28976b412b5";
 const ocrPageCode = "38fd35be31ec8040ab83fd4362120249";
+const travutPageCode = "38fd35be31ec80f1a521f3a00a363316";
+const ssrcPageCode = "390d35be31ec805a9f4fdaa561ed3384";
 
 const projectsByPageCode = {
   [dualTwinForkPageCode]: {
@@ -134,6 +138,130 @@ const projectsByPageCode = {
       },
     ],
   },
+};
+
+projectsByPageCode[travutPageCode] = {
+  title: "Context-aware Business Email Agent for Travel Operations",
+  organization: "TRAVUT",
+  sections: [
+    {
+      title: "연구 개요",
+      paragraphs: [
+        "본 프로젝트는 여행·의전·비즈니스 운영 과정에서 반복적으로 발생하는 이메일 응대 업무를 지원하기 위한 AI Agent 시스템 개발 프로젝트입니다. 실제 업무 이메일은 여러 차례의 송수신을 통해 요구사항, 일정, 결제 조건, 예외 사항 등이 점진적으로 누적되기 때문에, 단순히 최근 메일만 참고해서는 정확한 답변을 생성하기 어렵습니다.",
+        "TRAVUT은 이메일 스레드의 장기 맥락을 유지하고, 최근 대화와 과거 업무 이력을 함께 반영하여 비즈니스 상황에 적합한 답장 초안을 생성하는 것을 목표로 합니다. 이를 통해 반복적인 이메일 응대 부담을 줄이고, 업무 담당자가 중요한 의사결정과 고객 커뮤니케이션에 더 집중할 수 있도록 지원합니다.",
+      ],
+      image: {
+        src: travutOverviewImage,
+        alt: "Context-aware email agent workflow",
+      },
+    },
+    {
+      title: "연구 목표",
+      bullets: [
+        "이메일 스레드의 최근 대화와 장기 맥락을 함께 반영하는 Context-aware Reply Generation 구조 설계",
+        "과거 유사 사례와 현재 요청사항을 연결하여 답변 근거를 구성하는 RAG 기반 이메일 응답 파이프라인 개발",
+        "다중 메일 스레드에서 미해결 요청, 일정 변경, 조건 추가 등 업무상 중요한 정보를 추적하는 AI Agent 시스템 구현",
+        "실제 업무 환경에서 활용 가능한 자동 답장 초안 생성 및 검토 지원 기능 개발",
+      ],
+    },
+    {
+      title: "연구 성과",
+      bullets: [
+        "Gmail 기반 이메일 수집 및 스레드 단위 관리 기능 구현",
+        "최근 메일 원문, 장기 요약, 과거 유사 사례를 함께 활용하는 이메일 답장 생성 파이프라인 구축",
+        "Inbox 동기화, 계정별 필터링, 스레드 상태 관리 등 실제 운영을 고려한 시스템 구조 개선",
+        "여행·의전 업무 이메일 데이터를 활용한 초기 자동 응답 생성 실험 수행",
+      ],
+    },
+  ],
+};
+
+projectsByPageCode[ssrcPageCode] = {
+  title: "2026 학생창의자율과제 (SSRC)",
+  organization: "SSRC",
+  sections: [
+    {
+      title: "Project 1 : ENCORE: K-pop 안무 IP 확장을 위한 AI 기반 표준 무보 시스템",
+      image: {
+        src: ssrcEncoreImage,
+        alt: "ENCORE AI-based standard choreography notation system",
+      },
+    },
+    {
+      title: "연구 개요",
+      paragraphs: [
+        "본 연구는 AI 기반 K-pop 안무 무보 생성 및 안무 IP 활용 표준화 연구이다. K-pop 안무는 공연예술과 팬덤 문화의 핵심 자산으로 성장했지만, 기존 기록 방식은 영상, 사진/글, 전통 무보, 모션캡처에 의존해 왔다. 영상은 직관적이나 정량적 비교와 검색이 어렵고, 전통 무보는 해독 장벽이 높으며, 모션캡처는 전용 장비와 높은 비용이 필요하다는 한계가 있다.",
+        "따라서 본 연구는 안무 영상을 포즈 좌표, 손동작, 의미 표현, 권리 정보로 구조화하여 고정 가능한 디지털 무보이자 산업 제작 도구와 호환되는 ENCORE 표준 파일로 변환하는 시스템을 제안한다. ENCORE는 65개 keypoint 기반 확장 스켈레톤, Laban Movement Analysis 기반 의미 트랙, 안무가·라이선스·UCI 등 권리 메타데이터를 결합하여 안무 등록, 유사도 검증, 게임·버추얼·교육 콘텐츠 활용을 함께 지원한다.",
+      ],
+    },
+    {
+      title: "연구 목표",
+      bullets: [
+        "영상에서 65개 keypoint 기반 스켈레톤 좌표와 손동작 정보를 추출하는 AI 무보 파이프라인 구축",
+        "LMA/Effort 의미 트랙과 안무가·라이선스 등 권리 메타데이터를 결합한 ENCORE 표준 스키마 설계",
+        "안무 유사도 분석 및 Blender·Unity 등 제작 도구와 연동 가능한 활용 프로토타입 개발",
+      ],
+    },
+    {
+      title: "연구 성과",
+      bullets: [
+        "안무 IP 고정·등록·수익화 문제와 기존 기록 방식의 한계 정리",
+        "좌표 트랙, 의미 트랙, 권리 메타데이터로 구성된 3-layer ENCORE 구조 도출",
+        "AI Hub K-pop 데이터 변환, 자동 어노테이션, 유사도 리포트, DCC 연동 MVP 설계 진행 중",
+      ],
+    },
+    {
+      title: "Project 2 : E-Sports 중계 시청자의 시선 분산 패턴 기반 적응형 화면 구성 시스템",
+      paragraphs: [
+        "본 연구는 멀티모달 AI 기반 e스포츠 스폰서십 가치 측정 및 광고 패키지 설계 연구이다. 기존 e스포츠 광고 평가는 로고 노출 시간, 브랜드 언급 횟수, 조회수처럼 단순 지표에 의존해 왔다. 하지만 이러한 방식은 하이라이트 장면과의 연계성, 해설 언급의 맥락, 경기 흐름과 긴장감에 따른 주목도 차이를 충분히 반영하지 못한다.",
+        "따라서 본 연구는 경기 영상, 로고 노출, 브랜드 언급, 화면 점유율, 하이라이트 장면, SNS 재활용 가능성 등을 함께 분석하여 단순 노출이 아니라 '기억되고 가치 있는 광고 노출'이 무엇인지 측정하는 AI 기반 광고 가치 평가 모델을 제안한다.",
+      ],
+    },
+    {
+      title: "연구 목표",
+      bullets: [
+        "기존 노출 시간 중심 광고 평가 방식의 한계를 보완하는 맥락 기반 광고 가치 평가 모델 개발",
+        "경기 상황, 화면 점유율, 해설 언급, 하이라이트 연계 등을 반영한 멀티모달 AI 분석 모델 구축",
+        "분석 결과를 활용한 브랜드 맞춤형 스폰서십 패키지 자동 추천 시스템 설계",
+      ],
+    },
+    {
+      title: "연구 성과",
+      bullets: [
+        "e스포츠 스폰서십 가치 측정을 위한 연구 프레임워크 및 문제 정의 완료",
+        "광고 가치 산출을 위한 핵심 지표(노출 시간, 화면 점유율, 해설 언급, 하이라이트 연계, SNS 활용 가능성) 도출",
+        "브랜드 목적별(노출형, 팬참여형, 하이라이트형, 현장 연동형, 숏폼 재가공형) 패키지 설계 방안 수립",
+        "멀티모달 AI 기반 광고 가치 평가 모델 및 맞춤형 패키지 추천 시스템 설계 진행 중",
+      ],
+    },
+    {
+      title: "Project 3 : Korean Medical Sensemaking AI Service",
+      paragraphs: [
+        "본 연구는 환자와 가족이 진료실 밖에서 의료 정보를 자신의 상황에 맞게 이해하고, 실제 진료 준비와 의사결정에 활용할 수 있도록 지원하는 한국어 특화 Medical Sensemaking AI 서비스 개발 연구입니다. 일반적인 의료 정보 검색은 많은 정보를 제공할 수는 있지만, 검사 결과, 진단명, 처방, 커뮤니티 경험담 등을 사용자의 건강 상태와 생활 맥락에 맞게 해석하는 데에는 한계가 있습니다.",
+        "본 연구는 의료진을 대체하거나 진단을 수행하는 시스템이 아니라, 환자가 흩어진 의료 정보와 경험 정보를 보다 신뢰성 있게 이해하고, 필요한 질문과 행동으로 연결할 수 있도록 돕는 AI 기반 정보 해석 지원 시스템을 목표로 합니다.",
+      ],
+    },
+    {
+      title: "연구 목표",
+      bullets: [
+        "한국 성인 환자가 진단·검사 결과와 의료 정보를 해석할 때 겪는 구체적 어려움 분석",
+        "기존 생성형 AI 서비스가 의료 정보 탐색 과정에서 보이는 한계와 사용자 인식 파악",
+        "환자 커뮤니티 정보와 공신력 있는 의료 정보를 함께 고려하는 Sensemaking AI 구조 설계",
+        "건강보험 제도, 한국 진료 문화, 한국 식단 등 국내 의료 맥락을 반영한 서비스 기능 도출",
+        "진료 전 질문 준비, 의료 용어 해석, 진료 필요 상황 안내를 지원하는 AI 기반 진료 준비 도구 개발",
+      ],
+    },
+    {
+      title: "연구 성과",
+      bullets: [
+        "의료 정보 이해 지원을 위한 Medical Sensemaking AI 서비스의 연구 방향 및 핵심 기능 정의",
+        "동료 커뮤니티, 진료 준비 도구, 한국인 특화 맥락 반영을 중심으로 한 서비스 구성안 도출",
+        "20~50대 성인 대상 심층 인터뷰 및 주제 분석 기반의 사용자 요구사항 분석 계획 수립",
+        "AI Hub, K-의료데이터 중개 포털, 식품의약품안전처, 보건의료빅데이터개방시스템 등 공신력 있는 의료 지식 DB 구축 후보 자료원 정리",
+        "향후 심층 인터뷰 결과를 기반으로 LLM 기반 의료 정보 이해 지원 서비스 프로토타입을 설계·개발할 계획 수립",
+      ],
+    },
+  ],
 };
 
 projectsByPageCode[inodepPageCode] = {
