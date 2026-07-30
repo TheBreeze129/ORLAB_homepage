@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import BoardCard from "./BoardCard.js";
 import BoardList from "./BoardList.js";
-import Pagination from "./Pagination.js";
+import InfiniteScrollTrigger from "./InfiniteScrollTrigger.js";
 import YearRail from "./YearRail.js";
 import { seminarYears, workshopYears } from "../data/boardContent.js";
 import albumPlaceholder from "../../../assets/everyone_withprofmo.jpg";
@@ -62,8 +62,8 @@ const BoardContent = ({ activeBoard }) => {
   const albumPageKey = `album:page:${currentPage}`;
   const activePageKey = isAlbum ? albumPageKey : eventPageKey;
   const activeRows = isAlbum
-    ? albumPages[currentPage] || []
-    : eventPages[eventPageKey] || [];
+    ? getLoadedAlbumRows(albumPages, currentPage)
+    : getLoadedEventRows(eventPages, eventContentKey, currentPage);
   const pageSize = isAlbum ? ALBUM_PAGE_SIZE : LIST_PAGE_SIZE;
   const pageCount = isAlbum
     ? albumPageCount
@@ -72,7 +72,11 @@ const BoardContent = ({ activeBoard }) => {
     ? albumErrors[currentPage]
     : eventErrors[eventPageKey];
   const isLoading = loadingKey === activePageKey;
-  const shouldShowPagination = pageCount > 1 && !pageError;
+  const canLoadMore =
+    activeRows.length > 0 &&
+    currentPage < pageCount &&
+    !isLoading &&
+    !pageError;
 
   useEffect(() => {
     setCurrentPage(1);
@@ -148,7 +152,7 @@ const BoardContent = ({ activeBoard }) => {
               ...current,
               [currentPage]: fallbackAlbumRows,
             }));
-            setAlbumPageCount(3);
+            setAlbumPageCount(1);
             setAlbumErrors((current) => {
               const next = { ...current };
               delete next[currentPage];
@@ -257,7 +261,7 @@ const BoardContent = ({ activeBoard }) => {
             }));
             setEventPageCounts((current) => ({
               ...current,
-              [eventContentKey]: 3,
+              [eventContentKey]: 1,
             }));
             setEventErrors((current) => {
               const next = { ...current };
@@ -343,12 +347,20 @@ const BoardContent = ({ activeBoard }) => {
     setRetryRequestId((current) => current + 1);
   };
 
+  const handleLoadMore = useCallback(() => {
+    if (isLoading || pageError) return;
+
+    setCurrentPage((current) =>
+      current >= pageCount ? current : current + 1
+    );
+  }, [isLoading, pageCount, pageError]);
+
   return (
     <ContentFrame aria-busy={isLoading} aria-live="polite">
       {isAlbum ? (
         isLoading && activeRows.length === 0 ? (
           <AlbumStatus role="status">Loading albums...</AlbumStatus>
-        ) : pageError ? (
+        ) : pageError && activeRows.length === 0 ? (
           <AlbumStatus role="alert">
             <span>Unable to load albums.</span>
             <AlbumRetryButton type="button" onClick={handleRetry}>
@@ -396,22 +408,43 @@ const BoardContent = ({ activeBoard }) => {
           <BoardList
             rows={activeRows}
             isLoading={isLoading && activeRows.length === 0}
-            hasError={Boolean(pageError)}
+            hasError={Boolean(pageError && activeRows.length === 0)}
             onRetry={handleRetry}
           />
         </ListLayout>
       )}
-      {shouldShowPagination && (
-        <PaginationSlot $isList={!isAlbum}>
-          <Pagination
-            currentPage={currentPage}
-            pageCount={pageCount}
-            onPageChange={setCurrentPage}
-          />
-        </PaginationSlot>
-      )}
+      <InfiniteScrollTrigger
+        disabled={!canLoadMore}
+        onLoadMore={handleLoadMore}
+      />
+      {isLoading && activeRows.length > 0 ? (
+        <LoadMoreStatus $isList={!isAlbum} role="status">
+          Loading more {isAlbum ? "albums" : "board posts"}...
+        </LoadMoreStatus>
+      ) : null}
+      {pageError && activeRows.length > 0 ? (
+        <LoadMoreStatus $isList={!isAlbum} role="alert">
+          <span>Unable to load more {isAlbum ? "albums" : "board posts"}.</span>
+          <AlbumRetryButton type="button" onClick={handleRetry}>
+            Retry
+          </AlbumRetryButton>
+        </LoadMoreStatus>
+      ) : null}
     </ContentFrame>
   );
+};
+
+const getLoadedAlbumRows = (albumPages, currentPage) =>
+  Array.from({ length: currentPage }, (_, index) => albumPages[index + 1] || [])
+    .flat();
+
+const getLoadedEventRows = (eventPages, eventContentKey, currentPage) => {
+  if (!eventContentKey) return [];
+
+  return Array.from(
+    { length: currentPage },
+    (_, index) => eventPages[`${eventContentKey}:page:${index + 1}`] || []
+  ).flat();
 };
 
 const getPageCount = (data, rowCount, pageSize) => {
@@ -520,11 +553,18 @@ const ListLayout = styled.div`
   }
 `;
 
-const PaginationSlot = styled.div`
-  margin-top: ${(props) => (props.$isList ? "86px" : "112px")};
+const LoadMoreStatus = styled.div`
+  margin-top: ${(props) => (props.$isList ? "54px" : "48px")};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #8c8c8c;
+  font-size: 18px;
+  font-weight: 500;
 
   @media (max-width: 980px) {
-    margin-top: 72px;
+    margin-top: 40px;
   }
 `;
 

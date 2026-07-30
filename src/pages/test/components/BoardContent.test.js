@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import BoardContent from "./BoardContent.js";
 
 jest.mock(
@@ -20,8 +20,20 @@ jest.mock(
 );
 
 const originalFetch = global.fetch;
+const originalIntersectionObserver = global.IntersectionObserver;
+let intersectionCallbacks = [];
 
 beforeEach(() => {
+  intersectionCallbacks = [];
+  global.IntersectionObserver = class MockIntersectionObserver {
+    constructor(callback) {
+      intersectionCallbacks.push(callback);
+    }
+
+    observe = jest.fn();
+    disconnect = jest.fn();
+  };
+
   global.fetch = jest.fn(async (url, options) => ({
     ok: true,
     json: async () => ({
@@ -40,7 +52,19 @@ beforeEach(() => {
 afterEach(() => {
   jest.restoreAllMocks();
   global.fetch = originalFetch;
+  global.IntersectionObserver = originalIntersectionObserver;
 });
+
+const triggerLatestIntersection = () => {
+  const callback = intersectionCallbacks[intersectionCallbacks.length - 1];
+  if (!callback) {
+    throw new Error("No intersection observer was registered");
+  }
+
+  act(() => {
+    callback([{ isIntersecting: true }]);
+  });
+};
 
 test("fetches only the selected board year and caches its response", async () => {
   const { rerender } = render(<BoardContent activeBoard="seminar" />);
@@ -105,7 +129,7 @@ test("retries a failed request for the selected year", async () => {
   expect(global.fetch).toHaveBeenCalledTimes(2);
 });
 
-test("hides seminar pagination when the selected year has one page", async () => {
+test("does not render seminar pagination controls", async () => {
   render(<BoardContent activeBoard="seminar" />);
 
   expect(await screen.findByText("seminar-2026")).toBeInTheDocument();
@@ -114,7 +138,7 @@ test("hides seminar pagination when the selected year has one page", async () =>
   ).not.toBeInTheDocument();
 });
 
-test("uses real seminar page count and shifts visible page numbers", async () => {
+test("loads additional seminar pages through infinite scroll", async () => {
   global.fetch = jest.fn(async (url, options) => ({
     ok: true,
     json: async () => ({
@@ -130,14 +154,26 @@ test("uses real seminar page count and shifts visible page numbers", async () =>
   render(<BoardContent activeBoard="seminar" />);
 
   expect(await screen.findByText("seminar-1")).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^1$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^2$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^3$/ })).toBeInTheDocument();
   expect(
-    screen.queryByRole("button", { name: /^4$/ })
+    screen.queryByRole("navigation", { name: "Pagination" })
   ).not.toBeInTheDocument();
 
-  fireEvent.click(screen.getByRole("button", { name: /^3$/ }));
+  await waitFor(() => {
+    expect(intersectionCallbacks.length).toBeGreaterThan(0);
+  });
+  triggerLatestIntersection();
+
+  expect(await screen.findByText("seminar-7")).toBeInTheDocument();
+  expect(screen.getByText("seminar-1")).toBeInTheDocument();
+  expect(global.fetch).toHaveBeenLastCalledWith(
+    "/api/seminar?page=2&page_size=6",
+    expect.objectContaining({
+      method: "GET",
+      headers: { dbtoken: "2026", dbtype: "seminar" },
+    })
+  );
+
+  triggerLatestIntersection();
 
   expect(await screen.findByText("seminar-13")).toBeInTheDocument();
   expect(global.fetch).toHaveBeenLastCalledWith(
@@ -147,29 +183,6 @@ test("uses real seminar page count and shifts visible page numbers", async () =>
       headers: { dbtoken: "2026", dbtype: "seminar" },
     })
   );
-  expect(
-    screen.queryByRole("button", { name: /^1$/ })
-  ).not.toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^2$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^3$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^4$/ })).toBeInTheDocument();
-
-  fireEvent.click(screen.getByRole("button", { name: /^4$/ }));
-
-  expect(await screen.findByText("seminar-19")).toBeInTheDocument();
-  expect(global.fetch).toHaveBeenLastCalledWith(
-    "/api/seminar?page=4&page_size=6",
-    expect.objectContaining({
-      method: "GET",
-      headers: { dbtoken: "2026", dbtype: "seminar" },
-    })
-  );
-  expect(
-    screen.queryByRole("button", { name: /^2$/ })
-  ).not.toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^3$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^4$/ })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: /^5$/ })).toBeInTheDocument();
 });
 
 test("renders Supabase photo cards linked to their Notion detail", async () => {

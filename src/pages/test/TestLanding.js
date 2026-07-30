@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
 import landingBackground from "../../assets/figma/landing-background.png";
 import companyIcon from "../../assets/figma/company-icon.svg";
-import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
-import landingProjectLges from "../../assets/figma/landing-project-lges.png";
+import landingProjectMultimodal from "../../assets/figma/landing-project-multimodal.png";
+import landingProjectStockerCrane from "../../assets/figma/landing-project-stocker-crane.png";
+import landingProjectBatteryAssignment from "../../assets/figma/landing-project-battery-assignment.png";
 
 const navy = "#113275";
 const projectPageCodes = {
@@ -20,89 +21,27 @@ const projectCards = [
     pageCode: projectPageCodes.multimodalSurveillance,
     title:
       "Development of Multi-Modal Foundational Models and AI Accelerators for Zero-shot Intelligent Surveillance System",
-    image: landingProjectKiat,
+    image: landingProjectMultimodal,
     tags: ["Vision AI", "Large Multi-Modal Model"],
     partner: "KIAT",
   },
   {
     pageCode: projectPageCodes.stockerCrane,
     title: "Dual Twin Fork Stocker Crane Scheduling Optimization",
-    image: landingProjectLges,
+    image: landingProjectStockerCrane,
     tags: ["Optimization", "Logistics"],
     partner: "LG Energy Solution",
   },
   {
     pageCode: projectPageCodes.batteryAssignment,
     title: "Battery Charging/Discharging Equipment Assignment Optimization",
-    image: landingProjectLges,
+    image: landingProjectBatteryAssignment,
     tags: ["Optimization", "Smart Factory"],
     partner: "LG Energy Solution",
   },
 ];
 
-const TestLanding = () => {
-  const [ongoingProjects, setOngoingProjects] = useState([]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    let isCurrent = true;
-
-    const fetchOngoingProjects = async () => {
-      try {
-        const params = new URLSearchParams({
-          status: "ongoing",
-          page: "1",
-          page_size: "50",
-        });
-        const response = await fetch(`/api/project_idx?${params.toString()}`, {
-          method: "GET",
-          signal: controller.signal,
-        });
-
-        if (!response.ok) {
-          throw new Error(`Project API returned ${response.status}`);
-        }
-
-        const data = await response.json();
-        if (!Array.isArray(data.results)) {
-          throw new Error("Project API returned an invalid response");
-        }
-
-        if (isCurrent) {
-          setOngoingProjects(data.results);
-        }
-      } catch (error) {
-        if (error.name === "AbortError") return;
-        if (!isLocalApiHtmlFallback(error)) {
-          console.error("Failed to fetch landing project thumbnails:", error);
-        }
-      }
-    };
-
-    fetchOngoingProjects();
-
-    return () => {
-      isCurrent = false;
-      controller.abort();
-    };
-  }, []);
-
-  const landingProjects = useMemo(
-    () =>
-      projectCards.map((project) => {
-        const matchedProject = ongoingProjects.find((item) =>
-          isSameProject(project, item)
-        );
-
-        return {
-          ...project,
-          image: matchedProject?.thumbnail || project.image,
-        };
-      }),
-    [ongoingProjects]
-  );
-
-  return (
+const TestLanding = () => (
     <PageShell>
       <LandingFrame>
         <Header activeSection="landing" />
@@ -158,7 +97,7 @@ const TestLanding = () => {
 
           <ProjectsTitle>Ongoing Projects</ProjectsTitle>
           <ProjectGrid>
-            {landingProjects.map((project) => (
+            {projectCards.map((project) => (
               <ProjectLink
                 key={project.title}
                 to={`/test/subproject?pagecode=${project.pageCode}`}
@@ -184,29 +123,7 @@ const TestLanding = () => {
       </LandingFrame>
       <Footer />
     </PageShell>
-  );
-};
-
-const isSameProject = (landingProject, project) => {
-  const landingPageCode = normalizeProjectKey(landingProject.pageCode);
-  const notionId = normalizeProjectKey(project.notionId || project.url);
-
-  if (landingPageCode && notionId && landingPageCode === notionId) {
-    return true;
-  }
-
-  return normalizeProjectTitle(landingProject.title) === normalizeProjectTitle(project.name);
-};
-
-const normalizeProjectKey = (value = "") =>
-  String(value).trim().replace(/-/g, "").toLowerCase();
-
-const normalizeProjectTitle = (value = "") =>
-  String(value).trim().replace(/\s+/g, " ").toLowerCase();
-
-const isLocalApiHtmlFallback = (error) =>
-  error instanceof SyntaxError ||
-  /Unexpected token '<'|not valid JSON/i.test(error.message || "");
+);
 
 const PageShell = styled.main`
   min-height: 100vh;

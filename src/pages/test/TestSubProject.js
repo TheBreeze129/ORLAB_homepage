@@ -19,7 +19,35 @@ import ocrEmbeddingImage from "../../assets/ocr-page1-image1.jpg";
 import ocrGmissionLogo from "../../assets/ocr-page3-image1.png";
 import ocrDocumentAiImage from "../../assets/ocr-page3-image2.jpg";
 import travutOverviewImage from "../../assets/travut-overview.png";
-import ssrcEncoreImage from "../../assets/ssrc-encore.png";
+import ssrcEncoreMotionImage from "../../assets/ssrc-encore-motion.png";
+import ssrcEncorePipelineImage from "../../assets/ssrc-encore-pipeline.png";
+
+import finishedPositioningDecisionSystemImage from "../../assets/finished-projects/finished-positioning-decision-system.png";
+import finishedPositioningPortfolioSelectionImage from "../../assets/finished-projects/finished-positioning-portfolio-selection.png";
+import finishedPositioningReviewMiningImage from "../../assets/finished-projects/finished-positioning-review-mining.png";
+import finishedMedicalTreatmentRecommendationImage from "../../assets/finished-projects/finished-medical-treatment-recommendation.png";
+import finishedHyundaiFirstConferenceImage from "../../assets/finished-projects/finished-hyundai-first-conference.png";
+import finishedHyundaiSecondConferenceSessionImage from "../../assets/finished-projects/finished-hyundai-second-conference-session.png";
+import finishedHyundaiSecondConferencePresentationImage from "../../assets/finished-projects/finished-hyundai-second-conference-presentation.png";
+import finishedBackgroundMusicVideoKeywordImage from "../../assets/finished-projects/finished-background-music-video-keyword-recommendation.png";
+import finishedBackgroundMusicMetricLearningImage from "../../assets/finished-projects/finished-background-music-metric-learning.png";
+import finishedDualStockerSystemImage from "../../assets/finished-projects/finished-dual-stocker-system.png";
+import finishedDualStockerPrioritySchedulingImage from "../../assets/finished-projects/finished-dual-stocker-priority-scheduling.png";
+import finishedDualStockerRlArchitectureImage from "../../assets/finished-projects/finished-dual-stocker-rl-architecture.png";
+import finishedOptimizationMachineLearningYearlyPlanImage from "../../assets/finished-projects/finished-optimization-machine-learning-yearly-plan.png";
+import finishedLifterAssignmentOverviewImage from "../../assets/finished-projects/finished-lifter-assignment-overview.png";
+import finishedLifterOperationProcedureImage from "../../assets/finished-projects/finished-lifter-operation-procedure.png";
+import finishedWaferLotUnnecessaryDetourImage from "../../assets/finished-projects/finished-wafer-lot-unnecessary-detour.png";
+import finishedMusicEmotionModelsImage from "../../assets/finished-projects/finished-music-emotion-recognition-models.png";
+import finishedMusicEmotionClassificationVisualizationImage from "../../assets/finished-projects/finished-music-emotion-classification-visualization.png";
+import finishedImageClassificationBackgroundProcessImage from "../../assets/finished-projects/finished-image-classification-background-process.png";
+import finishedSsrc2025NavigationTtsImage from "../../assets/finished-projects/finished-ssrc-2025-navigation-tts.png";
+import finishedSsrc2025NavigationSpeechPipelineImage from "../../assets/finished-projects/finished-ssrc-2025-navigation-speech-pipeline.png";
+import finishedSsrc2025AccessibilityAssistantImage from "../../assets/finished-projects/finished-ssrc-2025-accessibility-assistant.png";
+import finishedSsrc2025AccessibilityPipelineImage from "../../assets/finished-projects/finished-ssrc-2025-accessibility-pipeline.png";
+import finishedSsrc2025DigitalAfterlifeServiceImage from "../../assets/finished-projects/finished-ssrc-2025-digital-afterlife-service.png";
+import finishedConveyorSystemOverviewImage from "../../assets/finished-projects/finished-conveyor-system-overview.png";
+import finishedConveyorSimulationOptimizationImage from "../../assets/finished-projects/finished-conveyor-simulation-optimization.png";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
@@ -29,6 +57,18 @@ const inodepPageCode = "1ced35be31ec8003a633f28976b412b5";
 const ocrPageCode = "38fd35be31ec8040ab83fd4362120249";
 const travutPageCode = "38fd35be31ec80f1a521f3a00a363316";
 const ssrcPageCode = "390d35be31ec805a9f4fdaa561ed3384";
+const finishedProductPositioningPageCode = "1aed35be31ec80aa975aee545dffe2dc";
+const finishedMedicalRecommendationPageCode = "1aed35be31ec80fd845cd58c0ea37b89";
+const finishedHyundaiClusterPageCode = "1aed35be31ec80728632d0477970ab2c";
+const finishedBackgroundMusicPageCode = "1aed35be31ec8054b840fad9c7506671";
+const finishedDualStockerPageCode = "1aed35be31ec80d2ba02ff3c8eabd048";
+const finishedOptimizationMachineLearningPageCode = "1aed35be31ec804b9b08d37a266127c1";
+const finishedLifterAssignmentPageCode = "1aed35be31ec807990bac380f34e8fe1";
+const finishedWaferLotAssignmentPageCode = "1aed35be31ec8011acc4fad80abf9c6b";
+const finishedMusicEmotionPageCode = "1acd35be31ec805d8cd0c147e3b87559";
+const finishedImageClassificationPageCode = "1acd35be31ec80f7a29ee9c34fb25d43";
+const finishedSsrc2025PageCode = "1d6d35be31ec8069af41f0a5a574df60";
+const finishedConveyorFlowPageCode = "1d6d35be31ec80eb8053d7556ff42704";
 
 const projectsByPageCode = {
   [dualTwinForkPageCode]: {
@@ -138,9 +178,8 @@ const projectsByPageCode = {
       },
     ],
   },
-};
 
-projectsByPageCode[travutPageCode] = {
+  [travutPageCode]: {
   title: "Context-aware Business Email Agent for Travel Operations",
   organization: "TRAVUT",
   sections: [
@@ -174,18 +213,14 @@ projectsByPageCode[travutPageCode] = {
       ],
     },
   ],
-};
+  },
 
-projectsByPageCode[ssrcPageCode] = {
+  [ssrcPageCode]: {
   title: "2026 학생창의자율과제 (SSRC)",
   organization: "SSRC",
   sections: [
     {
       title: "Project 1 : ENCORE: K-pop 안무 IP 확장을 위한 AI 기반 표준 무보 시스템",
-      image: {
-        src: ssrcEncoreImage,
-        alt: "ENCORE AI-based standard choreography notation system",
-      },
     },
     {
       title: "연구 개요",
@@ -209,6 +244,19 @@ projectsByPageCode[ssrcPageCode] = {
         "좌표 트랙, 의미 트랙, 권리 메타데이터로 구성된 3-layer ENCORE 구조 도출",
         "AI Hub K-pop 데이터 변환, 자동 어노테이션, 유사도 리포트, DCC 연동 MVP 설계 진행 중",
       ],
+      images: [
+        {
+          src: ssrcEncoreMotionImage,
+          alt: "ENCORE choreography skeleton extraction and Blender visualization",
+          width: "620px",
+        },
+        {
+          src: ssrcEncorePipelineImage,
+          alt: "ENCORE standardization pipeline from video data to content applications",
+          width: "920px",
+        },
+      ],
+      imageLayout: "stacked",
     },
     {
       title: "Project 2 : E-Sports 중계 시청자의 시선 분산 패턴 기반 적응형 화면 구성 시스템",
@@ -262,9 +310,9 @@ projectsByPageCode[ssrcPageCode] = {
       ],
     },
   ],
-};
+  },
 
-projectsByPageCode[inodepPageCode] = {
+  [inodepPageCode]: {
   title:
     "Zero-shot 지능형 선별관제 시스템을 위한 Multimodal 파운데이션 모델 학습 및 연구",
   organization: "INNODEP",
@@ -347,9 +395,9 @@ projectsByPageCode[inodepPageCode] = {
       },
     },
   ],
-};
+  },
 
-projectsByPageCode[ocrPageCode] = {
+  [ocrPageCode]: {
   title:
     "AI Document Intelligence: Manufacturing-Specific Embedding Models and Korean Handwriting Recognition",
   organization: "GMISSION",
@@ -410,7 +458,843 @@ projectsByPageCode[ocrPageCode] = {
       },
     },
   ],
+  },
+  // finished
+  [finishedProductPositioningPageCode]: {
+    title: "비정형의 빅데이터를 활용한 경쟁환경에서의 신제품 포지셔닝과 다기간 제품 포트폴리오 선정에 도움을 줄 수 있는 전사적 의사결정 시스템 개발",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "기업의 신제품 포지셔닝 및 제품 포트폴리오 최적화 연구는 범위의 경제 구현, 수평적․수직적 차별화, 수요 불 확실성의 중립화, 경쟁기업에 대비한 시장선점 등의 효과를 발생시킴. 또한, 기술의 발전 속도가 빨라지고 다양 성이 증가함에 따라, 소비자의 기호가 매우 빠르게 변하고 있음. 제조기업이 생산패턴을 ‘소품종-대량생산’으로 부터 ‘다품종-소량생산’으로 전환하는 것은 소비자 기호의 불확실성을 해소하기 위한 진화론적 대응이며, 이에 따라 다품종을 생산하는 제조기업의 입장에서는 범위의 경제(economies of scope) 구현이 비용경쟁력 확보의 필요조건이 됨. 제품 포트폴리오 최적화의 학문적 기존 접근 방식은 특수성이 강해, 서로 다른 기업환경에 직접 적으로 적용시키기 어려운 한계점을 가짐. 현업에는 대비되는 제품 포트폴리오 전략들이 일정한 가이드라인 없 이 시장에 혼재하고 있는 상황임.",
+        ],
+      },
+      {
+        title: "연구 목표 및 내용",
+        paragraphs: [
+          "본 연구의 목표는 기존 연구가 갖고 있는 개별 학문적 연구의 한계를 넘어 인지과학, 경제학과 경영과학 세 학 문의 융합연구를 통해 무정형의 빅데이터를 활용하여 경쟁환경에서 사업자의 신제품 포지셔닝과 다기간 제품 포 트폴리오 선정에 도움을 줄 수 있는 전사적 의사결정 시스템을 개발하는 것임.",
+        ],
+        images: [
+          {
+            src: finishedPositioningDecisionSystemImage,
+            alt: "Finished project figure",
+          },
+        ],
+      },
+      {
+        title: "주요 연구 결과",
+        blocks: [
+          {
+            type: "paragraphs",
+            items: [
+              "1. 전사적 제품 포트폴리오 최적화 시스템 개발",
+              "소비자 리뷰를 이용한 제품 포트폴리오 최적화 시스템을 개발, 웹 어플리케이션으로 구현함. 1) 제품의 속성을 이용한 클러스터링, 2)소비자 리뷰를 이용한 중요 제품 속성 도출, 3)시장 데이터를 이용한 소비자 수요 분석, 4) 이산선택 모형을 이용한 최적 제품 포트폴리오 선정",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedPositioningPortfolioSelectionImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "2. 딥러닝 기반 온라인 리뷰 감성 분류",
+              "딥러닝 기법을 활용한 온라인 리뷰 문장의 긍정과 부정을 분류하는 연구를 진행함. 여러 딥러닝 모델과 다양 한 분야의 데이터에 대해 입력 인코딩 방식을 조절하여 온라인 리뷰가 어떤 감성 극성을 갖고 있는지 판단하는 알고리즘을 개발함.",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedPositioningReviewMiningImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "3. 정보 획득(Information gain) 이론을 이용한 수요 효용 모델 개발",
+              "온라인 소비자 리뷰의 공감 및 긍정/부정을 고려하여 수요 예측에 적합한 독립 변수를 파악, 판매량과 독립변수 들과의 관계를 Lasso 회귀 알고리즘을 적용, 다중선형회귀분석을 통해 규명함.",
+              "[1] Jungju Park, Jeonghoon Mo, “An Efficient Method for Joint Product Line Selection and Pricing with Fixed Costs”, Optimization Letters, 2018.",
+              "[2] Jungju Park, Ji Hyoun Lim and Jeonghoon Mo, “A Cover-based Product Line Selection to Manage, Product Line Size and Product Similarity”, International Journal of Industrial Engineering: Theory, Applications and Practice, 2018.",
+              "[3] 김예진, 오상호, 황성범, 모정훈, “온라인 소비자 리뷰의 문맥정보 마이닝: 정보 이득과 제품 판매량의 상관 관계”, 대한산업공학회지, 2019.",
+              "[4] 오상호, 김예진, 모정훈, “정보이론을 적용한 국내 자동차 시장 수요예측”, 대한산업공학회 추계학술대회, 2017.",
+              "[5] 황성범, 모정훈, “온라인리뷰의 Information Gain 분석을 통한 판매예측”, 한국경영과학회 추계학술대회, 2016.",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  [finishedMedicalRecommendationPageCode]: {
+    title: "의료 빅데이터를 이용한 맞춤 의료행위 추천 시스템 개발",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "전자의무기록 (electronic health record, EHR)은 디지털 형태로 체계적으로 수집되어 전자적으로 저장된 환 자 및 인구의 건강정보. EHR은 인구통계학, 병력, 약물복용 및 알레르기, 예방접종 상태, 검사실 검사결과, 영상 의학 이미지, 생체징후, 나이와 성별 같은 개인적인 통계 그리고 청구정보를 포함하는 일정 범위의 데이터를 포 함할 수 있음.",
+          "병원에서 환자의 진료기록을 데이터베이스화함으로써 의료분야의 데이터 기반 연구는 기존의 패러다임을 변화 시키고 있음. 의료분야에서 발생되는 많은 양의 데이터를 단순히 분류하고 정리하는 것에 그치지 않고 이를 이 용하여 환자들 간의 진료기록을 분석하고 진단에 따라 해당되는 모집단에 알맞은 의료행위 추천시스템의 현실적 인 이용가능성을 탐색할 필요가 있음.",
+          "의료분야에서 강화학습은 다양한 응용가능성을 가지고 있지만 그 응용 수준이 아직 초기단계임(Schell et al., 2015; Choi et al., 2017). 특히 분야의 특성상 치료 행위에 따라 단계적으로 환자의 상태가 변할 수 있음을 고 려했을 때, 강화학습 모형을 이용하는 것이 적합하다고 판단됨.",
+        ],
+      },
+      {
+        title: "연구 목표",
+        paragraphs: [
+          "본 연구는 데이터베이스화된 의료 빅데이터를 바탕으로 당뇨 환자의 상태에 따른 약제처방의 영향을 파악하고, 이를 Markov decision process(MDP) 및 강화학습 기법들을 활용하여 최적의 약 처방을 추천하는 모델 개발을 연구함.",
+        ],
+      },
+      {
+        title: "연구 내용",
+        blocks: [
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedMedicalTreatmentRecommendationImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "[1] Sangho Oh, Jongyoul Park, Sujin Lee, Seungyeon Kang, Jeonghoon Mo, “Reinforcement learning-based expanded personalized diabetes treatment recommendation using South Korean electronic health records”, Expert system with Applications, 2022.",
+              "[2] Sangho Oh, Sujin Kim, Juhwan Noh, Jeonghoon Mo, “Optimal treatment recommendations for diabetes patients using the Marcov decision process along with the South Korean electronic health records”, Scientific reports, 2021.",
+              "[3] 오상호, Piao Liying, 모정훈 “의료데이터와 Markov Decision Process를 이용한 당뇨병 환자의 최적 약제 추천 모델” 대한산업공학회 춘계공동학술대회, 한국경영과학회 춘계공동학술대회, 2019.",
+              "[4] 오상호, Piao Liying, 모정훈 “Markov Decision Process를 적용한 환자의 질병 예측 및 의료 행위 추천 모델: 의료 빅데이터를 중심으로” 대한산업공학회 추계학술대회 논문집, 2018.",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  [finishedHyundaiClusterPageCode]: {
+    title: "현대자동차 자율주행 관련 신기술 리서치 산학 클러스터",
+    organization: "Hyundai Motor Group",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "신기술 리서치를 위한 산학 클러스터 세미나",
+        paragraphs: [
+          "(현대자동차그룹, 고려대학교, 서울대학교, 연세대학교, 이화여자대학교, 한국과학기술원)",
+        ],
+      },
+      {
+        title: "1차 컨퍼런스",
+        bullets: [
+          "일시 : 2020년 6월 26일(금)",
+          "장소 : Online zoom meeting",
+          "발표자 : 강승연 석사과정",
+          "주제 : Patient similarity learning 연구 소개 및 현대자동차 연구 적용 방안 공유",
+        ],
+        images: [
+          {
+            src: finishedHyundaiFirstConferenceImage,
+            alt: "Finished project figure",
+          },
+        ],
+      },
+      {
+        title: "2차 컨퍼런스",
+        blocks: [
+          {
+            type: "bullets",
+            items: [
+              "일시 : 2020년 10월 23일(금)",
+              "장소 : 섬유센터 컨퍼런스홀",
+              "발표자 : 오상호 박사과정",
+              "주제 : 강화학습을 이용한 당뇨병 치료제 추천 시스템 개발",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedHyundaiSecondConferencePresentationImage,
+                alt: "Finished project figure",
+                width: "872px",
+              },
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedHyundaiSecondConferenceSessionImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  [finishedBackgroundMusicPageCode]: {
+    title: "Background music recommendation model (SSRC)",
+    organization: "SSRC",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "Background music recommendation model",
+        paragraphs: [
+          "In this study, we propose a multi-modal music recommendation model that recommends music using video and keywords. First, for the background music recommendation model, a study was conducted to build a space where an appropriate distance from video, music, and keywords can be obtained using machine learning. After that, when video and keywords are entered, a system is created to recommend music that is close to the distance.",
+        ],
+      },
+      {
+        title: "Background music recommendation using video and keyword",
+        paragraphs: [
+          "In this study, we propose a multi-modal music recommendation model that recommends music using video and keywords. First, for the background music recommendation model, a study was conducted to build a space where an appropriate distance from video, music, and keywords can be obtained using machine learning. After that, when video and keywords are entered, a system is created to recommend music that is close to the distance.",
+        ],
+        images: [
+          {
+            src: finishedBackgroundMusicVideoKeywordImage,
+            alt: "Finished project figure",
+            width: "539px",
+          },
+        ],
+      },
+      {
+        title: "Multi-Modal Metric learning for background music recommendation",
+        paragraphs: [
+          "Video and music have very different characteristics of data, so we must map to an embedding space where we can find the distance between the two. In this study, the model was divided according to whether the existing association was used and whether keyword existed in the music DB. At this time, the embedding space is trained using metric learning, one of the machine learning techniques, and if not used, it uses a continuous emotion space, Valence-Arousal space",
+        ],
+        images: [
+          {
+            src: finishedBackgroundMusicMetricLearningImage,
+            alt: "Finished project figure",
+            width: "602px",
+          },
+        ],
+      },
+      {
+        title: "Background music recommendation model using emotion space and keyword",
+        paragraphs: [
+          "Among the previously proposed models, the model using emotion space and keywords at the same time showed the best performance, and you can directly recommend background music at the link below.",
+          "[1] 장도운, 모정훈, “배경음악 추천을 위한 영상과 키워드를 사용한 다중 양상 거리 학습 모델”, 한국경영과학회 춘계학술대회, 2022",
+        ],
+      },
+    ],
+  },
+
+  [finishedDualStockerPageCode]: {
+    title: "Dual stocker system scheduling problem with considering priority (LG Display)",
+    organization: "LG Display",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 내용",
+        hideTitle: true,
+        blocks: [
+          {
+            type: "paragraphs",
+            items: [
+              "The stocker system is one of the Automated Material Handling System(AMHS) in manufacturing system. The stocker mainly consists of one or two rack masters (or cranes) moving along a single track to transport cassettes. Because the stocker system is the primary material handling system, the performance of stocker system directly affects the overall production performance.",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedDualStockerSystemImage,
+                alt: "Fig 1. Dual stocker system (Source : Hwang(2018))",
+                caption: "Fig 1. Dual stocker system (Source : Hwang(2018))",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "In practice, each jobs have different priorities. Various products, customer demands, delivery date and production environments make the different level of job priorities. Therefore, we should consider not only efficiency(makespan) but the priority. Besides, a fairness of the scheduling should be considered.",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedDualStockerPrioritySchedulingImage,
+                alt: "Fig 2. Scheduling example with priority",
+                caption: "Fig 2. Scheduling example with priority",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "Several mathematical optimization methods are used to solving many scheduling problems. Dynamic programming is an optimization approach that transforms a complex problem into a sequence of simpler problems. However, as the problem becomes more complex, it is difficult(or impossible) to find an optimal solution within an appropriate time(suffering from the curse of dimensionality). So, the (meta)-heuristic algorithm is applied to scheduling problem and has the advantage of giving a (near)-optimal solution in a relatively short time compared to the mathematical optimization methods. Tabu search, simulated annealing and genetic algorithm are representative heuristic algorithm that generate appropriate solutions in reasonable computation time.",
+              "Recently, machine learning and deep learning approaches, which use the function approximation with neural network, have been widely studied to solve the scheduling problems. Especially reinforcement learning(RL) that learn a policy based on an action value function. In this work, we will study how to model the dual stocker system scheduling problem as a Markov decision process(MDP) and use the deep reinforcement learning to train a scheduler.(RL agent)",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedDualStockerRlArchitectureImage,
+                alt: "Fig 3. Example of RL architecture in scheduling (Source : Luo(2020))",
+                caption: "Fig 3. Example of RL architecture in scheduling (Source : Luo(2020))",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "[1] Minjoon Kim, Jeonghoon Mo, “An efficient prioritized scheduling heuristic algorithm for dual stocker systems”, 한국경영과학회 추계학술대회, 2021",
+              "[2] Minjoon Kim, Jeonghoon Mo, “A comparison of heuristic and reinforcement learning approach to dual stocker scheduling considering priority”, 한국경영과학회 춘계학술대회, 2022",
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
+  [finishedOptimizationMachineLearningPageCode]: {
+    title: "Optimization vs. Machine Learning: 장비 스케쥴링을 중심으로",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "2016년 알파고의 등장 이후 CNN(Convolutional Neural Network), RNN(Recurrent Neural Network), 강화학습 등을 사용한 머신러닝 방법론은 최적화 분야 등에서도 사용범위를 넓혀가고 있고 성능이 우수하다고 주장하고 있음. 최근 연구에서 좋은 성과를 보여주었다고 하지만 아직 초기단계로 기존의 최적화 방법론 대비 다음과 같은 한계점이 존재함. 1) 표현에 따라 성능이 민감함. 2) 학습에 많은 data와 시간/지원이 소모되며, 모델이 변화가 생기면 다시 학습해야 함. 3) 도출된 결과에 대한 원인 파악이 어려움(Black-box model)",
+        ],
+      },
+      {
+        title: "연구 목표",
+        paragraphs: [
+          "본 연구의 목표는 최적화 문제의 새로운 접근법인 머신러닝 기반 방법론을 전통적인 최적화 방법론과 비교/평가하고 머신러닝 방법론의 개선점을 연구하는 것임. 이를 위해 LG display 반도체/LCD 공장의 스케쥴링 문제를 이용하여 두 방법론을 비교하고, 이와 더불어 머신러닝 방법론의 표현 민감도 연구, 재학습 비용 연구, 설명가능성 연구를 수행할 것임.",
+        ],
+      },
+      {
+        title: "연구 내용",
+        images: [
+          {
+            src: finishedOptimizationMachineLearningYearlyPlanImage,
+            alt: "[그림 1] 연차별 연구내용",
+            caption: "[그림 1] 연차별 연구내용",
+          },
+        ],
+      },
+      {
+        title: "결과",
+      },
+      {
+        title: "참고 문헌",
+        paragraphs: [
+          "[1] Luo, Shu., “Dynamic scheduling for flexible job shop with new job insertions by deep reinforcement learning.”, Applied Soft Computing, 2020.",
+          "[2] Han, Bao-An, and Jian-Jun Yang., “Research on adaptive job shop scheduling problems based on dueling double DQN.”, IEEE Access, 2020.",
+          "[3] Das, Arun, and Paul Rad, “Opportunities and challenges in explainable artificial intelligence (xai): A survey.”, arXiv, 2020.",
+          "[4] Tallón-Ballesteros, A., and C. Chen., “Explainable AI: Using Shapley value to explain complex anomaly detection ML-based systems.”, Machine learning and artificial intelligence, 2020.",
+          "[5] Hwang Seol., “강화 학습을 이용한 듀얼 크레인 스토커 스케쥴링”, 한국과학기술원, 2018.",
+        ],
+      },
+    ],
+  },
+
+  [finishedLifterAssignmentPageCode]: {
+    title: "Lifter Assignment problem in multi-floor FAB",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 내용",
+        hideTitle: true,
+        blocks: [
+          {
+            type: "paragraphs",
+            items: [
+              "As semiconductor manufacturing processes become complicated and require more production steps, a single-floor FAB is not sufficient to meet the increasing demand. Therefore, a multi-floor FAB was developed in recent years and the efficient operations of inter-line (inter-floor) lifter emerged as one of the important challenges in semiconductor manufacturing. Due to an increase in inter-line transfer, a bottleneck can occur in lifters, leading to production loss. Hence, it is crucial to assign lots to each lifter properly.",
+              "Since traffic control is one of the significant challenges in an AMHS, the efficiency of inter-line delivery has emerged as an important issue. The number of lifters is limited and the increase in inter-line delivery leads to a bottleneck if an excessive number of FOUPs are assigned to a single lifter. Therefore, it is essential to assign interline TRs to lifters properly in order not to cause production loss.",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedLifterAssignmentOverviewImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "Our project aims to design an algorithm that can be applied to a multi-floor FAB with heterogeneous lifters. In contrast to previous papers, in our approach, a lifter is assigned and scheduled simultaneously using reinforcement learning. However, if the cost function is calculated solely with the total delivery time, utilization of lifters becomes unbalanced and lifters that are nearby bottleneck machines will suffer from excessive loads. Therefore, we proposed a heterogeneous lifter assignment algorithm balancing utilization.",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Lifter operation procedure",
+        blocks: [
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedLifterOperationProcedureImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "A lifter is composed of input and output ports including physical and virtual ports, a rack-master, and shelves. Once an inter-line transfer request is generated, a nearby vehicle moves to the machine (side-track-buffer) and delivers a FOUP from a source machine (side-track-buffer) to a lifter. The FOUP is assigned to an available lifter by the manufacturing execution system (MES) according to its policy and waits in an input port until the rack master is available. An ‘available lifter’ means that the number of scheduled lots is less than the maximum capacity of input ports. The FOUP is delivered to a different floor by a rack-master (transporting robot) and waits for a vehicle in an output port to be transported to the destination machine. If all the output ports are occupied, the FOUP is sent to a shelf. If all the lifters are occupied, a vehicle carrying the FOUP moves along the railway not to block other vehicles, which is called a “retrial’. If the assigned lifter is still unavailable after several retrials, the FOUP is reassigned to another lifter, which is called an alternative delivery.",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Heterogeneous Lifter Assignment",
+        paragraphs: [
+          "In multi-floor FABs, while each floor is connected via lifters, heterogeneous lifters exist. Each lifter runs only on certain floors or in a certain direction. If lifter A only runs between the first and the second floor and lifter B runs between the second and fourth floor, a TR, which is scheduled to be transported from the first floor to the fourth floor, can be assigned to both lifter A and B in order. Using two different lifters increases net delivery time. However, if all other lifters are occupied or the waiting time of other lifters is longer, delivery via two different lifters should be considered.",
+        ],
+      },
+      {
+        title: "Benchmark Solution approaches",
+        paragraphs: [
+          "1) Round Robin rule",
+          "Each lot is assigned equally to each lifter in a circular order. While the round robin rule can reduce a gap between utilization of lifters, the rule cannot guarantee transfer efficiency as it does not consider waiting time and distance from machine to lifter.",
+          "2) Shortest Distance First",
+          "A transfer request is assigned to the nearest lifter from the source machine. The rule reduces delivery time from the source machine to the lifter. However, as it does not consider the delivery time from the lifter to the destination machine, the rule cannot minimize the actual delivery time. Moreover, if excessive lots are waiting in the input ports of the assigned lifter, the sum of the delivery time and the waiting time increases.",
+          "3) SEAT (Shortest Expected Arrival Time)",
+          "Na et al. [1] proposed Shorted Expected Arrival Time (SEAT) rule and compared with four different rules to assign lifters. A transfer request is assigned to a lifter that minimize the expected arrival time derived from the following equation:",
+          "4) MDP-based algorithm",
+          "Shin et al. [2] designed a two-step algorithm for inter-line transports.: 1) an MDP-based algorithm for inter-line transports and 2) an algorithm using clustering, partitioning, and tournament methods to reduce the dimension of the problem. Using the Markov decision process, they considered future states as well as current states.",
+        ],
+      },
+      {
+        title: "참고문헌",
+        paragraphs: [
+          "[1] Na B, Woo JE, Lee J (2016) Lifter assignment problem for inter-line transfers in semiconductor manufacturing facilities. Int J Adv Manuf Technol 86:1615–26.",
+          "[2] Shin, K., Jang, H. & Kim, H. (2022) An MDP-based lifter assignment algorithm for inter-floor transportation in semiconductor fabrication. Int J Adv Manuf Technol 119, 6583–6598",
+        ],
+      },
+    ],
+  },
+
+  [finishedWaferLotAssignmentPageCode]: {
+    title: "Lot assignment problem in wafer fabrication",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "Introduction",
+        paragraphs: [
+          "Wafer fabrication in display manufacturing is a highly complex and dynamic re-entrant process in which wafers go through hundreds of processing steps, entering the same processing group of machines several times. The success of display manufacturer is determined by its ability to provide the quantity and quality demanded by customers in an extremely competitive environment. For success of display manufacturing, they have to improve flow time, WIP level, throughput rate and equipment utilization. Assigning lots to the appropriate equipment can improve these performance measurement factors.",
+        ],
+      },
+      {
+        title: "Machine priority based lot assignment",
+        paragraphs: [
+          "There are several ways to assign lots to machine and one of them is the machine priority based lot assignment method. This method involves ranking machine in each machine group and assigning lots to the machine in order of priority. The priority of each machine is determined based on its current status such as idle, process etc.",
+        ],
+      },
+      {
+        title: "Issue in machine priority based lot assignment problem",
+        paragraphs: [
+          "Unnecessary detour can cause by applying priority to each machine. If we assume that the priority of the PTH1 machine is higher than that of the PTH2 machine, PHT1 will pick up the closer lot, AA03, and AA01 will be assigned to the PHT2 machine. It can cause unnecessary detour compared to when AA01 is assigned to the PHT1 machine and AA03 is assigned to the PH2 machine.",
+        ],
+        images: [
+          {
+            src: finishedWaferLotUnnecessaryDetourImage,
+            alt: "Fig 1. Example of unnecessary detour",
+            caption: "Fig 1. Example of unnecessary detour",
+          },
+        ],
+      },
+      {
+        title: "Soultion approach",
+        paragraphs: [
+          "1. Heuristic algorithm",
+          "The fisrst approach is to use heuristic algorithm. For example, assigning the lot closest in distance to a particular machine or the lot with the estimated earliest arrival time. Altough heuristic algorithms enable simple and fast computation, the solution obtained may not be the optimal solution.",
+          "2. Mathematical model",
+          "Using mathematical model is another solution to approach lot assignment problem. Objective function can be minimize distance, waiting time, transfer time or maximize machine utilization, total throughput. The approach using mathematical models can obtain the optimal solutionm, but it has the disadvantage of taking longer computation time and not considering dynamic situations.",
+        ],
+      },
+      {
+        title: "참고문헌",
+        paragraphs: [
+          "[1] M.Vimala Rani, “A state-of-art review and a simple meta-analysis on deterministic scheduling of diffusion furnaces in semiconductor manufacturing”, 2021",
+          "[2] Juan Liu, et al., “Scenario-based multi-objective robust scheduling for a semiconductor production line”, 2019",
+        ],
+      },
+    ],
+  },
+
+  [finishedMusicEmotionPageCode]: {
+    title: "Music Emotion Recognition",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "Emotion Recognition은 음악, 표정, 스피치, 텍스트, 영상 등 여러 도메인에서 연구가 진행되고 있음. Music Emotion Recognition(MER)은 청취자가 음악을 들으며 느끼는 감정을 분류하는 연구로, Valence-Arousal(VA-SPACE) 좌표 에서 연속적인 감정 값을 표현하는 Dimensional approach, 특정 Emotion 카테고리로 분류하는 Categorical approach가 있음. 현재 MER 분야에서는 Audio data에 Lyrics, Symbolic(MIDI data), Image, Biological data 등을 추가적으로 사용, Multi-modal 방법으로 문제 해결을 시도하고 있음. MER 연구는 추천시스템, 작곡 자동화, 심리 치료, 음악 시각화 등으로 학계 및 산업계에 응용되어 적용될 수 있지만 한계점이 존재함. 1) Emotion의 주관성 및 음악에서 Emotion feature 나타내는 지표 부재 2) 양질의 대량 데이터 확보 어려움. 3) 낮은 Emotion 분류 정확도 (Music Information Retrieval Evaluation Exchange(MIREX), audio mood classification task, 69.8%)",
+        ],
+        images: [
+          {
+            src: finishedMusicEmotionModelsImage,
+            alt: "Fig 1. (Left) A Circumplex Model of Affect, The V-A Model (Russell, 1980) Fig 2. (Right) Geneva Emotion Wheel Model (Scherer, 2005)",
+            caption: "Fig 1. (Left) A Circumplex Model of Affect, The V-A Model (Russell, 1980) Fig 2. (Right) Geneva Emotion Wheel Model (Scherer, 2005)",
+          },
+        ],
+      },
+      {
+        title: "연구 목표",
+        paragraphs: [
+          "음악에서 감정 분류 정확도를 높이는 것이 본 연구의 목표임. 스마트미디어 서비스 창의자율과제에 참여함. XGBoost 모델 기반 Music Emotion Classification을 진행. 음악 Beat detection하여 해당 감정 색상 시각화 모델 구현함. 선행 연구를 기반으로 감정 분류 정확도를 개선할 것임.",
+        ],
+        images: [
+          {
+            src: finishedMusicEmotionClassificationVisualizationImage,
+            alt: "Fig 3. Music emotion classifcation & visualization model process",
+            caption: "Fig 3. Music emotion classifcation & visualization model process",
+          },
+        ],
+      },
+      {
+        title: "연구 내용",
+        paragraphs: [
+          "Spotify open api 통해 데이터 수집 진행. 머신 러닝 모델을 이용하여 음악에서 감정 분류 진행함. 음악이 진행되며 나타나는 감정의 심화 정도를 표현하기 위해 Lyrics, Danceability 지표로 각각 Valence, Arousal 값에 가중치 부여. 시각화 모델에서 감정 및 색상을 표현하였음. MER 정확도 개선을 위해 여러 도메인에서 Emotion Recognition 리서치 진행할 예정임. 딥러닝 모델 이용하여 MER 연구 진행.",
+        ],
+      },
+      {
+        title: "참고 문헌",
+        paragraphs: [
+          "[1] Posner, Jonathan, James A. Russell, and Bradley S. Peterson. “The circumplex model of affect: An integrative approach to affective neuroscience, cognitive development, and psychopathology.” Development and psychopathology 17.3 (2005): 715-734.",
+          "[2] Vaswani, Ashish, et al. “Attention is all you need.” Advances in neural information processing systems 30 (2017).",
+          "[3] Chen, Changfeng, and Qiang Li. “A multimodal music emotion classification method based on multifeature combined network classifier.” Mathematical Problems in Engineering 2020 (2020): 1-11.",
+        ],
+      },
+    ],
+  },
+
+  [finishedImageClassificationPageCode]: {
+    title: "배경 정보를 고려한 image classification",
+    organization: "Finished Project",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "최근 이미지 분류 알고리즘은 많은 발전을 보이며 21,841개의 범주를 포함하고 있는 ImageNet 데이터셋에서도 90% 이상의 성능을 보이고 있다. 하지만 실제 공정에서 발생한 Image data에 대한 classification은 학습 데이터의 부족으로 적은 범주에서도 사용 가능한 인공지능을 개발하는데 한계가 있다. 또한 실제 제조 현장의 공정 데이터에서는 같은 Object가 다른 위치에 존재할 때 다른 범주로 정의 되는 경우(후속 조치가 달라져 다르게 분류)가 있어 인공지능 개발에 어려움이 있다.",
+        ],
+      },
+      {
+        title: "연구 목표",
+        paragraphs: [
+          "본 연구는 이미지 데이터에서 같은 Object가 다른 위치에 존재할 때 다른 범주로 분류하는 인공지능 모델에 대해 연구한다. 제안한 모델을 목표 데이터세트에서 최신 이미지 분류 모델과 비교 하고 95%이상의 성능을 목표로 한다.",
+        ],
+      },
+      {
+        title: "연구 방법",
+        paragraphs: [
+          "배경 정보를 보여주는 데이터 생성. 즉, 이미지 데이터에서 객체를 제거하여 배경만 남김.",
+          "원본 이미지에서 feature를 추출하는 신경망과 배경만 남은 이미지에서 feature를 추출하는 신경망, 두 신경망으로 classifcation 모델 구성. 두 신경망에서 추출된 feature를 weighted combine하여 feature를 생성하고 image classification task 수행하도록 학습.",
+        ],
+        images: [
+          {
+            src: finishedImageClassificationBackgroundProcessImage,
+            alt: "Fig 1. Classifcation task process",
+            caption: "Fig 1. Classifcation task process",
+          },
+        ],
+      },
+      {
+        title: "참고 문헌",
+        paragraphs: [
+          "[1] YANG, Yuting; MEI, Gang; PICCIALLI, Francesco. “A Deep Learning Approach Considering Image Background for Pneumonia Identification Using Explainable AI (XAI)” IEEE/ACM Transactions on Computational Biology and Bioinformatics, 2022",
+        ],
+      },
+    ],
+  },
+
+  [finishedSsrc2025PageCode]: {
+    title: "2025 학생창의-자율과제 (SSRC)",
+    organization: "SSRC",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "Project 1 | 어르신 맞춤 AI 길 안내 비서",
+      },
+      {
+        title: "연구 배경 :",
+        paragraphs: [
+          "고령층의 Smartphone Navigation App의 UI/UX가 복잡하여 사용이 어려움",
+        ],
+        bullets: [
+          "ex) 길에서 학생에게 경로를 묻는 경우가 많음",
+        ],
+      },
+      {
+        title: "연구 목표",
+        blocks: [
+          {
+            type: "paragraphs",
+            items: [
+              "음성으로 간단한 길을 안내해주는 AI Agent 개발",
+            ],
+          },
+          {
+            type: "bullets",
+            items: [
+              "Text-to-Speech",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedSsrc2025NavigationTtsImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "bullets",
+            items: [
+              "Speech Recognition Pipeline: From Acoustic Signal to Text",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedSsrc2025NavigationSpeechPipelineImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        title: "Project 2 | 사회적 소수자를 위한 디지털 접근성 개선방안",
+      },
+      {
+        title: "연구배경",
+        paragraphs: [
+          "고령자, 장애인 등 사회적 소수자 계층은 디지털 기기의 조작에 큰 어려움을 겪고 있으며, 이는 일상생활의 자립성과 정보 접근에 장애가 됩니다. 본 프로젝트는 이러한 디지털 격차 문제를 해소하기 위해 최신 인공지능 기술을 활용한 접근성 강화 방안을 제안합니다.",
+        ],
+      },
+      {
+        title: "연구 목표",
+        paragraphs: [
+          "최근의 대형 언어 모델(LLM)은 사람처럼 문장을 이해하고 생성할 수 있으며, 시각-언어 모델(VLM)은 이미지와 언어를 함께 해석하여 맥락에 맞는 응답을 생성할 수 있습니다. 이 두 모델을 결합하면 사용자 의도를 자연스럽게 해석하고, 시각 정보를 바탕으로 앱 상의 요소까지 정확히 이해할 수 있습니다.",
+        ],
+        images: [
+          {
+            src: finishedSsrc2025AccessibilityAssistantImage,
+            alt: "Finished project figure",
+          },
+        ],
+      },
+      {
+        title: "파이프라인 구조",
+        blocks: [
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedSsrc2025AccessibilityPipelineImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "사용자가 스마트폰 카메라로 손글씨나 안내문을 촬영하면, 시스템은 해당 이미지를 분석하여 필요한 작업을 자동으로 수행합니다. 예를 들어, “홍길동에게 전화 걸어”라는 문장을 인식한 뒤, 실제로 전화 앱을 실행하고 연락을 연결하는 일련의 과정을 자동화할 수 있습니다.",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Project 3 | 안전한 디지털 애프터라이프를 위한 ‘디지털 유산 관리 서비스’ 제안",
+      },
+      {
+        title: "연구 배경",
+        paragraphs: [
+          "디지털 환경의 확산으로 사망 후에도 온라인에 남는 디지털 흔적(디지털 레거시)의 관리가 중요한 이슈가 되고 있다. 개인은 사망 후 자신의 정보가 유출되거나 악용될 위험에 노출되며, 사회적으로는 범죄 악용과 관리 비용 증가 문제가 발생한다. 기존 서비스들은 디지털 금고 형태로 정보를 유족에게 전달하지만, 민감 정보 삭제와 유산 구분에는 한계가 있다. 이에 본 연구는 디지털 유언장 기반의 보안성 있는 유산 관리 시스템을 제안한다.",
+        ],
+      },
+      {
+        title: "연구 내용",
+        paragraphs: [
+          "본 연구는 사망자의 디지털 자산을 AI가 자동으로 탐색·분류하여 유족이 불필요한 개인정보를 손쉽게 삭제하고, 보존할 가치는 유지할 수 있도록 지원하는 디지털 유산 관리 서비스를 개발하는 데 목적이 있다. 기존 서비스가 생전 데이터 보관에 초점을 두는 반면, 본 연구는 사망 후 AI가 이메일, SNS, 클라우드 등을 분석해 계정을 정리하고 삭제 요청을 지원하는 기능을 제공한다는 점에서 차별성을 갖는다.",
+        ],
+        bullets: [
+          "서비스 구조",
+        ],
+        images: [
+          {
+            src: finishedSsrc2025DigitalAfterlifeServiceImage,
+            alt: "Finished project figure",
+          },
+        ],
+      },
+    ],
+  },
+
+  [finishedConveyorFlowPageCode]: {
+    title: "컨베이어 시스템을 위한 물류 흐름 최적화 (LG Energy Solution)",
+    organization: "LG Energy Solution",
+    date: "2025.01 ~ 2025.12",
+    sections: [
+      {
+        title: "연구 개요",
+        paragraphs: [
+          "생산공장 와 물류시설의 자동화 및  무인화가 가속화됨에 따라, 그를 위한 최적화 기법 개발이 필요합니다.",
+          "본 연구는 LG Energy Solution과 함께 진행하며, Simulation & Optimization 관점에서 물류 흐름을 위한 방안을 개발 및 검증합니다.",
+          "기존 컨베이어 시스템과 달리, 본 연구의 대상은 다수의 단방향 Short-cut들을 포함하는 컨베이어 시스템이기에 더욱 정교하고 복잡한 상황에서도 구현 가능한 solution 도출을 목표로 합니다.",
+        ],
+        images: [
+          {
+            src: finishedConveyorSystemOverviewImage,
+            alt: "Finished project figure",
+          },
+        ],
+      },
+      {
+        title: "연구 목표",
+        blocks: [
+          {
+            type: "bullets",
+            items: [
+              "Python 기반  시뮬레이션 환경 구축",
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "본 연구의 대상이 되는 컨베이어를 비롯한 실제 물류 시스템을 실험 가능한 시뮬레이션 환경으로 구축합니다.",
+              "이를 다양한 물류 흐름 상황과 최적화 모델을 적용해보는 등의 지속적인 실험 및 효과 검증이 가능합니다.",
+            ],
+          },
+          {
+            type: "bullets",
+            items: [
+              "물류 흐름 최적화를 위한 수학적 모델링 및 검증",
+            ],
+          },
+          {
+            type: "paragraphs",
+            items: [
+              "실제 산업에서는 시시각각 변하는 물류 환경에 맞춰 사용이 가능한 연산 속도가 빠르고 구조가 복잡하지 않은 수학적 모델을 필요로 합니다.",
+              "이를 위해 수리 최적화 방법을 사용하여 물류 시스템의 효율을 최대화하기 위한 Objective function, Decision variables, Constraints를 정의하고 실험합니다.",
+              "마지막으로 시뮬레이션 환경을 통해 최적화 모델의 성능을 여러 상황에 대해 검증하고, 보완합니다.",
+            ],
+          },
+          {
+            type: "images",
+            items: [
+              {
+                src: finishedConveyorSimulationOptimizationImage,
+                alt: "Finished project figure",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 };
+
+function renderParagraphs(paragraphs) {
+  return (
+    <ParagraphGroup>
+      {paragraphs.map((paragraph, index) => (
+        <p key={`${paragraph}-${index}`}>{paragraph}</p>
+      ))}
+    </ParagraphGroup>
+  );
+}
+
+function renderBullets(bullets) {
+  return (
+    <BulletList>
+      {bullets.map((item, index) => (
+        <li key={`${item}-${index}`}>{item}</li>
+      ))}
+    </BulletList>
+  );
+}
+
+function renderSupportingImages(images, imageLayout, flush = false) {
+  return (
+    <SupportingImageGrid
+      $single={images.length === 1}
+      $stacked={imageLayout === "stacked"}
+      $flush={flush}
+    >
+      {images.map((image) => (
+        <SupportingImageFigure key={image.src}>
+          <SupportingImage
+            src={image.src}
+            alt={image.alt}
+            $width={image.width}
+          />
+          {image.caption ? (
+            <SupportingImageCaption>{image.caption}</SupportingImageCaption>
+          ) : null}
+        </SupportingImageFigure>
+      ))}
+    </SupportingImageGrid>
+  );
+}
+
+function renderOrderedBlock(block, section, index) {
+  const isMediaBlock =
+    block.type === "images" ||
+    block.type === "figure" ||
+    block.type === "image" ||
+    block.type === "logo";
+  return (
+    <OrderedContentBlock
+      key={`${section.title}-${block.type}-${index}`}
+      $isFirst={index === 0}
+      $isMedia={isMediaBlock}
+    >
+      {block.type === "paragraphs" ? renderParagraphs(block.items) : null}
+      {block.type === "bullets" ? renderBullets(block.items) : null}
+      {block.type === "figure" ? (
+        <FigureBlock $flush>
+          <MainFigure src={block.figure.src} alt={block.figure.alt} />
+          <FigureCaption>{block.figure.caption}</FigureCaption>
+        </FigureBlock>
+      ) : null}
+      {block.type === "image" ? (
+        <ConferenceImage src={block.image.src} alt={block.image.alt} $flush />
+      ) : null}
+      {block.type === "images"
+        ? renderSupportingImages(
+            block.items,
+            block.imageLayout || section.imageLayout,
+            true,
+          )
+        : null}
+      {block.type === "logo" ? (
+        <CollaboratorLogo
+          src={block.logo.src}
+          alt={block.logo.alt}
+          $width={block.logo.width}
+          $flush
+        />
+      ) : null}
+    </OrderedContentBlock>
+  );
+}
 
 const TestSubProject = () => {
   const [searchParams] = useSearchParams();
@@ -439,45 +1323,37 @@ const TestSubProject = () => {
         <ContentFrame data-pagecode={pageCode || dualTwinForkPageCode}>
           {project.sections.map((section) => (
             <ContentSection key={section.title}>
-              <SectionTitle>{section.title}</SectionTitle>
+              {section.hideTitle ? null : <SectionTitle>{section.title}</SectionTitle>}
               {section.kicker ? <SectionKicker>{section.kicker}</SectionKicker> : null}
-              {section.paragraphs ? (
-                <ParagraphGroup>
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </ParagraphGroup>
-              ) : null}
-              {section.bullets ? (
-                <BulletList>
-                  {section.bullets.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </BulletList>
-              ) : null}
-              {section.figure ? (
-                <FigureBlock>
-                  <MainFigure src={section.figure.src} alt={section.figure.alt} />
-                  <FigureCaption>{section.figure.caption}</FigureCaption>
-                </FigureBlock>
-              ) : null}
-              {section.image ? (
-                <ConferenceImage src={section.image.src} alt={section.image.alt} />
-              ) : null}
-              {section.images ? (
-                <SupportingImageGrid>
-                  {section.images.map((image) => (
-                    <SupportingImage key={image.src} src={image.src} alt={image.alt} />
-                  ))}
-                </SupportingImageGrid>
-              ) : null}
-              {section.logo ? (
-                <CollaboratorLogo
-                  src={section.logo.src}
-                  alt={section.logo.alt}
-                  $width={section.logo.width}
-                />
-              ) : null}
+              {section.blocks
+                ? section.blocks.map((block, index) =>
+                    renderOrderedBlock(block, section, index),
+                  )
+                : (
+                  <>
+                    {section.paragraphs ? renderParagraphs(section.paragraphs) : null}
+                    {section.bullets ? renderBullets(section.bullets) : null}
+                    {section.figure ? (
+                      <FigureBlock>
+                        <MainFigure src={section.figure.src} alt={section.figure.alt} />
+                        <FigureCaption>{section.figure.caption}</FigureCaption>
+                      </FigureBlock>
+                    ) : null}
+                    {section.image ? (
+                      <ConferenceImage src={section.image.src} alt={section.image.alt} />
+                    ) : null}
+                    {section.images
+                      ? renderSupportingImages(section.images, section.imageLayout)
+                      : null}
+                    {section.logo ? (
+                      <CollaboratorLogo
+                        src={section.logo.src}
+                        alt={section.logo.alt}
+                        $width={section.logo.width}
+                      />
+                    ) : null}
+                  </>
+                )}
             </ContentSection>
           ))}
         </ContentFrame>
@@ -574,6 +1450,11 @@ const SectionKicker = styled.p`
   }
 `;
 
+const OrderedContentBlock = styled.div`
+  margin-top: ${(props) =>
+    props.$isFirst ? "0" : props.$isMedia ? "36px" : "18px"};
+`;
+
 const ParagraphGroup = styled.div`
   max-width: 1100px;
   color: #111111;
@@ -615,7 +1496,7 @@ const BulletList = styled.ul`
 
 const FigureBlock = styled.figure`
   width: 590px;
-  margin: 34px auto 0;
+  margin: ${(props) => (props.$flush ? "0 auto" : "34px auto 0")};
   text-align: center;
 
   @media (max-width: 680px) {
@@ -643,7 +1524,7 @@ const ConferenceImage = styled.img`
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 36px auto 0;
+  margin: ${(props) => (props.$flush ? "0 auto" : "36px auto 0")};
   border: 1px solid #eeeeee;
   border-radius: 6px;
   object-fit: contain;
@@ -651,9 +1532,11 @@ const ConferenceImage = styled.img`
 
 const SupportingImageGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin: 36px auto 0;
+  grid-template-columns: ${(props) =>
+    props.$stacked || props.$single ? "1fr" : "repeat(2, minmax(0, 1fr))"};
+  align-items: center;
+  gap: ${(props) => (props.$stacked ? "20px" : "24px")};
+  margin: ${(props) => (props.$flush ? "0 auto" : "36px auto 0")};
   max-width: 1000px;
 
   @media (max-width: 860px) {
@@ -662,12 +1545,29 @@ const SupportingImageGrid = styled.div`
 `;
 
 const SupportingImage = styled.img`
-  width: 100%;
+  width: ${(props) => props.$width || "100%"};
+  max-width: 100%;
   height: auto;
   display: block;
+  margin: 0 auto;
   border: 1px solid #eeeeee;
   border-radius: 6px;
   object-fit: contain;
+`;
+
+const SupportingImageFigure = styled.figure`
+  width: 100%;
+  margin: 0;
+  justify-self: center;
+`;
+
+const SupportingImageCaption = styled.figcaption`
+  margin-top: 10px;
+  color: #4f4f4f;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
 `;
 
 const CollaboratorLogo = styled.img`
@@ -675,7 +1575,7 @@ const CollaboratorLogo = styled.img`
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 58px auto 0;
+  margin: ${(props) => (props.$flush ? "0 auto" : "58px auto 0")};
   object-fit: contain;
 `;
 
