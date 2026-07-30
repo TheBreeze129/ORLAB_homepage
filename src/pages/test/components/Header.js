@@ -26,9 +26,9 @@ const researchItems = [
 ];
 
 const boardNavItems = [
-  { id: "album", label: "Album", to: "/test/board" },
-  { id: "seminar", label: "Seminar", to: "/test/board?board=seminar" },
+  { id: "seminar", label: "Seminar", to: "/test/board" },
   { id: "workshop", label: "Workshop", to: "/test/board?board=workshop" },
+  { id: "album", label: "Album", to: "/test/board?board=album" },
 ];
 
 const Header = ({

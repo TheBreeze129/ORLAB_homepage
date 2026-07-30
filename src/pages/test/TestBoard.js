@@ -12,10 +12,10 @@ const TestBoard = () => {
   const requestedBoard = searchParams.get("board");
   const activeBoard = boardItems.some((item) => item.id === requestedBoard)
     ? requestedBoard
-    : "album";
+    : "seminar";
 
   const handleBoardChange = (boardId) => {
-    setSearchParams(boardId === "album" ? {} : { board: boardId });
+    setSearchParams(boardId === "seminar" ? {} : { board: boardId });
   };
 
   return (

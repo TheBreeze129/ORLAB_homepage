@@ -5,7 +5,6 @@ import Header from "./components/Header.js";
 import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import profMoImage from "../../assets/profmo.jpg";
-import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
 import alumniPlaceholder from "../../assets/figma/member-alumni-placeholder.png";
 import professorMailIcon from "../../assets/figma/professor-mail.png";
 import professorWebIcon from "../../assets/figma/professor-web.png";
@@ -244,12 +243,46 @@ const TestMember = () => {
 };
 
 function makeDummyResearchers(prefix, count) {
+  const postDocSamples = [
+    {
+      Name: "Minhyuk Jeong",
+      Email: "wjd9496@yonsei.ac.kr",
+      interests: "AI in Finance, Asset Pricing, Energy Economics",
+    },
+    {
+      Name: "Keon Hee Lee",
+      Email: "kh.lee@yonsei.ac.kr",
+      interests: "Optimization, Machine Learning",
+    },
+    {
+      Name: "Hee Beom Park",
+      Email: "heebumpark0724@gmail.com",
+      interests: "LLM, Agentic AI",
+    },
+  ];
+  const defaultSamples = [
+    {
+      Name: "Keon Hee Lee",
+      Email: "kh.lee@yonsei.ac.kr",
+      interests: "Optimization, Machine Learning",
+    },
+    {
+      Name: "Hee Beom Park",
+      Email: "heebumpark0724@gmail.com",
+      interests: "LLM, Agentic AI",
+    },
+    {
+      Name: "Long Email Tester",
+      Email: "very.long.researcher.email.address@yonsei.ac.kr",
+      interests: "Optimization, Reinforcement Learning, Deep Learning",
+    },
+  ];
+  const samples = prefix === "pd" ? postDocSamples : defaultSamples;
+
   return Array.from({ length: count }, (_, index) => ({
     id: `${prefix}-dummy-${index + 1}`,
-    Name: "Hyomin Choi",
-    Email: "abc@abc.com",
-    interests: "Large multi-Modal Models, Deep Learning",
-    image: researcherPlaceholder,
+    ...samples[index % samples.length],
+    image: profMoImage,
   }));
 }
 
@@ -368,29 +401,48 @@ const ResearchersContent = ({ data, errors, loading }) => (
             label={section.title}
           />
           {(data[section.key] || []).map((member) => (
-            <ResearcherCard key={member.id || member.Email || member.Name}>
-              <ResearcherImage src={member.image} alt={member.Name} />
-              <ResearcherName>{normalizeName(member.Name)}</ResearcherName>
-              <ResearcherInfoList>
-                <ResearcherInfoRow>
-                  <ResearcherIconWrap aria-hidden="true">
-                    <ResearcherIcon src={memberInterestIcon} alt="" />
-                  </ResearcherIconWrap>
-                  <ResearcherMeta>{member.interests}</ResearcherMeta>
-                </ResearcherInfoRow>
-                <ResearcherInfoRow>
-                  <ResearcherIconWrap aria-hidden="true">
-                    <ResearcherIcon src={memberEmailIcon} alt="" />
-                  </ResearcherIconWrap>
-                  <ResearcherMeta>{member.Email}</ResearcherMeta>
-                </ResearcherInfoRow>
-              </ResearcherInfoList>
-            </ResearcherCard>
+            <ResearcherCard
+              key={member.id || member.Email || member.Name}
+              member={member}
+              preserveMeta={section.key === "pd"}
+            />
           ))}
         </ResearcherGrid>
       </ResearcherSection>
     ))}
   </MembersFrame>
+);
+
+const ResearcherCard = ({ member, preserveMeta }) => (
+  <ResearcherCardFrame>
+    <ResearcherImageFrame>
+      <ResearcherImage src={member.image} alt={member.Name} />
+    </ResearcherImageFrame>
+    <ResearcherName>{normalizeName(member.Name)}</ResearcherName>
+    <ResearcherInfoList>
+      <ResearcherInfoRow>
+        <ResearcherIconWrap aria-hidden="true">
+          <ResearcherIcon src={memberInterestIcon} alt="" />
+        </ResearcherIconWrap>
+        <ResearcherInterestMeta>
+          {preserveMeta
+            ? member.interests || "No research interest"
+            : formatResearchInterests(member.interests)}
+        </ResearcherInterestMeta>
+      </ResearcherInfoRow>
+      <ResearcherInfoRow>
+        <ResearcherIconWrap aria-hidden="true">
+          <ResearcherIcon src={memberEmailIcon} alt="" />
+        </ResearcherIconWrap>
+        <ResearcherEmailMeta
+          $allowBreak={!preserveMeta && shouldBreakEmail(member.Email)}
+          $fontSize={preserveMeta ? "18px" : getEmailFontSize(member.Email)}
+        >
+          {preserveMeta ? member.Email || "No Email" : formatEmailAddress(member.Email)}
+        </ResearcherEmailMeta>
+      </ResearcherInfoRow>
+    </ResearcherInfoList>
+  </ResearcherCardFrame>
 );
 
 const AlumniContent = ({ data, errors, loading }) => (
@@ -468,6 +520,57 @@ const normalizeName = (value = "") => {
     .join(" ")
     .replace(/\bPh\.\s+D\./g, "Ph. D.")
     .replace(/\bM\.\s+S\./g, "M. S.");
+};
+
+const formatResearchInterests = (value = "") => {
+  const interests = value
+    .split(",")
+    .map((interest) => interest.trim())
+    .filter(Boolean);
+
+  if (interests.length === 0) return "No research interest";
+
+  return interests.map((interest, index) => (
+    <React.Fragment key={`${interest}-${index}`}>
+      {interest}
+      {index < interests.length - 1 ? "," : ""}
+      {index < interests.length - 1 ? <br /> : null}
+    </React.Fragment>
+  ));
+};
+
+const formatEmailAddress = (value = "") => {
+  const email = value.trim();
+  if (!email) return "No Email";
+
+  if (email.length <= 30 || !email.includes("@")) return email;
+
+  return email.split(/(@)/).map((part, index) => {
+    if (part === "@") {
+      return (
+        <React.Fragment key={`email-break-${index}`}>
+          @
+          <wbr />
+        </React.Fragment>
+      );
+    }
+
+    return part;
+  });
+};
+
+const getEmailFontSize = (value = "") => {
+  const length = value.trim().length;
+  if (length <= 20) return "18px";
+  if (length <= 23) return "17px";
+  if (length <= 26) return "16px";
+  if (length <= 30) return "15px";
+  return "14px";
+};
+
+const shouldBreakEmail = (value = "") => {
+  const email = value.trim();
+  return email.length > 30 && email.includes("@");
 };
 
 const formatNameToken = (token = "") =>
@@ -799,7 +902,8 @@ const ResearcherGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 286px);
   justify-content: space-between;
-  gap: 0;
+  column-gap: 0;
+  row-gap: 56px;
   padding: 0;
 
   @media (max-width: 980px) {
@@ -814,7 +918,7 @@ const ResearcherGrid = styled.div`
   }
 `;
 
-const ResearcherCard = styled.article`
+const ResearcherCardFrame = styled.article`
   width: 286px;
   display: flex;
   flex-direction: column;
@@ -827,13 +931,21 @@ const ResearcherCard = styled.article`
   }
 `;
 
-const ResearcherImage = styled.img`
+const ResearcherImageFrame = styled.div`
   width: 190px;
   height: 244px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 29px;
+`;
+
+const ResearcherImage = styled.img`
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
   object-position: center top;
-  border-radius: 0 0 12px 12px;
-  margin-bottom: 29px;
+  border-radius: inherit;
 `;
 
 const ResearcherName = styled.h3`
@@ -890,9 +1002,22 @@ const ResearcherMeta = styled.p`
   line-height: 1.25;
   letter-spacing: 0;
   text-align: left;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
   max-width: 100%;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+`;
+
+const ResearcherInterestMeta = styled(ResearcherMeta)`
+  white-space: normal;
+`;
+
+const ResearcherEmailMeta = styled(ResearcherMeta)`
+  font-size: ${({ $fontSize }) => $fontSize || "18px"};
+  white-space: ${({ $allowBreak }) => ($allowBreak ? "normal" : "nowrap")};
+  overflow-wrap: normal;
+  word-break: normal;
 `;
 
 const AlumniGrid = styled.div`

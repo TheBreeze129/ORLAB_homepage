@@ -1,7 +1,7 @@
 export const boardItems = [
-  { id: "album", label: "Album" },
   { id: "seminar", label: "Seminar" },
   { id: "workshop", label: "Workshop" },
+  { id: "album", label: "Album" },
 ];
 
 export const seminarYears = ["2026", "2025", "2024", "2023", "2022", "2021"];

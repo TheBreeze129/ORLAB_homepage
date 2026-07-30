@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
@@ -9,10 +9,15 @@ import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
 import landingProjectLges from "../../assets/figma/landing-project-lges.png";
 
 const navy = "#113275";
+const projectPageCodes = {
+  multimodalSurveillance: "1ced35be31ec8003a633f28976b412b5",
+  stockerCrane: "38fd35be31ec804f8fefc71bc74b3dae",
+  batteryAssignment: "38fd35be31ec809d8c1dc0099da807ed",
+};
 
 const projectCards = [
   {
-    notionId: "landing-project-multimodal-surveillance",
+    pageCode: projectPageCodes.multimodalSurveillance,
     title:
       "Development of Multi-Modal Foundational Models and AI Accelerators for Zero-shot Intelligent Surveillance System",
     image: landingProjectKiat,
@@ -20,14 +25,14 @@ const projectCards = [
     partner: "KIAT",
   },
   {
-    notionId: "landing-project-stocker-crane",
+    pageCode: projectPageCodes.stockerCrane,
     title: "Dual Twin Fork Stocker Crane Scheduling Optimization",
     image: landingProjectLges,
     tags: ["Optimization", "Logistics"],
     partner: "LG Energy Solution",
   },
   {
-    notionId: "landing-project-battery-assignment",
+    pageCode: projectPageCodes.batteryAssignment,
     title: "Battery Charging/Discharging Equipment Assignment Optimization",
     image: landingProjectLges,
     tags: ["Optimization", "Smart Factory"],
@@ -35,95 +40,173 @@ const projectCards = [
   },
 ];
 
-const TestLanding = () => (
-  <PageShell>
-    <LandingFrame>
-      <Header activeSection="landing" />
+const TestLanding = () => {
+  const [ongoingProjects, setOngoingProjects] = useState([]);
 
-      <ContentRail>
-        <HeroTextRow>
-          <HeroCopy>
-            <KoreanTitle>경영과학연구실</KoreanTitle>
-            <EnglishTitle>
-              <BlueText>Operations Research</BlueText> Lab
-            </EnglishTitle>
-          </HeroCopy>
+  useEffect(() => {
+    const controller = new AbortController();
+    let isCurrent = true;
 
-          <GhostCopy aria-hidden="true">
-            <div>Operations Research Lab</div>
-            <div>경영과학연구실</div>
-          </GhostCopy>
-        </HeroTextRow>
+    const fetchOngoingProjects = async () => {
+      try {
+        const params = new URLSearchParams({
+          status: "ongoing",
+          page: "1",
+          page_size: "50",
+        });
+        const response = await fetch(`/api/project_idx?${params.toString()}`, {
+          method: "GET",
+          signal: controller.signal,
+        });
 
-        <HeroImage
-          src={landingBackground}
-          alt="Yonsei University engineering building"
-        />
+        if (!response.ok) {
+          throw new Error(`Project API returned ${response.status}`);
+        }
 
-        <IntroText>
-          <p>
-            <strong>Operations Research Lab</strong> studies decision-making
-            problems arising in industrial systems by formulating them
-            mathematically and developing practical solutions through optimization
-            and artificial intelligence.
-          </p>
-          <p>
-            Based on the mathematical modeling and analytical methodologies of
-            operations research, we address a wide range of operational and
-            managerial problems across various industries, including manufacturing,
-            telecommunications, and finance.
-            <br />
-            In particular, we develop data-driven decision-making models and
-            algorithms using optimization, reinforcement learning, and deep
-            learning.
-            <br />
-            Our research aims to advance intelligent decision-making technologies
-            that can be effectively applied to real-world systems.
-          </p>
-          <p>
-            Our laboratory is currently exploring novel AI methodologies based on
-            optimization, reinforcement learning, and deep learning.
-            <br />
-            We warmly welcome passionate and motivated researchers to join our
-            laboratory.
-          </p>
-        </IntroText>
+        const data = await response.json();
+        if (!Array.isArray(data.results)) {
+          throw new Error("Project API returned an invalid response");
+        }
 
-        <ProjectsTitle>Ongoing Projects</ProjectsTitle>
-        <ProjectGrid>
-          {projectCards.map((project) => (
-            <ProjectLink
-              key={project.title}
-              to={`/test/research/project/${project.notionId}`}
-              state={{
-                project: {
-                  name: project.title,
-                  organization: project.partner,
-                },
-              }}
-              aria-label={`${project.title} project detail`}
-            >
-              <ProjectCard>
-                <ProjectImage src={project.image} alt="" aria-hidden="true" />
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <TagList>
-                  {project.tags.map((tag) => (
-                    <ProjectTag key={tag}>{tag}</ProjectTag>
-                  ))}
-                </TagList>
-                <Partner>
-                  <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
-                  <span>{project.partner}</span>
-                </Partner>
-              </ProjectCard>
-            </ProjectLink>
-          ))}
-        </ProjectGrid>
-      </ContentRail>
-    </LandingFrame>
-    <Footer />
-  </PageShell>
-);
+        if (isCurrent) {
+          setOngoingProjects(data.results);
+        }
+      } catch (error) {
+        if (error.name === "AbortError") return;
+        if (!isLocalApiHtmlFallback(error)) {
+          console.error("Failed to fetch landing project thumbnails:", error);
+        }
+      }
+    };
+
+    fetchOngoingProjects();
+
+    return () => {
+      isCurrent = false;
+      controller.abort();
+    };
+  }, []);
+
+  const landingProjects = useMemo(
+    () =>
+      projectCards.map((project) => {
+        const matchedProject = ongoingProjects.find((item) =>
+          isSameProject(project, item)
+        );
+
+        return {
+          ...project,
+          image: matchedProject?.thumbnail || project.image,
+        };
+      }),
+    [ongoingProjects]
+  );
+
+  return (
+    <PageShell>
+      <LandingFrame>
+        <Header activeSection="landing" />
+
+        <ContentRail>
+          <HeroTextRow>
+            <HeroCopy>
+              <KoreanTitle>경영과학연구실</KoreanTitle>
+              <EnglishTitle>
+                <BlueText>Operations Research</BlueText> Lab
+              </EnglishTitle>
+            </HeroCopy>
+
+            <GhostCopy aria-hidden="true">
+              <div>Operations Research Lab</div>
+              <div>경영과학연구실</div>
+            </GhostCopy>
+          </HeroTextRow>
+
+          <HeroImage
+            src={landingBackground}
+            alt="Yonsei University engineering building"
+          />
+
+          <IntroText>
+            <p>
+              <strong>Operations Research Lab</strong> studies decision-making
+              problems arising in industrial systems by formulating them
+              mathematically and developing practical solutions through optimization
+              and artificial intelligence.
+            </p>
+            <p>
+              Based on the mathematical modeling and analytical methodologies of
+              operations research, we address a wide range of operational and
+              managerial problems across various industries, including manufacturing,
+              telecommunications, and finance.
+              <br />
+              In particular, we develop data-driven decision-making models and
+              algorithms using optimization, reinforcement learning, and deep
+              learning.
+              <br />
+              Our research aims to advance intelligent decision-making technologies
+              that can be effectively applied to real-world systems.
+            </p>
+            <p>
+              Our laboratory is currently exploring novel AI methodologies based on
+              optimization, reinforcement learning, and deep learning.
+              <br />
+              We warmly welcome passionate and motivated researchers to join our
+              laboratory.
+            </p>
+          </IntroText>
+
+          <ProjectsTitle>Ongoing Projects</ProjectsTitle>
+          <ProjectGrid>
+            {landingProjects.map((project) => (
+              <ProjectLink
+                key={project.title}
+                to={`/test/subproject?pagecode=${project.pageCode}`}
+                aria-label={`${project.title} project detail`}
+              >
+                <ProjectCard>
+                  <ProjectImage src={project.image} alt="" aria-hidden="true" />
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <TagList>
+                    {project.tags.map((tag) => (
+                      <ProjectTag key={tag}>{tag}</ProjectTag>
+                    ))}
+                  </TagList>
+                  <Partner>
+                    <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
+                    <span>{project.partner}</span>
+                  </Partner>
+                </ProjectCard>
+              </ProjectLink>
+            ))}
+          </ProjectGrid>
+        </ContentRail>
+      </LandingFrame>
+      <Footer />
+    </PageShell>
+  );
+};
+
+const isSameProject = (landingProject, project) => {
+  const landingPageCode = normalizeProjectKey(landingProject.pageCode);
+  const notionId = normalizeProjectKey(project.notionId || project.url);
+
+  if (landingPageCode && notionId && landingPageCode === notionId) {
+    return true;
+  }
+
+  return normalizeProjectTitle(landingProject.title) === normalizeProjectTitle(project.name);
+};
+
+const normalizeProjectKey = (value = "") =>
+  String(value).trim().replace(/-/g, "").toLowerCase();
+
+const normalizeProjectTitle = (value = "") =>
+  String(value).trim().replace(/\s+/g, " ").toLowerCase();
+
+const isLocalApiHtmlFallback = (error) =>
+  error instanceof SyntaxError ||
+  /Unexpected token '<'|not valid JSON/i.test(error.message || "");
 
 const PageShell = styled.main`
   min-height: 100vh;
