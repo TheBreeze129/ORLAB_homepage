@@ -68,6 +68,7 @@ const HeroTitle = styled.h1`
   font-weight: 700;
   line-height: ${(props) => props.$lineHeight || "1.21"};
   letter-spacing: -0.96px;
+  white-space: pre-line;
   overflow-wrap: break-word;
 
   @media (max-width: 780px) {

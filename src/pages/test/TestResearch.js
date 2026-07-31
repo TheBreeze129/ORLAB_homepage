@@ -8,11 +8,14 @@ import Footer from "./components/Footer.js";
 import InfiniteScrollTrigger from "./components/InfiniteScrollTrigger.js";
 import projectThumbnail from "../../assets/figma/project-ocr-thumbnail.jpg";
 import gmissionLogo from "../../assets/figma/gmission-logo.jpg";
+import skaxAgfThumbnail from "../../assets/skax-agf-overview.png";
+import skaxLogo from "../../assets/skax-logo.jpg";
 
 const navy = "#113275";
 const soft = "#e6e6e6";
 const PUBLICATION_PAGE_SIZE = 6;
 const PROJECT_PAGE_SIZE = 4;
+const skaxAgfSolutionPageCode = "skax-agf-solution-advancement";
 
 const researchTabs = [
   { id: "project", label: "Project" },
@@ -48,6 +51,9 @@ const projectTabs = [
   { id: "finished", label: "Finished Projects" },
 ];
 
+const getValidProjectStatus = (status) =>
+  projectTabs.some((item) => item.id === status) ? status : "ongoing";
+
 const fallbackPublications = Array.from({ length: PUBLICATION_PAGE_SIZE }, (_, index) => ({
   id: `fallback-publication-${index + 1}`,
   authors: "Jiwon Kim, Jeonghoon Mo",
@@ -65,17 +71,32 @@ const fallbackProjects = Array.from({ length: PROJECT_PAGE_SIZE }, (_, index) =>
   thumbnail: projectThumbnail,
 }));
 
+const hardcodedOngoingProjects = [
+  {
+    id: "hardcoded-skax-agf-solution",
+    notionId: skaxAgfSolutionPageCode,
+    name: "AGF Solution 고도화 과제",
+    date: "2026.07.",
+    organization: "SK AX",
+    organizationLogo: skaxLogo,
+    thumbnail: skaxAgfThumbnail,
+  },
+];
+
 const TestResearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedTab = searchParams.get("tab");
   const activeTab = requestedTab === "publication" ? "publication" : "project";
+  const requestedProjectStatus = searchParams.get("status");
   const [activeCategory, setActiveCategory] = useState("international-journal");
   const [publicationPage, setPublicationPage] = useState(1);
   const [publications, setPublications] = useState([]);
   const [publicationPageCount, setPublicationPageCount] = useState(1);
   const [isPublicationLoading, setIsPublicationLoading] = useState(false);
   const [hasPublicationError, setHasPublicationError] = useState(false);
-  const [projectStatus, setProjectStatus] = useState("ongoing");
+  const [projectStatus, setProjectStatus] = useState(() =>
+    getValidProjectStatus(requestedProjectStatus)
+  );
   const [projectPage, setProjectPage] = useState(1);
   const [projects, setProjects] = useState([]);
   const [projectPageCount, setProjectPageCount] = useState(1);
@@ -85,6 +106,10 @@ const TestResearch = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    setProjectStatus(getValidProjectStatus(requestedProjectStatus));
+  }, [requestedProjectStatus]);
 
   useEffect(() => {
     setPublications([]);
@@ -187,6 +212,11 @@ const TestResearch = () => {
     setSearchParams({ tab: tabId });
   };
 
+  const handleProjectStatusChange = (statusId) => {
+    setProjectStatus(statusId);
+    setSearchParams({ tab: "project", status: statusId });
+  };
+
   useEffect(() => {
     if (activeTab !== "project") return undefined;
 
@@ -217,11 +247,17 @@ const TestResearch = () => {
           throw new Error("Project API returned an invalid response");
         }
 
+        const projectResults = withHardcodedOngoingProjects(
+          data.results,
+          projectStatus,
+          projectPage
+        );
+
         if (isCurrent) {
           setProjects((current) =>
             projectPage === 1
-              ? data.results
-              : appendUniqueItems(current, data.results, getProjectKey)
+              ? projectResults
+              : appendUniqueItems(current, projectResults, getProjectKey)
           );
           setProjectPageCount(Math.max(1, Number(data.pageCount) || 1));
         }
@@ -230,11 +266,17 @@ const TestResearch = () => {
 
         if (isCurrent) {
           if (isLocalApiHtmlFallback(error)) {
+            const projectResults = withHardcodedOngoingProjects(
+              fallbackProjects,
+              projectStatus,
+              projectPage
+            );
+
             setHasProjectError(false);
             setProjects((current) =>
               projectPage === 1
-                ? fallbackProjects
-                : appendUniqueItems(current, fallbackProjects, getProjectKey)
+                ? projectResults
+                : appendUniqueItems(current, projectResults, getProjectKey)
             );
             setProjectPageCount(1);
           } else {
@@ -309,7 +351,7 @@ const TestResearch = () => {
                   key={item.id}
                   type="button"
                   $active={projectStatus === item.id}
-                  onClick={() => setProjectStatus(item.id)}
+                  onClick={() => handleProjectStatusChange(item.id)}
                 >
                   {item.label}
                 </ProjectStatusButton>
@@ -455,6 +497,11 @@ const appendUniqueItems = (currentItems, nextItems, getKey) => {
 
   return [...currentItems, ...uniqueNextItems];
 };
+
+const withHardcodedOngoingProjects = (items, status, page) =>
+  status === "ongoing" && page === 1
+    ? appendUniqueItems(items, hardcodedOngoingProjects, getProjectKey)
+    : items;
 
 const getProjectKey = (item) =>
   item.id ||

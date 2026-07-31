@@ -21,6 +21,10 @@ import ocrDocumentAiImage from "../../assets/ocr-page3-image2.jpg";
 import travutOverviewImage from "../../assets/travut-overview.png";
 import ssrcEncoreMotionImage from "../../assets/ssrc-encore-motion.png";
 import ssrcEncorePipelineImage from "../../assets/ssrc-encore-pipeline.png";
+import skaxAgfOverviewImage from "../../assets/skax-agf-overview.png";
+import skaxAgfFrameworkImage from "../../assets/skax-agf-framework.jpg";
+import skaxAgfSyntheticDataImage from "../../assets/skax-agf-synthetic-data.jpg";
+import skaxLogo from "../../assets/skax-logo.jpg";
 
 import finishedPositioningDecisionSystemImage from "../../assets/finished-projects/finished-positioning-decision-system.png";
 import finishedPositioningPortfolioSelectionImage from "../../assets/finished-projects/finished-positioning-portfolio-selection.png";
@@ -57,6 +61,7 @@ const inodepPageCode = "1ced35be31ec8003a633f28976b412b5";
 const ocrPageCode = "38fd35be31ec8040ab83fd4362120249";
 const travutPageCode = "38fd35be31ec80f1a521f3a00a363316";
 const ssrcPageCode = "390d35be31ec805a9f4fdaa561ed3384";
+const skaxAgfSolutionPageCode = "skax-agf-solution-advancement";
 const finishedProductPositioningPageCode = "1aed35be31ec80aa975aee545dffe2dc";
 const finishedMedicalRecommendationPageCode = "1aed35be31ec80fd845cd58c0ea37b89";
 const finishedHyundaiClusterPageCode = "1aed35be31ec80728632d0477970ab2c";
@@ -312,6 +317,82 @@ const projectsByPageCode = {
   ],
   },
 
+  [skaxAgfSolutionPageCode]: {
+    title: "AGF Solution 고도화 과제",
+    organization: "SK AX",
+    sections: [
+      {
+        title: "1. 연구 개요",
+        paragraphs: [
+          "본 연구는 RGB Camera와 LiDAR를 함께 활용해 윙바디 화물 트럭의 적재 공간과 적재함 내 화물을 3D로 인지하는 Vision AI 연구입니다.",
+          "RCS가 외부 고정형 센서에 의존하지 않고 작업 현장의 공간, 화물 위치, 크기 정보를 직접 판단할 수 있는 기반을 확보하는 것을 목표로 합니다.",
+          "5톤·14톤 윙바디 트럭을 대상으로 화물칸 cube와 화물 cube의 꼭지점 좌표, W/H/D, 월드 좌표를 산출하고, 추론 결과를 Robot Control System으로 전달하여 상·하차 작업 생성과 AGF/로봇 할당에 활용합니다.",
+        ],
+        figure: {
+          src: skaxAgfOverviewImage,
+          alt: "Wing body cargo truck loading space and cargo recognition",
+          caption: "<윙바디 화물 트럭의 적재 공간 및 화물 인지>",
+        },
+      },
+      {
+        title: "시나리오 예시",
+        bullets: [
+          "화물트럭 진입 → 상/하차 준비 → AGF 호출 → 트럭 화물칸/화물 인지 → 좌표 추출/실제 좌표 변환 → Robot Control System 전송 → 작업 생성 → AGF 할당",
+        ],
+      },
+      {
+        title: "2. 기존 기술의 한계",
+        bullets: [
+          "기존 자동화는 고정형 센서·설비가 설치된 표준 작업영역을 전제로 하며, 트럭·평치·단순 선반처럼 가변적인 공간에는 적용이 어려움",
+          "화물 위치, 적재율, 가려짐, 조도·날씨·역광 변화에 따라 Camera 단독 또는 LiDAR 단독 인식의 안정성이 저하",
+          "Camera-LiDAR 설치 위치와 화각, calibration, Image-World 좌표 변환 정밀도가 실제 성능을 좌우",
+          "장폭 트럭과 다중 센서 구성에서는 Camera/LiDAR 동기화와 연동 복잡도가 증가",
+          "새로운 현장 적용에는 synthetic-real domain gap 보정, Edge Device 최적화 등의 고난도 기술 구성이 필요",
+        ],
+      },
+      {
+        title: "3. 연구 목표",
+        bullets: [
+          "알고리듬 개발을 위한 Camera-LiDAR align 합성/현장/증강 데이터 확보",
+          "Task 1: 트럭 적재함의 벽면·평면·기둥을 검출하고 적재 공간 Cube 꼭지점 좌표와 W/H/D를 월드 좌표계로 산출",
+          "Task 2: 팔레트 위 박스형 화물을 중심으로 화물 Cube 꼭지점 좌표와 W/H/D를 월드 좌표계로 산출",
+        ],
+        images: [
+          {
+            src: skaxAgfFrameworkImage,
+            alt: "AGF solution advancement task framework and robust recognition process",
+            caption: "적재 공간 및 화물 인지 알고리듬 개발 흐름",
+            width: "1000px",
+          },
+          {
+            src: skaxAgfSyntheticDataImage,
+            alt: "Synthetic data and camera LiDAR position configuration examples",
+            caption: "Synthetic 데이터 및 Camera/LiDAR 위치 구성 예시",
+            width: "1000px",
+          },
+        ],
+        imageLayout: "stacked",
+      },
+      {
+        title: "4. 기대 효과",
+        bullets: [
+          "자동화 설비 설치 난이도가 높은 트럭 적재 환경까지 AGF 적용 범위를 확장",
+          "RCS가 공간과 화물 상태를 실시간으로 파악해 작업 생성, 이동 위치 결정, AGF 할당의 판단 품질을 개선",
+          "Camera-LiDAR 융합과 실제 좌표 변환으로 다양한 조도·반실외 환경에서도 운영 가능한 인지 기반 확보",
+          "데이터셋, 학습 모델, 소스코드, 캘리브레이션/설치 가이드로 후속 고도화 기반 마련",
+        ],
+      },
+      {
+        title: "5. 공동 연구 기관",
+        logo: {
+          src: skaxLogo,
+          alt: "SK AX",
+          width: "180px",
+        },
+      },
+    ],
+  },
+
   [inodepPageCode]: {
   title:
     "Zero-shot 지능형 선별관제 시스템을 위한 Multimodal 파운데이션 모델 학습 및 연구",
@@ -461,7 +542,7 @@ const projectsByPageCode = {
   },
   // finished
   [finishedProductPositioningPageCode]: {
-    title: "비정형의 빅데이터를 활용한 경쟁환경에서의 신제품 포지셔닝과 다기간 제품 포트폴리오 선정에 도움을 줄 수 있는 전사적 의사결정 시스템 개발",
+    title: "비정형의 빅데이터를 활용한 경쟁환경에서의 신제품 포지셔닝과\n다기간 제품 포트폴리오 선정에 도움을 줄 수 있는 전사적 의사결정 시스템 개발",
     organization: "Finished Project",
     date: "2025.01 ~ 2025.12",
     sections: [

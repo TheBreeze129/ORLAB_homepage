@@ -8,12 +8,14 @@ import companyIcon from "../../assets/figma/company-icon.svg";
 import landingProjectMultimodal from "../../assets/figma/landing-project-multimodal.png";
 import landingProjectStockerCrane from "../../assets/figma/landing-project-stocker-crane.png";
 import landingProjectBatteryAssignment from "../../assets/figma/landing-project-battery-assignment.png";
+import skaxAgfThumbnail from "../../assets/skax-agf-overview.png";
 
 const navy = "#113275";
 const projectPageCodes = {
   multimodalSurveillance: "1ced35be31ec8003a633f28976b412b5",
   stockerCrane: "38fd35be31ec804f8fefc71bc74b3dae",
   batteryAssignment: "38fd35be31ec809d8c1dc0099da807ed",
+  skaxAgfSolution: "skax-agf-solution-advancement",
 };
 
 const projectCards = [
@@ -38,6 +40,13 @@ const projectCards = [
     image: landingProjectBatteryAssignment,
     tags: ["Optimization", "Smart Factory"],
     partner: "LG Energy Solution",
+  },
+  {
+    pageCode: projectPageCodes.skaxAgfSolution,
+    title: "AGF Solution 고도화 과제",
+    image: skaxAgfThumbnail,
+    tags: ["Vision AI", "Logistics"],
+    partner: "SK AX",
   },
 ];
 

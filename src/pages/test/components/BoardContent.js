@@ -84,6 +84,30 @@ const BoardContent = ({ activeBoard }) => {
 
   useEffect(() => {
     if (!isAlbum) return undefined;
+
+    const scrollToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    };
+    let secondFrameId;
+    const firstFrameId = window.requestAnimationFrame(() => {
+      scrollToTop();
+      secondFrameId = window.requestAnimationFrame(scrollToTop);
+    });
+    const timeoutId = window.setTimeout(scrollToTop, 100);
+
+    scrollToTop();
+
+    return () => {
+      window.cancelAnimationFrame(firstFrameId);
+      if (secondFrameId) {
+        window.cancelAnimationFrame(secondFrameId);
+      }
+      window.clearTimeout(timeoutId);
+    };
+  }, [isAlbum]);
+
+  useEffect(() => {
+    if (!isAlbum) return undefined;
     if (albumPages[currentPage] !== undefined) return undefined;
 
     const controller = new AbortController();
