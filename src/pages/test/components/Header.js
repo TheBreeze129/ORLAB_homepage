@@ -6,29 +6,29 @@ import orlabLogo from "../../../assets/logo.svg";
 const navy = "#113275";
 
 const aboutItems = [
-  { id: "about", label: "About", to: "/test/about" },
-  { id: "contact", label: "Contact", to: "/test/about?tab=contact" },
+  { id: "about", label: "About", to: "/about" },
+  { id: "contact", label: "Contact", to: "/about?tab=contact" },
 ];
 
 const memberItems = [
-  { id: "professor", label: "Professor", to: "/test/member?tab=professor" },
+  { id: "professor", label: "Professor", to: "/member?tab=professor" },
   {
     id: "researchers",
     label: "Researchers",
-    to: "/test/member?tab=researchers",
+    to: "/member?tab=researchers",
   },
-  { id: "alumni", label: "Alumni", to: "/test/member?tab=alumni" },
+  { id: "alumni", label: "Alumni", to: "/member?tab=alumni" },
 ];
 
 const researchItems = [
-  { id: "project", label: "Project", to: "/test/research?tab=project" },
-  { id: "publication", label: "Publication", to: "/test/research?tab=publication" },
+  { id: "project", label: "Project", to: "/research?tab=project" },
+  { id: "publication", label: "Publication", to: "/research?tab=publication" },
 ];
 
 const boardNavItems = [
-  { id: "seminar", label: "Seminar", to: "/test/board" },
-  { id: "workshop", label: "Workshop", to: "/test/board?board=workshop" },
-  { id: "album", label: "Album", to: "/test/board?board=album" },
+  { id: "seminar", label: "Seminar", to: "/board" },
+  { id: "workshop", label: "Workshop", to: "/board?board=workshop" },
+  { id: "album", label: "Album", to: "/board?board=album" },
 ];
 
 const Header = ({
@@ -67,7 +67,7 @@ const Header = ({
 
   return (
     <HeaderFrame>
-      <LogoLink to="/test" aria-label="ORLAB home">
+      <LogoLink to="/" aria-label="ORLAB home">
         <LogoImage src={orlabLogo} alt="ORLAB Operations Research Lab" />
       </LogoLink>
 
@@ -76,7 +76,7 @@ const Header = ({
           onContextMenu={clearDropdownFocus}
           onMouseLeave={clearDropdownFocus}
         >
-          <AboutButton to="/test/about" $active={activeSection === "about"}>
+          <AboutButton to="/about" $active={activeSection === "about"}>
             ABOUT
           </AboutButton>
           <DropdownMenu $width="139px">
@@ -97,7 +97,7 @@ const Header = ({
           onMouseLeave={clearDropdownFocus}
         >
           <MemberButton
-            to="/test/member?tab=professor"
+            to="/member?tab=professor"
             $active={activeSection === "member"}
           >
             MEMBERS
@@ -120,7 +120,7 @@ const Header = ({
           onMouseLeave={clearDropdownFocus}
         >
           <ResearchButton
-            to="/test/research?tab=project"
+            to="/research?tab=project"
             $active={activeSection === "research"}
           >
             RESEARCH
@@ -142,7 +142,7 @@ const Header = ({
           onContextMenu={clearDropdownFocus}
           onMouseLeave={clearDropdownFocus}
         >
-          <BoardButton to="/test/board" $active={activeSection === "board"}>
+          <BoardButton to="/board" $active={activeSection === "board"}>
             BOARD
           </BoardButton>
           <DropdownMenu $width="139px">
@@ -187,7 +187,7 @@ const Header = ({
         <MobileNav aria-label="Mobile navigation">
           <MobileNavGroup>
             <MobileNavLink
-              to="/test/about"
+              to="/about"
               $active={activeSection === "about"}
               onClick={closeMobileMenu}
             >
@@ -207,7 +207,7 @@ const Header = ({
 
           <MobileNavGroup>
             <MobileNavLink
-              to="/test/member?tab=professor"
+              to="/member?tab=professor"
               $active={activeSection === "member"}
               onClick={closeMobileMenu}
             >
@@ -227,7 +227,7 @@ const Header = ({
 
           <MobileNavGroup>
             <MobileNavLink
-              to="/test/research?tab=project"
+              to="/research?tab=project"
               $active={activeSection === "research"}
               onClick={closeMobileMenu}
             >
@@ -247,7 +247,7 @@ const Header = ({
 
           <MobileNavGroup>
             <MobileNavLink
-              to="/test/board"
+              to="/board"
               $active={activeSection === "board"}
               onClick={closeMobileMenu}
             >

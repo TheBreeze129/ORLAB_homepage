@@ -7,7 +7,7 @@ import landingBackground from "../../assets/figma/landing-background.png";
 import companyIcon from "../../assets/figma/company-icon.svg";
 import landingProjectMultimodal from "../../assets/figma/landing-project-multimodal.png";
 import landingProjectStockerCrane from "../../assets/figma/landing-project-stocker-crane.png";
-import skaxAgfThumbnail from "../../assets/skax-agf-overview.png";
+import skaxAgfLandingThumbnail from "../../assets/skax-agf-landing-thumbnail.jpg";
 
 const navy = "#113275";
 const projectPageCodes = {
@@ -28,7 +28,7 @@ const projectCards = [
   {
     pageCode: projectPageCodes.skaxAgfSolution,
     title: "AGF Solution 고도화 과제",
-    image: skaxAgfThumbnail,
+    image: skaxAgfLandingThumbnail,
     tags: ["Vision AI", "Logistics"],
     partner: "SK AX",
   },
@@ -100,7 +100,7 @@ const TestLanding = () => (
             {projectCards.map((project) => (
               <ProjectLink
                 key={project.title}
-                to={`/test/subproject?pagecode=${project.pageCode}`}
+                to={`/subproject?pagecode=${project.pageCode}`}
                 aria-label={`${project.title} project detail`}
               >
                 <ProjectCard>

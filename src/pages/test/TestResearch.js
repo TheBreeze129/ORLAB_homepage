@@ -450,7 +450,7 @@ const ProjectCard = ({ item }) => {
   );
 
   return (
-    <ProjectCardLink to={`/test/subproject?pagecode=${item.notionId || item.url}`}>
+    <ProjectCardLink to={`/subproject?pagecode=${item.notionId || item.url}`}>
       {content}
     </ProjectCardLink>
   );
