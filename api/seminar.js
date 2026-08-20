@@ -38,7 +38,7 @@ export async function GET(req) {
       .gte("Date", `${dbToken}-01-01`)
       .lt("Date", `${Number(dbToken) + 1}-01-01`)
       .order("Date", { ascending: false })
-      .order("id", { ascending: false });
+      .order("id", { ascending: true });
 
     if (pagination) {
       query = query.range(pagination.from, pagination.to);
