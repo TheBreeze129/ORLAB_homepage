@@ -5,7 +5,7 @@ const supabase = createClient(
   process.env.REACT_APP_SUPABASE_SERVICE_ROLE_KEY
 );
 
-const seminarColumns = "Date, Name, Title, file, is_workshop";
+const seminarColumns = "id, Date, Name, Title, file, is_workshop";
 
 export async function GET(req) {
   try {
@@ -37,7 +37,8 @@ export async function GET(req) {
       .eq("is_workshop", isWorkshop)
       .gte("Date", `${dbToken}-01-01`)
       .lt("Date", `${Number(dbToken) + 1}-01-01`)
-      .order("Date", { ascending: false });
+      .order("Date", { ascending: false })
+      .order("id", { ascending: false });
 
     if (pagination) {
       query = query.range(pagination.from, pagination.to);
@@ -50,6 +51,7 @@ export async function GET(req) {
     }
 
     const results = (data || []).map((row) => ({
+      id: row.id,
       date: row.Date,
       name: row.Name ?? "",
       title: row.Title ?? "",
