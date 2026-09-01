@@ -31,8 +31,11 @@ export async function GET(req) {
     } else if (stdType === "alumni_ms") {
       categoryOptions = ["MS", "M.S.", "M. S.", "M. S"];
       is_current = false;
+    } else if (stdType === "alumni_pd") {
+      categoryOptions = ["PD", "Post Doc.", "PostDoc"];
+      is_current = false;
     } else if (stdType === "pd") {
-      categoryOptions = ["PD", "Post Doc.", "PostDoc"]
+      categoryOptions = ["PD", "Post Doc.", "PostDoc"];
     }
 
     if (categoryOptions.length === 0) {
