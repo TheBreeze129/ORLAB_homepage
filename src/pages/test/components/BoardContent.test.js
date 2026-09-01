@@ -81,13 +81,13 @@ test("fetches only the selected board year and caches its response", async () =>
 
   rerender(<BoardContent activeBoard="workshop" />);
 
-  expect(await screen.findByText("workshop-2023")).toBeInTheDocument();
+  expect(await screen.findByText("workshop-2026")).toBeInTheDocument();
   expect(global.fetch).toHaveBeenCalledTimes(2);
   expect(global.fetch).toHaveBeenLastCalledWith(
     "/api/seminar?page=1&page_size=6",
     expect.objectContaining({
       method: "GET",
-      headers: { dbtoken: "2023", dbtype: "workshop" },
+      headers: { dbtoken: "2026", dbtype: "workshop" },
     })
   );
 

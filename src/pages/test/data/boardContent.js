@@ -6,4 +6,4 @@ export const boardItems = [
 
 export const seminarYears = ["2026", "2025", "2024", "2023", "2022", "2021"];
 
-export const workshopYears = ["2023", "2022", "2021"];
+export const workshopYears = ["2026", "2023", "2022", "2021"];
