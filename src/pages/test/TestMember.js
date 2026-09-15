@@ -154,7 +154,16 @@ const localDevelopmentMemberFixtures = {
     },
   ],
   intern: [],
-  alumni_pd: [],
+  alumni_pd: [
+    {
+      id: "local-alumni-pd-1",
+      Name: "Alumni Post Doc. Preview",
+      Email: "alumni.postdoc@yonsei.ac.kr",
+      outdate: "August 2026",
+      To_go: "Professor at University",
+      image: alumniPlaceholder,
+    },
+  ],
   alumni_phd: [
     {
       id: "local-alumni-phd-1",
@@ -483,7 +492,11 @@ const AlumniContent = ({ data, errors, loading }) => (
                 <AlumniDetails>
                   <AlumniName>{normalizeName(member.Name)}</AlumniName>
                   <AlumniMeta>
-                    {member.outdate ? `${section.title}, Graduated on ${member.outdate}` : section.title}
+                    {member.outdate
+                      ? section.key === "alumni_pd"
+                        ? `${section.title}, ${member.outdate}`
+                        : `${section.title}, Graduated on ${member.outdate}`
+                      : section.title}
                   </AlumniMeta>
                   <AlumniMeta>{member.Email}</AlumniMeta>
                   <AlumniDestination>{member.To_go}</AlumniDestination>
