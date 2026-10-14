@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import ieeeLogo from "../../../assets/ieee-logo.svg";
 
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 
@@ -29,13 +30,21 @@ const LandingPopup = ({ event }) => {
   return (
     <PopupLayer role="presentation">
       <PopupDialog role="dialog" aria-modal="true" aria-label={event.title}>
-        {event.eyebrow ? <PopupEyebrow>{event.eyebrow}</PopupEyebrow> : null}
-        <PopupImageFrame>
-          <PopupImage src={event.image} alt={event.imageAlt || ""} />
-          {event.imageLabel ? (
-            <PopupImageLabel>{event.imageLabel}</PopupImageLabel>
-          ) : null}
-        </PopupImageFrame>
+        <PopupHeader>
+          {event.eyebrow ? <PopupEyebrow>{event.eyebrow}</PopupEyebrow> : null}
+          <JournalBrand aria-label="IEEE TCAD">
+            <IeeeLogo src={ieeeLogo} alt="IEEE" />
+            <JournalName>TCAD</JournalName>
+          </JournalBrand>
+        </PopupHeader>
+        <CertificateFrame>
+          <PopupImageFrame>
+            <PopupImage src={event.image} alt={event.imageAlt || ""} />
+            {event.imageLabel ? (
+              <PopupImageLabel>{event.imageLabel}</PopupImageLabel>
+            ) : null}
+          </PopupImageFrame>
+        </CertificateFrame>
         <PopupTitle>{event.title}</PopupTitle>
         {event.description ? (
           <PopupDescription>{event.description}</PopupDescription>
@@ -129,11 +138,37 @@ const PopupDialog = styled.div`
   }
 `;
 
-const PopupImageFrame = styled.figure`
+const CertificateFrame = styled.div`
   position: relative;
   width: min(679px, 100%);
   height: 412px;
   margin: 0 auto;
+  padding: 10px;
+  border: 2px solid #a88635;
+  background: #fffdf7;
+  box-shadow: inset 0 0 0 3px #fffdf7, inset 0 0 0 4px #d7bd72,
+    0 8px 20px rgba(17, 50, 117, 0.08);
+  box-sizing: border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid #d7bd72;
+    pointer-events: none;
+  }
+
+  @media (max-width: 720px) {
+    height: auto;
+    aspect-ratio: 679 / 412;
+  }
+`;
+
+const PopupImageFrame = styled.figure`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0;
   padding: 14px;
   display: grid;
   overflow: hidden;
@@ -142,11 +177,6 @@ const PopupImageFrame = styled.figure`
   background: #f3f5f8;
   box-shadow: 0 8px 20px rgba(17, 50, 117, 0.08);
   box-sizing: border-box;
-
-  @media (max-width: 720px) {
-    height: auto;
-    aspect-ratio: 679 / 412;
-  }
 `;
 
 const PopupImage = styled.img`
@@ -176,9 +206,18 @@ const PopupImageLabel = styled.figcaption`
   letter-spacing: 0;
 `;
 
-const PopupEyebrow = styled.p`
+const PopupHeader = styled.div`
   width: min(679px, 100%);
+  min-height: 42px;
   margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+`;
+
+const PopupEyebrow = styled.p`
+  margin: 0;
   padding-left: 10px;
   border-left: 4px solid #113275;
   color: #113275;
@@ -187,6 +226,34 @@ const PopupEyebrow = styled.p`
   line-height: 1.4;
   letter-spacing: 0;
   box-sizing: border-box;
+`;
+
+const JournalBrand = styled.div`
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #113275;
+`;
+
+const IeeeLogo = styled.img`
+  width: 76px;
+  height: 42px;
+  display: block;
+  object-fit: contain;
+`;
+
+const JournalName = styled.span`
+  padding-left: 10px;
+  border-left: 1px solid #b99a4a;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const PopupTitle = styled.h2`
