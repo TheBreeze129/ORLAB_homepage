@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
+import LandingPopup from "./components/LandingPopup.js";
+import { landingPopupEvent } from "./data/landingPopup.js";
 import landingBackground from "../../assets/figma/landing-background.png";
 import companyIcon from "../../assets/figma/company-icon.svg";
 import landingProjectMultimodal from "../../assets/figma/landing-project-multimodal.png";
@@ -43,6 +45,7 @@ const projectCards = [
 
 const TestLanding = () => (
     <PageShell>
+      <LandingPopup event={landingPopupEvent} />
       <LandingFrame>
         <Header activeSection="landing" />
 

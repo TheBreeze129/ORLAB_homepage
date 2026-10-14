@@ -1,12 +1,12 @@
-import popupImage from "../../../assets/everyone_withprofmo.jpg";
+import popupImage from "../../../assets/popup-ieee-tcad-acceptance.png";
 
 export const landingPopupEvent = {
-  id: "orlab-2026-cvpr-acceptance",
+  id: "leebaekchan-ieee-tcad-acceptance-2026",
   enabled: true,
-  startAt: "2026-01-01T00:00:00+09:00",
+  startAt: "2026-10-13T00:00:00+09:00",
   endAt: "2026-12-31T23:59:59+09:00",
   image: popupImage,
-  imageAlt: "ORLab event announcement",
+  imageAlt: "이백찬 연구원 IEEE TCAD 논문 게재 승인 축하",
   title:
-    "우리 연구실의 OOO의 논문이 2026 CVPR에 Accept되었습니다! 축하합니다!",
+    '이백찬 연구원의 논문 "Structure-Aware Functional Retrieval in Layout Cell Libraries via Path-Aware Reranking"이 IEEE TCAD에 게재 승인되었습니다. 축하드립니다!',
 };

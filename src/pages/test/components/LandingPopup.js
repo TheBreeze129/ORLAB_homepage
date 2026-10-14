@@ -128,7 +128,7 @@ const PopupImageFrame = styled.figure`
   display: grid;
   overflow: hidden;
   border-radius: 8px;
-  background: #f7f7f7;
+  background: #ffffff;
 
   @media (max-width: 720px) {
     height: auto;
@@ -139,9 +139,14 @@ const PopupImageFrame = styled.figure`
 const PopupImage = styled.img`
   grid-area: 1 / 1;
   width: 100%;
+  max-width: 100%;
   height: 100%;
+  max-height: 100%;
+  align-self: center;
+  justify-self: center;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 `;
 
 const PopupImageLabel = styled.figcaption`
