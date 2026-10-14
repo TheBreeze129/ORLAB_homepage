@@ -169,13 +169,11 @@ const PopupImageFrame = styled.figure`
   width: 100%;
   height: 100%;
   margin: 0;
-  padding: 14px;
+  padding: 0;
   display: grid;
   overflow: hidden;
-  border: 1px solid #d5dce8;
-  border-radius: 6px;
-  background: #f3f5f8;
-  box-shadow: 0 8px 20px rgba(17, 50, 117, 0.08);
+  border: 0;
+  background: #ffffff;
   box-sizing: border-box;
 `;
 
