@@ -18,17 +18,18 @@ const LandingPopup = ({ event }) => {
   if (!event || !isVisible) return null;
 
   const handleClose = () => {
+    setIsVisible(false);
+  };
+
+  const handleDismissForToday = () => {
     dismissForToday(event.id);
     setIsVisible(false);
   };
 
   return (
     <PopupLayer role="presentation">
-      <PopupDialog
-        role="dialog"
-        aria-modal="true"
-        aria-label={event.title}
-      >
+      <PopupDialog role="dialog" aria-modal="true" aria-label={event.title}>
+        {event.eyebrow ? <PopupEyebrow>{event.eyebrow}</PopupEyebrow> : null}
         <PopupImageFrame>
           <PopupImage src={event.image} alt={event.imageAlt || ""} />
           {event.imageLabel ? (
@@ -36,9 +37,17 @@ const LandingPopup = ({ event }) => {
           ) : null}
         </PopupImageFrame>
         <PopupTitle>{event.title}</PopupTitle>
-        <CloseButton type="button" onClick={handleClose}>
-          닫기
-        </CloseButton>
+        {event.description ? (
+          <PopupDescription>{event.description}</PopupDescription>
+        ) : null}
+        <PopupActions>
+          <DismissButton type="button" onClick={handleDismissForToday}>
+            오늘 하루 보지 않기
+          </DismissButton>
+          <CloseButton type="button" onClick={handleClose}>
+            닫기
+          </CloseButton>
+        </PopupActions>
       </PopupDialog>
     </PopupLayer>
   );
@@ -106,7 +115,7 @@ const PopupDialog = styled.div`
   position: relative;
   width: min(843px, 100%);
   min-height: 641px;
-  padding: 45px 22px 23px;
+  padding: 45px 22px 12px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -116,7 +125,7 @@ const PopupDialog = styled.div`
 
   @media (max-width: 720px) {
     min-height: auto;
-    padding: 24px 18px 86px;
+    padding: 24px 18px 14px;
   }
 `;
 
@@ -125,10 +134,14 @@ const PopupImageFrame = styled.figure`
   width: min(679px, 100%);
   height: 412px;
   margin: 0 auto;
+  padding: 14px;
   display: grid;
   overflow: hidden;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1px solid #d5dce8;
+  border-radius: 6px;
+  background: #f3f5f8;
+  box-shadow: 0 8px 20px rgba(17, 50, 117, 0.08);
+  box-sizing: border-box;
 
   @media (max-width: 720px) {
     height: auto;
@@ -163,20 +176,77 @@ const PopupImageLabel = styled.figcaption`
   letter-spacing: 0;
 `;
 
-const PopupTitle = styled.p`
+const PopupEyebrow = styled.p`
   width: min(679px, 100%);
-  margin: 26px auto 0;
-  color: #000000;
-  font-size: 20px;
+  margin: 0 auto 14px;
+  padding-left: 10px;
+  border-left: 4px solid #113275;
+  color: #113275;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0;
+  box-sizing: border-box;
+`;
+
+const PopupTitle = styled.h2`
+  width: min(679px, 100%);
+  margin: 22px auto 0;
+  color: #113275;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+
+  @media (max-width: 720px) {
+    font-size: 21px;
+  }
+`;
+
+const PopupDescription = styled.p`
+  width: min(679px, 100%);
+  margin: 8px auto 0;
+  color: #333333;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+
+  @media (max-width: 720px) {
+    font-size: 16px;
+  }
+`;
+
+const PopupActions = styled.div`
+  width: min(679px, 100%);
+  margin: 16px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+`;
+
+const DismissButton = styled.button`
+  height: 46px;
+  padding: 0 18px;
+  border: 1px solid #113275;
+  background: #ffffff;
+  color: #113275;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  letter-spacing: 0;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: #f0f4fc;
+  }
 `;
 
 const CloseButton = styled.button`
   width: 100px;
-  height: 50px;
-  margin: auto 0 0 auto;
+  height: 46px;
   border: 0;
   background: #113275;
   color: #ffffff;

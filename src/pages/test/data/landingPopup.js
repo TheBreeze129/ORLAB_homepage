@@ -7,6 +7,8 @@ export const landingPopupEvent = {
   endAt: "2026-12-31T23:59:59+09:00",
   image: popupImage,
   imageAlt: "이백찬 연구원 IEEE TCAD 논문 게재 승인 축하",
-  title:
-    '이백찬 연구원의 논문 "Structure-Aware Functional Retrieval in Layout Cell Libraries via Path-Aware Reranking"이 IEEE TCAD에 게재 승인되었습니다. 축하드립니다!',
+  eyebrow: "PAPER ACCEPTED",
+  title: "이백찬 연구원, IEEE TCAD 논문 게재 승인",
+  description:
+    "이백찬 연구원의 논문이 IEEE TCAD에 게재 승인되었습니다. 뜻깊은 연구 성과를 진심으로 축하드립니다!",
 };
