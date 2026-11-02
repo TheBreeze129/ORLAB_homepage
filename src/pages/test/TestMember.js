@@ -5,8 +5,6 @@ import Header from "./components/Header.js";
 import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
 import profMoImage from "../../assets/profmo.jpg";
-import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
-import alumniPlaceholder from "../../assets/figma/member-alumni-placeholder.png";
 import professorMailIcon from "../../assets/figma/professor-mail.png";
 import professorWebIcon from "../../assets/figma/professor-web.png";
 import professorScholarIcon from "../../assets/figma/professor-scholar.png";
@@ -17,6 +15,8 @@ import professorTempleIcon from "../../assets/figma/professor-temple.png";
 import professorHandshakeIcon from "../../assets/figma/professor-handshake.png";
 import memberInterestIcon from "../../assets/figma/member-interest.png";
 import memberEmailIcon from "../../assets/figma/member-email.png";
+import researcherPlaceholder from "../../assets/figma/member-researcher-placeholder.png";
+import alumniPlaceholder from "../../assets/figma/member-alumni-placeholder.png";
 
 const navy = "#113275";
 
@@ -34,6 +34,7 @@ const researcherSections = [
 ];
 
 const alumniSections = [
+  { key: "alumni_pd", title: "Post Doc.", alwaysShow: true },
   { key: "alumni_phd", title: "Ph.D." },
   { key: "alumni_ms", title: "M.S." },
 ];
@@ -118,16 +119,71 @@ const professorCards = [
   },
 ];
 
-const dummyResearchers = {
-  pd: makeDummyResearchers("pd", 3),
-  phd: makeDummyResearchers("phd", 3),
-  ms: makeDummyResearchers("ms", 9),
-  intern: makeDummyResearchers("intern", 3),
-};
-
-const dummyAlumni = {
-  alumni_phd: makeDummyAlumni("alumni-phd", 6),
-  alumni_ms: makeDummyAlumni("alumni-ms", 6),
+const localDevelopmentMemberFixtures = {
+  pd: [],
+  phd: [
+    {
+      id: "local-phd-1",
+      Name: "Local Ph.D. Preview",
+      Email: "phd.preview@yonsei.ac.kr",
+      interests: "Optimization, Machine Learning",
+      image: researcherPlaceholder,
+    },
+    {
+      id: "local-phd-2",
+      Name: "Researcher Preview",
+      Email: "researcher.preview@yonsei.ac.kr",
+      interests: "Reinforcement Learning, Deep Learning",
+      image: researcherPlaceholder,
+    },
+  ],
+  ms: [
+    {
+      id: "local-ms-1",
+      Name: "M.S. Preview",
+      Email: "ms.preview@yonsei.ac.kr",
+      interests: "Large Language Models, Agentic AI",
+      image: researcherPlaceholder,
+    },
+    {
+      id: "local-ms-2",
+      Name: "Student Preview",
+      Email: "student.preview@yonsei.ac.kr",
+      interests: "Optimization, Simulation",
+      image: researcherPlaceholder,
+    },
+  ],
+  intern: [],
+  alumni_pd: [
+    {
+      id: "local-alumni-pd-1",
+      Name: "Alumni Post Doc. Preview",
+      Email: "alumni.postdoc@yonsei.ac.kr",
+      outdate: "August 2026",
+      To_go: "Professor at University",
+      image: alumniPlaceholder,
+    },
+  ],
+  alumni_phd: [
+    {
+      id: "local-alumni-phd-1",
+      Name: "Alumni Ph.D. Preview",
+      Email: "alumni.phd@yonsei.ac.kr",
+      outdate: "August 2021",
+      To_go: "Professor at University",
+      image: alumniPlaceholder,
+    },
+  ],
+  alumni_ms: [
+    {
+      id: "local-alumni-ms-1",
+      Name: "Alumni M.S. Preview",
+      Email: "alumni.ms@yonsei.ac.kr",
+      outdate: "February 2023",
+      To_go: "Industry Researcher",
+      image: alumniPlaceholder,
+    },
+  ],
 };
 
 const TestMember = () => {
@@ -171,6 +227,11 @@ const TestMember = () => {
           throw new Error(`Member API returned ${response.status}`);
         }
 
+        const contentType = response.headers.get("content-type") || "";
+        if (!contentType.includes("application/json")) {
+          throw new Error("Member API returned a non-JSON response");
+        }
+
         const data = await response.json();
         if (!Array.isArray(data.results)) {
           throw new Error("Member API returned an invalid response");
@@ -179,16 +240,19 @@ const TestMember = () => {
         if (isCurrent) {
           setMemberData((current) => ({
             ...current,
-            [key]: data.results.length > 0 ? data.results : getDummyMembers(key),
+            [key]: data.results,
           }));
           setErrorKeys((current) => ({ ...current, [key]: false }));
         }
       } catch (error) {
         if (error.name === "AbortError") return;
 
-        console.error(`Failed to fetch ${key} member data:`, error);
+        const fallbackRows = getLocalDevelopmentMemberRows(key);
+        if (fallbackRows.length === 0) {
+          console.error(`Failed to fetch ${key} member data:`, error);
+        }
         if (isCurrent) {
-          setMemberData((current) => ({ ...current, [key]: getDummyMembers(key) }));
+          setMemberData((current) => ({ ...current, [key]: fallbackRows }));
           setErrorKeys((current) => ({ ...current, [key]: false }));
         }
       } finally {
@@ -243,30 +307,15 @@ const TestMember = () => {
   );
 };
 
-function makeDummyResearchers(prefix, count) {
-  return Array.from({ length: count }, (_, index) => ({
-    id: `${prefix}-dummy-${index + 1}`,
-    Name: "Hyomin Choi",
-    Email: "abc@abc.com",
-    interests: "Large multi-Modal Models, Deep Learning",
-    image: researcherPlaceholder,
-  }));
-}
+const getLocalDevelopmentMemberRows = (key) => {
+  if (!isLocalDevelopmentApiFallbackEnabled()) return [];
+  return localDevelopmentMemberFixtures[key] || [];
+};
 
-function makeDummyAlumni(prefix, count) {
-  return Array.from({ length: count }, (_, index) => ({
-    id: `${prefix}-dummy-${index + 1}`,
-    Name: "Sang Ho Oh",
-    Email: "minjeong.kim@yonsei.ac.kr",
-    outdate: "August 2021",
-    To_go: "Professor at Pukyong National University",
-    image: alumniPlaceholder,
-  }));
-}
-
-function getDummyMembers(key) {
-  return dummyResearchers[key] || dummyAlumni[key] || [];
-}
+const isLocalDevelopmentApiFallbackEnabled = () =>
+  process.env.NODE_ENV === "development" &&
+  typeof window !== "undefined" &&
+  ["localhost", "127.0.0.1"].includes(window.location.hostname);
 
 const ProfessorContent = () => (
   <ProfessorFrame>
@@ -354,74 +403,109 @@ const ProfessorContent = () => (
   </ProfessorFrame>
 );
 
+const shouldRenderMemberSection = (section, data, errors, loading) =>
+  Boolean(
+    section.alwaysShow ||
+      loading[section.key] ||
+      errors[section.key] ||
+      (data[section.key] || []).length > 0
+  );
+
 const ResearchersContent = ({ data, errors, loading }) => (
   <MembersFrame $minHeight="2240px">
-    {researcherSections.map((section) => (
-      <ResearcherSection key={section.key}>
-        <MemberSectionTitle>{section.title}</MemberSectionTitle>
-        <MemberSectionDivider />
-        <ResearcherGrid>
-          <MemberListStatus
-            rows={data[section.key]}
-            isLoading={loading[section.key]}
-            hasError={errors[section.key]}
-            label={section.title}
-          />
-          {(data[section.key] || []).map((member) => (
-            <ResearcherCard key={member.id || member.Email || member.Name}>
-              <ResearcherImage src={member.image} alt={member.Name} />
-              <ResearcherName>{normalizeName(member.Name)}</ResearcherName>
-              <ResearcherInfoList>
-                <ResearcherInfoRow>
-                  <ResearcherIconWrap aria-hidden="true">
-                    <ResearcherIcon src={memberInterestIcon} alt="" />
-                  </ResearcherIconWrap>
-                  <ResearcherMeta>{member.interests}</ResearcherMeta>
-                </ResearcherInfoRow>
-                <ResearcherInfoRow>
-                  <ResearcherIconWrap aria-hidden="true">
-                    <ResearcherIcon src={memberEmailIcon} alt="" />
-                  </ResearcherIconWrap>
-                  <ResearcherMeta>{member.Email}</ResearcherMeta>
-                </ResearcherInfoRow>
-              </ResearcherInfoList>
-            </ResearcherCard>
-          ))}
-        </ResearcherGrid>
-      </ResearcherSection>
-    ))}
+    {researcherSections
+      .filter((section) => shouldRenderMemberSection(section, data, errors, loading))
+      .map((section) => (
+        <ResearcherSection key={section.key}>
+          <MemberSectionTitle>{section.title}</MemberSectionTitle>
+          <MemberSectionDivider />
+          <ResearcherGrid>
+            <MemberListStatus
+              rows={data[section.key]}
+              isLoading={loading[section.key]}
+              hasError={errors[section.key]}
+              label={section.title}
+            />
+            {(data[section.key] || []).map((member) => (
+              <ResearcherCard
+                key={member.id || member.Email || member.Name}
+                member={member}
+                preserveMeta={section.key === "pd"}
+              />
+            ))}
+          </ResearcherGrid>
+        </ResearcherSection>
+      ))}
   </MembersFrame>
+);
+
+const ResearcherCard = ({ member, preserveMeta }) => (
+  <ResearcherCardFrame>
+    <ResearcherImageFrame>
+      <ResearcherImage src={member.image} alt={member.Name} />
+    </ResearcherImageFrame>
+    <ResearcherName>{normalizeName(member.Name)}</ResearcherName>
+    <ResearcherInfoList>
+      <ResearcherInfoRow>
+        <ResearcherIconWrap aria-hidden="true">
+          <ResearcherIcon src={memberInterestIcon} alt="" />
+        </ResearcherIconWrap>
+        <ResearcherInterestMeta>
+          {preserveMeta
+            ? member.interests || "No research interest"
+            : formatResearchInterests(member.interests)}
+        </ResearcherInterestMeta>
+      </ResearcherInfoRow>
+      <ResearcherInfoRow>
+        <ResearcherIconWrap aria-hidden="true">
+          <ResearcherIcon src={memberEmailIcon} alt="" />
+        </ResearcherIconWrap>
+        <ResearcherEmailMeta
+          $allowBreak={!preserveMeta && shouldBreakEmail(member.Email)}
+          $fontSize={preserveMeta ? "18px" : getEmailFontSize(member.Email)}
+        >
+          {preserveMeta ? member.Email || "No Email" : formatEmailAddress(member.Email)}
+        </ResearcherEmailMeta>
+      </ResearcherInfoRow>
+    </ResearcherInfoList>
+  </ResearcherCardFrame>
 );
 
 const AlumniContent = ({ data, errors, loading }) => (
   <MembersFrame $minHeight="1868px">
-    {alumniSections.map((section) => (
-      <AlumniSection key={section.key}>
-        <MemberSectionTitle>{section.title}</MemberSectionTitle>
-        <MemberSectionDivider />
-        <AlumniGrid>
-          <MemberListStatus
-            rows={data[section.key]}
-            isLoading={loading[section.key]}
-            hasError={errors[section.key]}
-            label={section.title}
-          />
-          {(data[section.key] || []).map((member) => (
-            <AlumniCard key={member.id || member.Email || member.Name}>
-              <AlumniImage src={member.image} alt={member.Name} />
-              <AlumniDetails>
-                <AlumniName>{normalizeName(member.Name)}</AlumniName>
-                <AlumniMeta>
-                  {member.outdate ? `${section.title}, Graduated on ${member.outdate}` : section.title}
-                </AlumniMeta>
-                <AlumniMeta>{member.Email}</AlumniMeta>
-                <AlumniDestination>{member.To_go}</AlumniDestination>
-              </AlumniDetails>
-            </AlumniCard>
-          ))}
-        </AlumniGrid>
-      </AlumniSection>
-    ))}
+    {alumniSections
+      .filter((section) => shouldRenderMemberSection(section, data, errors, loading))
+      .map((section) => (
+        <AlumniSection key={section.key}>
+          <MemberSectionTitle>{section.title}</MemberSectionTitle>
+          <MemberSectionDivider />
+          <AlumniGrid>
+            <MemberListStatus
+              rows={data[section.key]}
+              isLoading={loading[section.key]}
+              hasError={errors[section.key]}
+              label={section.title}
+            />
+            {(data[section.key] || []).map((member) => (
+              <AlumniCard key={member.id || member.Email || member.Name}>
+                <AlumniImage src={member.image} alt={member.Name} />
+                <AlumniDetails>
+                  <AlumniName>{normalizeName(member.Name)}</AlumniName>
+                  <AlumniMeta>
+                    {member.outdate
+                      ? section.key === "alumni_pd"
+                        ? `${section.title}, ${member.outdate}`
+                        : `${section.title}, Graduated on ${member.outdate}`
+                      : section.title}
+                  </AlumniMeta>
+                  <AlumniMeta>{member.Email}</AlumniMeta>
+                  <AlumniDestination>{member.To_go}</AlumniDestination>
+                </AlumniDetails>
+              </AlumniCard>
+            ))}
+          </AlumniGrid>
+        </AlumniSection>
+      ))}
   </MembersFrame>
 );
 
@@ -432,10 +516,6 @@ const MemberListStatus = ({ rows = [], isLoading, hasError, label }) => {
 
   if (hasError) {
     return <StatusText role="alert">Unable to load {label}.</StatusText>;
-  }
-
-  if (rows.length === 0) {
-    return <StatusText>No {label} members available.</StatusText>;
   }
 
   return null;
@@ -468,6 +548,57 @@ const normalizeName = (value = "") => {
     .join(" ")
     .replace(/\bPh\.\s+D\./g, "Ph. D.")
     .replace(/\bM\.\s+S\./g, "M. S.");
+};
+
+const formatResearchInterests = (value = "") => {
+  const interests = value
+    .split(",")
+    .map((interest) => interest.trim())
+    .filter(Boolean);
+
+  if (interests.length === 0) return "No research interest";
+
+  return interests.map((interest, index) => (
+    <React.Fragment key={`${interest}-${index}`}>
+      {interest}
+      {index < interests.length - 1 ? "," : ""}
+      {index < interests.length - 1 ? <br /> : null}
+    </React.Fragment>
+  ));
+};
+
+const formatEmailAddress = (value = "") => {
+  const email = value.trim();
+  if (!email) return "No Email";
+
+  if (email.length <= 30 || !email.includes("@")) return email;
+
+  return email.split(/(@)/).map((part, index) => {
+    if (part === "@") {
+      return (
+        <React.Fragment key={`email-break-${index}`}>
+          @
+          <wbr />
+        </React.Fragment>
+      );
+    }
+
+    return part;
+  });
+};
+
+const getEmailFontSize = (value = "") => {
+  const length = value.trim().length;
+  if (length <= 20) return "18px";
+  if (length <= 23) return "17px";
+  if (length <= 26) return "16px";
+  if (length <= 30) return "15px";
+  return "14px";
+};
+
+const shouldBreakEmail = (value = "") => {
+  const email = value.trim();
+  return email.length > 30 && email.includes("@");
 };
 
 const formatNameToken = (token = "") =>
@@ -799,7 +930,8 @@ const ResearcherGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 286px);
   justify-content: space-between;
-  gap: 0;
+  column-gap: 0;
+  row-gap: 56px;
   padding: 0;
 
   @media (max-width: 980px) {
@@ -814,7 +946,7 @@ const ResearcherGrid = styled.div`
   }
 `;
 
-const ResearcherCard = styled.article`
+const ResearcherCardFrame = styled.article`
   width: 286px;
   display: flex;
   flex-direction: column;
@@ -827,13 +959,21 @@ const ResearcherCard = styled.article`
   }
 `;
 
-const ResearcherImage = styled.img`
+const ResearcherImageFrame = styled.div`
   width: 190px;
   height: 244px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 29px;
+`;
+
+const ResearcherImage = styled.img`
+  width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
   object-position: center top;
-  border-radius: 0 0 12px 12px;
-  margin-bottom: 29px;
+  border-radius: inherit;
 `;
 
 const ResearcherName = styled.h3`
@@ -890,9 +1030,22 @@ const ResearcherMeta = styled.p`
   line-height: 1.25;
   letter-spacing: 0;
   text-align: left;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
+  min-width: 0;
   max-width: 100%;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+`;
+
+const ResearcherInterestMeta = styled(ResearcherMeta)`
+  white-space: normal;
+`;
+
+const ResearcherEmailMeta = styled(ResearcherMeta)`
+  font-size: ${({ $fontSize }) => $fontSize || "18px"};
+  white-space: ${({ $allowBreak }) => ($allowBreak ? "normal" : "nowrap")};
+  overflow-wrap: normal;
+  word-break: normal;
 `;
 
 const AlumniGrid = styled.div`

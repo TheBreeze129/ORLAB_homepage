@@ -75,7 +75,7 @@ const Project = () => {
                 {/* 검은 배경 영역 */}
                 <CardFooter>
                   <ReadMore
-                    to={`/subproject?pagecode=${page.url}`}
+                    to={`/test/subproject?pagecode=${page.url}`}
                     key={page.url}
                   >
                     View details →
@@ -110,7 +110,7 @@ const Project = () => {
                 {/* 검은 배경 영역 */}
                 <CardFooter>
                   <ReadMore
-                    to={`/subproject?pagecode=${page.url}`}
+                    to={`/test/subproject?pagecode=${page.url}`}
                     key={page.url}
                   >
                     View details →

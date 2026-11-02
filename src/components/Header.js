@@ -34,13 +34,13 @@ const Header = () => {
 
           {!isMobile ? (
             <Nav>
-              <NavLink to="/" isScrolled={isScrolled}>
+              <NavLink to="/test" isScrolled={isScrolled}>
                 HOME
               </NavLink>
-              <NavLink to="/research" isScrolled={isScrolled}>
+              <NavLink to="/test/research" isScrolled={isScrolled}>
                 RESEARCH AREAS
               </NavLink>
-              <NavLink to="/academic_curriculum" isScrolled={isScrolled}>
+              <NavLink to="/test/academic_curriculum" isScrolled={isScrolled}>
                 ACADEMIC CURRICULUM
               </NavLink>
 
@@ -49,17 +49,17 @@ const Header = () => {
                   MEMBERS ▾
                 </NavLink>
                 <DropdownContent>
-                  <DropdownItem to="/members/professor">PROFESSOR</DropdownItem>
-                  <DropdownItem to="/members/researchers">RESEARCHERS</DropdownItem>
-                  <DropdownItem to="/members/alumni">ALUMNI</DropdownItem>
+                  <DropdownItem to="/test/members/professor">PROFESSOR</DropdownItem>
+                  <DropdownItem to="/test/members/researchers">RESEARCHERS</DropdownItem>
+                  <DropdownItem to="/test/members/alumni">ALUMNI</DropdownItem>
                 </DropdownContent>
               </Dropdown>
 
-              <NavLink to="/project" isScrolled={isScrolled}>
+              <NavLink to="/test/project" isScrolled={isScrolled}>
                 PROJECTS
               </NavLink>
 
-              <NavLink to="/publications" isScrolled={isScrolled}>
+              <NavLink to="/test/publications" isScrolled={isScrolled}>
                 PUBLICATIONS
               </NavLink>
 
@@ -78,22 +78,22 @@ const Header = () => {
                       ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </DropdownItem>
                     <SubDropdownContent>
-                      <DropdownItem to="/board/seminar?year=2026">
+                      <DropdownItem to="/test/board/seminar?year=2026">
                         2026 SEMINAR
                       </DropdownItem>
-                      <DropdownItem to="/board/seminar?year=2025">
+                      <DropdownItem to="/test/board/seminar?year=2025">
                         2025 SEMINAR
                       </DropdownItem>
-                      <DropdownItem to="/board/seminar?year=2024">
+                      <DropdownItem to="/test/board/seminar?year=2024">
                         2024 SEMINAR
                       </DropdownItem>
-                      <DropdownItem to="/board/seminar?year=2023">
+                      <DropdownItem to="/test/board/seminar?year=2023">
                         2023 SEMINAR
                       </DropdownItem>
-                      <DropdownItem to="/board/seminar?year=2022">
+                      <DropdownItem to="/test/board/seminar?year=2022">
                         2022 SEMINAR
                       </DropdownItem>
-                      <DropdownItem to="/board/seminar?year=2021">
+                      <DropdownItem to="/test/board/seminar?year=2021">
                         2021 SEMINAR
                       </DropdownItem>
                     </SubDropdownContent>
@@ -104,13 +104,13 @@ const Header = () => {
                       ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </DropdownItem>
                     <SubDropdownContent>
-                      <DropdownItem to="/board/workshop?year=2023">
+                      <DropdownItem to="/test/board/workshop?year=2023">
                         2023 WORKSHOP
                       </DropdownItem>
-                      <DropdownItem to="/board/workshop?year=2022">
+                      <DropdownItem to="/test/board/workshop?year=2022">
                         2022 WORKSHOP
                       </DropdownItem>
-                      <DropdownItem to="/board/workshop?year=2021">
+                      <DropdownItem to="/test/board/workshop?year=2021">
                         2021 WORKSHOP
                       </DropdownItem>
                     </SubDropdownContent>
@@ -121,16 +121,16 @@ const Header = () => {
                       ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </DropdownItem>
                     <SubDropdownContent>
-                      <DropdownItem to="/board/photo?year=2026">
+                      <DropdownItem to="/test/board/photo?year=2026">
                         2026 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2025">
+                      <DropdownItem to="/test/board/photo?year=2025">
                         2025 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2023">
+                      <DropdownItem to="/test/board/photo?year=2023">
                         2023 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2022">
+                      <DropdownItem to="/test/board/photo?year=2022">
                         2022 PHOTO
                       </DropdownItem>
                     </SubDropdownContent>
@@ -167,13 +167,13 @@ const Header = () => {
         <Sidebar isOpen={menuOpen} isMobile={isMobile}>
           <CloseButton onClick={() => setMenuOpen(false)}>×</CloseButton>
           <Nav isOpen={menuOpen} isMobile={isMobile}>
-            <NavLink to="/" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/test" onClick={() => setMenuOpen(false)}>
               HOME
             </NavLink>
-            <NavLink to="/research" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/test/research" onClick={() => setMenuOpen(false)}>
               RESEARCH AREAS
             </NavLink>
-            <NavLink to="/academic_curriculum" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/test/academic_curriculum" onClick={() => setMenuOpen(false)}>
               ACADEMIC CURRICULUM
             </NavLink>
 
@@ -183,19 +183,19 @@ const Header = () => {
               </NavLink>
               <DropdownContent>
                 <DropdownItem
-                  to="/members/professor"
+                  to="/test/members/professor"
                   onClick={() => setMenuOpen(false)}
                 >
                   PROFESSOR
                 </DropdownItem>
                 <DropdownItem
-                  to="/members/researchers"
+                  to="/test/members/researchers"
                   onClick={() => setMenuOpen(false)}
                 >
                   RESEARCHERS
                 </DropdownItem>
                 <DropdownItem
-                  to="/members/alumni"
+                  to="/test/members/alumni"
                   onClick={() => setMenuOpen(false)}
                 >
                   ALUMNI
@@ -203,11 +203,11 @@ const Header = () => {
               </DropdownContent>
             </Dropdown>
 
-            <NavLink to="/project" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/test/project" onClick={() => setMenuOpen(false)}>
               PROJECTS
             </NavLink>
 
-            <NavLink to="/publications" onClick={() => setMenuOpen(false)}>
+            <NavLink to="/test/publications" onClick={() => setMenuOpen(false)}>
               PUBLICATIONS
             </NavLink>
 
@@ -226,22 +226,22 @@ const Header = () => {
                     ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </DropdownItem>
                   <SubDropdownContent2>
-                    <DropdownItem to="/board/seminar?year=2026">
+                    <DropdownItem to="/test/board/seminar?year=2026">
                       2026 SEMINAR
                     </DropdownItem>
-                    <DropdownItem to="/board/seminar?year=2025">
+                    <DropdownItem to="/test/board/seminar?year=2025">
                       2025 SEMINAR
                     </DropdownItem>
-                    <DropdownItem to="/board/seminar?year=2024">
+                    <DropdownItem to="/test/board/seminar?year=2024">
                       2024 SEMINAR
                     </DropdownItem>
-                    <DropdownItem to="/board/seminar?year=2023">
+                    <DropdownItem to="/test/board/seminar?year=2023">
                       2023 SEMINAR
                     </DropdownItem>
-                    <DropdownItem to="/board/seminar?year=2022">
+                    <DropdownItem to="/test/board/seminar?year=2022">
                       2022 SEMINAR
                     </DropdownItem>
-                    <DropdownItem to="/board/seminar?year=2021">
+                    <DropdownItem to="/test/board/seminar?year=2021">
                       2021 SEMINAR
                     </DropdownItem>
                   </SubDropdownContent2>
@@ -252,13 +252,13 @@ const Header = () => {
                     ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   </DropdownItem>
                   <SubDropdownContent2>
-                    <DropdownItem to="/board/workshop?year=2023">
+                    <DropdownItem to="/test/board/workshop?year=2023">
                       2023 WORKSHOP
                     </DropdownItem>
-                    <DropdownItem to="/board/workshop?year=2022">
+                    <DropdownItem to="/test/board/workshop?year=2022">
                       2022 WORKSHOP
                     </DropdownItem>
-                    <DropdownItem to="/board/workshop?year=2021">
+                    <DropdownItem to="/test/board/workshop?year=2021">
                       2021 WORKSHOP
                     </DropdownItem>
                   </SubDropdownContent2>
@@ -269,16 +269,16 @@ const Header = () => {
                       ▸&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </DropdownItem>
                     <SubDropdownContent>
-                      <DropdownItem to="/board/photo?year=2026">
+                      <DropdownItem to="/test/board/photo?year=2026">
                         2026 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2025">
+                      <DropdownItem to="/test/board/photo?year=2025">
                         2025 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2023">
+                      <DropdownItem to="/test/board/photo?year=2023">
                         2023 PHOTO
                       </DropdownItem>
-                      <DropdownItem to="/board/photo?year=2022">
+                      <DropdownItem to="/test/board/photo?year=2022">
                         2022 PHOTO
                       </DropdownItem>
                     </SubDropdownContent>

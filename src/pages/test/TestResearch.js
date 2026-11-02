@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import styled from "styled-components";
 import { FaBuilding } from "react-icons/fa";
 import Header from "./components/Header.js";
 import Hero from "./components/Hero.js";
 import Footer from "./components/Footer.js";
-import Pagination from "./components/Pagination.js";
+import InfiniteScrollTrigger from "./components/InfiniteScrollTrigger.js";
 import projectThumbnail from "../../assets/figma/project-ocr-thumbnail.jpg";
 import gmissionLogo from "../../assets/figma/gmission-logo.jpg";
 
@@ -48,6 +48,9 @@ const projectTabs = [
   { id: "finished", label: "Finished Projects" },
 ];
 
+const getValidProjectStatus = (status) =>
+  projectTabs.some((item) => item.id === status) ? status : "ongoing";
+
 const fallbackPublications = Array.from({ length: PUBLICATION_PAGE_SIZE }, (_, index) => ({
   id: `fallback-publication-${index + 1}`,
   authors: "Jiwon Kim, Jeonghoon Mo",
@@ -69,13 +72,16 @@ const TestResearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const requestedTab = searchParams.get("tab");
   const activeTab = requestedTab === "publication" ? "publication" : "project";
+  const requestedProjectStatus = searchParams.get("status");
   const [activeCategory, setActiveCategory] = useState("international-journal");
   const [publicationPage, setPublicationPage] = useState(1);
   const [publications, setPublications] = useState([]);
   const [publicationPageCount, setPublicationPageCount] = useState(1);
   const [isPublicationLoading, setIsPublicationLoading] = useState(false);
   const [hasPublicationError, setHasPublicationError] = useState(false);
-  const [projectStatus, setProjectStatus] = useState("ongoing");
+  const [projectStatus, setProjectStatus] = useState(() =>
+    getValidProjectStatus(requestedProjectStatus)
+  );
   const [projectPage, setProjectPage] = useState(1);
   const [projects, setProjects] = useState([]);
   const [projectPageCount, setProjectPageCount] = useState(1);
@@ -87,11 +93,21 @@ const TestResearch = () => {
   }, []);
 
   useEffect(() => {
+    setProjectStatus(getValidProjectStatus(requestedProjectStatus));
+  }, [requestedProjectStatus]);
+
+  useEffect(() => {
+    setPublications([]);
     setPublicationPage(1);
+    setPublicationPageCount(1);
+    setHasPublicationError(false);
   }, [activeCategory]);
 
   useEffect(() => {
+    setProjects([]);
     setProjectPage(1);
+    setProjectPageCount(1);
+    setHasProjectError(false);
   }, [projectStatus]);
 
   const activeCategoryData = useMemo(
@@ -132,7 +148,11 @@ const TestResearch = () => {
         }
 
         if (isCurrent) {
-          setPublications(data.results);
+          setPublications((current) =>
+            publicationPage === 1
+              ? data.results
+              : appendUniqueItems(current, data.results, getPublicationKey)
+          );
           setPublicationPageCount(Math.max(1, Number(data.pageCount) || 1));
         }
       } catch (error) {
@@ -141,8 +161,16 @@ const TestResearch = () => {
         if (isCurrent) {
           if (isLocalApiHtmlFallback(error)) {
             setHasPublicationError(false);
-            setPublications(fallbackPublications);
-            setPublicationPageCount(3);
+            setPublications((current) =>
+              publicationPage === 1
+                ? fallbackPublications
+                : appendUniqueItems(
+                    current,
+                    fallbackPublications,
+                    getPublicationKey
+                  )
+            );
+            setPublicationPageCount(1);
           } else {
             console.error("Failed to fetch publication data:", error);
             setHasPublicationError(true);
@@ -167,6 +195,11 @@ const TestResearch = () => {
 
   const handleResearchTabChange = (tabId) => {
     setSearchParams({ tab: tabId });
+  };
+
+  const handleProjectStatusChange = (statusId) => {
+    setProjectStatus(statusId);
+    setSearchParams({ tab: "project", status: statusId });
   };
 
   useEffect(() => {
@@ -200,7 +233,11 @@ const TestResearch = () => {
         }
 
         if (isCurrent) {
-          setProjects(data.results);
+          setProjects((current) =>
+            projectPage === 1
+              ? data.results
+              : appendUniqueItems(current, data.results, getProjectKey)
+          );
           setProjectPageCount(Math.max(1, Number(data.pageCount) || 1));
         }
       } catch (error) {
@@ -209,8 +246,12 @@ const TestResearch = () => {
         if (isCurrent) {
           if (isLocalApiHtmlFallback(error)) {
             setHasProjectError(false);
-            setProjects(fallbackProjects);
-            setProjectPageCount(3);
+            setProjects((current) =>
+              projectPage === 1
+                ? fallbackProjects
+                : appendUniqueItems(current, fallbackProjects, getProjectKey)
+            );
+            setProjectPageCount(1);
           } else {
             console.error("Failed to fetch project data:", error);
             setHasProjectError(true);
@@ -232,6 +273,31 @@ const TestResearch = () => {
       controller.abort();
     };
   }, [activeTab, projectPage, projectStatus]);
+
+  const handleLoadMoreProjects = useCallback(() => {
+    setProjectPage((current) =>
+      current >= projectPageCount ? current : current + 1
+    );
+  }, [projectPageCount]);
+
+  const handleLoadMorePublications = useCallback(() => {
+    setPublicationPage((current) =>
+      current >= publicationPageCount ? current : current + 1
+    );
+  }, [publicationPageCount]);
+
+  const canLoadMoreProjects =
+    activeTab === "project" &&
+    projects.length > 0 &&
+    projectPage < projectPageCount &&
+    !isProjectLoading &&
+    !hasProjectError;
+  const canLoadMorePublications =
+    activeTab === "publication" &&
+    publications.length > 0 &&
+    publicationPage < publicationPageCount &&
+    !isPublicationLoading &&
+    !hasPublicationError;
 
   return (
     <PageShell>
@@ -258,7 +324,7 @@ const TestResearch = () => {
                   key={item.id}
                   type="button"
                   $active={projectStatus === item.id}
-                  onClick={() => setProjectStatus(item.id)}
+                  onClick={() => handleProjectStatusChange(item.id)}
                 >
                   {item.label}
                 </ProjectStatusButton>
@@ -266,25 +332,28 @@ const TestResearch = () => {
             </ProjectStatusTabs>
 
             <ProjectGrid aria-label={`${projectStatus} project list`}>
-              {isProjectLoading ? (
+              {isProjectLoading && projects.length === 0 ? (
                 <StatusText role="status">Loading projects...</StatusText>
               ) : hasProjectError && projects.length === 0 ? (
                 <StatusText role="alert">Unable to load projects.</StatusText>
               ) : projects.length === 0 ? (
                 <StatusText>No projects available.</StatusText>
               ) : (
-                projects.map((item) => <ProjectCard key={item.id} item={item} />)
+                projects.map((item, index) => (
+                  <ProjectCard key={`${getProjectKey(item)}-${index}`} item={item} />
+                ))
               )}
             </ProjectGrid>
 
-            {projectPageCount > 1 ? (
-              <ProjectPaginationSlot>
-                <Pagination
-                  currentPage={projectPage}
-                  pageCount={projectPageCount}
-                  onPageChange={setProjectPage}
-                />
-              </ProjectPaginationSlot>
+            <InfiniteScrollTrigger
+              disabled={!canLoadMoreProjects}
+              onLoadMore={handleLoadMoreProjects}
+            />
+            {isProjectLoading && projects.length > 0 ? (
+              <LoadMoreStatus role="status">Loading more projects...</LoadMoreStatus>
+            ) : null}
+            {hasProjectError && projects.length > 0 ? (
+              <LoadMoreStatus role="alert">Unable to load more projects.</LoadMoreStatus>
             ) : null}
           </>
         ) : (
@@ -304,15 +373,15 @@ const TestResearch = () => {
               </CategoryRail>
 
               <PublicationList aria-label="Publication list">
-                {isPublicationLoading ? (
+                {isPublicationLoading && publications.length === 0 ? (
                   <StatusText role="status">Loading publications...</StatusText>
                 ) : hasPublicationError && publications.length === 0 ? (
                   <StatusText role="alert">Unable to load publications.</StatusText>
                 ) : publications.length === 0 ? (
                   <StatusText>No publications available.</StatusText>
                 ) : (
-                  publications.map((item) => (
-                    <PublicationItem key={item.id}>
+                  publications.map((item, index) => (
+                    <PublicationItem key={`${getPublicationKey(item)}-${index}`}>
                       <Authors>{item.authors}</Authors>
                       <PublicationTitle>{item.title}</PublicationTitle>
                       {item.venue ? <Venue>{item.venue}</Venue> : null}
@@ -322,14 +391,19 @@ const TestResearch = () => {
               </PublicationList>
             </ContentLayout>
 
-            {publicationPageCount > 1 ? (
-              <PaginationSlot>
-                <Pagination
-                  currentPage={publicationPage}
-                  pageCount={publicationPageCount}
-                  onPageChange={setPublicationPage}
-                />
-              </PaginationSlot>
+            <InfiniteScrollTrigger
+              disabled={!canLoadMorePublications}
+              onLoadMore={handleLoadMorePublications}
+            />
+            {isPublicationLoading && publications.length > 0 ? (
+              <LoadMoreStatus role="status">
+                Loading more publications...
+              </LoadMoreStatus>
+            ) : null}
+            {hasPublicationError && publications.length > 0 ? (
+              <LoadMoreStatus role="alert">
+                Unable to load more publications.
+              </LoadMoreStatus>
             ) : null}
           </>
         )}
@@ -376,7 +450,7 @@ const ProjectCard = ({ item }) => {
   );
 
   return (
-    <ProjectCardLink to={`/test/subproject?pagecode=${item.notionId || item.url}`}>
+    <ProjectCardLink to={`/subproject?pagecode=${item.notionId || item.url}`}>
       {content}
     </ProjectCardLink>
   );
@@ -384,6 +458,31 @@ const ProjectCard = ({ item }) => {
 
 const isImageUrl = (value = "") =>
   /^https?:\/\//i.test(value) || /\.(png|jpe?g|gif|webp|svg)(\?.*)?$/i.test(value);
+
+const appendUniqueItems = (currentItems, nextItems, getKey) => {
+  const seen = new Set(currentItems.map(getKey));
+  const uniqueNextItems = nextItems.filter((item) => {
+    const key = getKey(item);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  return [...currentItems, ...uniqueNextItems];
+};
+
+const getProjectKey = (item) =>
+  item.id ||
+  item.notionId ||
+  item.url ||
+  item.name ||
+  item.Name ||
+  JSON.stringify(item);
+
+const getPublicationKey = (item) =>
+  item.id ||
+  `${item.authors || ""}-${item.title || ""}-${item.venue || ""}` ||
+  JSON.stringify(item);
 
 const isLocalApiHtmlFallback = (error) =>
   error instanceof SyntaxError ||
@@ -571,14 +670,6 @@ const OrganizationIcon = styled(FaBuilding)`
   flex: 0 0 auto;
 `;
 
-const ProjectPaginationSlot = styled.div`
-  margin-top: 58px;
-
-  @media (max-width: 980px) {
-    margin-top: 72px;
-  }
-`;
-
 const ContentLayout = styled.div`
   display: flex;
   align-items: flex-start;
@@ -707,11 +798,15 @@ const StatusText = styled.div`
   font-weight: 500;
 `;
 
-const PaginationSlot = styled.div`
-  margin-top: 86px;
+const LoadMoreStatus = styled.div`
+  margin-top: 48px;
+  color: #8c8c8c;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
 
   @media (max-width: 980px) {
-    margin-top: 72px;
+    margin-top: 40px;
   }
 `;
 

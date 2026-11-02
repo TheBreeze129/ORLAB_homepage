@@ -8,6 +8,12 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
   const pages = getVisiblePages(currentPage, pageCount);
   const canGoBack = currentPage > 1;
   const canGoForward = currentPage < pageCount;
+  const handlePageChange = (page) => {
+    if (page === currentPage) return;
+
+    onPageChange(page);
+    scrollToPageTop();
+  };
 
   return (
     <PaginationBar aria-label="Pagination">
@@ -15,7 +21,7 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         type="button"
         aria-label="First page"
         disabled={!canGoBack}
-        onClick={() => onPageChange(1)}
+        onClick={() => handlePageChange(1)}
       >
         <FiChevronsLeft aria-hidden="true" />
       </IconButton>
@@ -23,7 +29,7 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         type="button"
         aria-label="Previous page"
         disabled={!canGoBack}
-        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+        onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
       >
         <FiChevronLeft aria-hidden="true" />
       </IconButton>
@@ -33,7 +39,7 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
           type="button"
           $active={currentPage === page}
           aria-current={currentPage === page ? "page" : undefined}
-          onClick={() => onPageChange(page)}
+          onClick={() => handlePageChange(page)}
         >
           {page}
         </PageButton>
@@ -42,7 +48,7 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         type="button"
         aria-label="Next page"
         disabled={!canGoForward}
-        onClick={() => onPageChange(Math.min(pageCount, currentPage + 1))}
+        onClick={() => handlePageChange(Math.min(pageCount, currentPage + 1))}
       >
         <FiChevronRight aria-hidden="true" />
       </IconButton>
@@ -50,7 +56,7 @@ const Pagination = ({ currentPage, pageCount, onPageChange }) => {
         type="button"
         aria-label="Last page"
         disabled={!canGoForward}
-        onClick={() => onPageChange(pageCount)}
+        onClick={() => handlePageChange(pageCount)}
       >
         <FiChevronsRight aria-hidden="true" />
       </IconButton>
@@ -67,6 +73,19 @@ const getVisiblePages = (currentPage, pageCount) => {
 
   const startPage = Math.min(Math.max(currentPage - 1, 1), pageCount - 2);
   return Array.from({ length: visibleCount }, (_, index) => startPage + index);
+};
+
+const scrollToPageTop = () => {
+  if (typeof window === "undefined") return;
+
+  window.requestAnimationFrame(() => {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    } catch (error) {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  });
 };
 
 const PaginationBar = styled.nav`

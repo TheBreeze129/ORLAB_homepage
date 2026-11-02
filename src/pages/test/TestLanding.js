@@ -3,126 +3,129 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Header from "./components/Header.js";
 import Footer from "./components/Footer.js";
+import LandingPopup from "./components/LandingPopup.js";
+import { landingPopupEvent } from "./data/landingPopup.js";
 import landingBackground from "../../assets/figma/landing-background.png";
 import companyIcon from "../../assets/figma/company-icon.svg";
-import landingProjectKiat from "../../assets/figma/landing-project-kiat.png";
-import landingProjectLges from "../../assets/figma/landing-project-lges.png";
+import landingProjectMultimodal from "../../assets/figma/landing-project-multimodal.png";
+import landingProjectStockerCrane from "../../assets/figma/landing-project-stocker-crane.png";
+import skaxAgfLandingThumbnail from "../../assets/skax-agf-landing-thumbnail.jpg";
 
 const navy = "#113275";
+const projectPageCodes = {
+  multimodalSurveillance: "1ced35be31ec8003a633f28976b412b5",
+  stockerCrane: "38fd35be31ec804f8fefc71bc74b3dae",
+  skaxAgfSolution: "3aed35be31ec80069308ccf684e024bc",
+};
 
 const projectCards = [
   {
-    notionId: "landing-project-multimodal-surveillance",
+    pageCode: projectPageCodes.multimodalSurveillance,
     title:
       "Development of Multi-Modal Foundational Models and AI Accelerators for Zero-shot Intelligent Surveillance System",
-    image: landingProjectKiat,
+    image: landingProjectMultimodal,
     tags: ["Vision AI", "Large Multi-Modal Model"],
     partner: "KIAT",
   },
   {
-    notionId: "landing-project-stocker-crane",
-    title: "Dual Twin Fork Stocker Crane Scheduling Optimization",
-    image: landingProjectLges,
-    tags: ["Optimization", "Logistics"],
-    partner: "LG Energy Solution",
+    pageCode: projectPageCodes.skaxAgfSolution,
+    title: "AGF Solution 고도화 과제",
+    image: skaxAgfLandingThumbnail,
+    tags: ["Vision AI", "Logistics"],
+    partner: "SK AX",
   },
   {
-    notionId: "landing-project-battery-assignment",
-    title: "Battery Charging/Discharging Equipment Assignment Optimization",
-    image: landingProjectLges,
-    tags: ["Optimization", "Smart Factory"],
+    pageCode: projectPageCodes.stockerCrane,
+    title: "Dual Twin Fork Stocker Crane Scheduling Optimization",
+    image: landingProjectStockerCrane,
+    tags: ["Optimization", "Logistics"],
     partner: "LG Energy Solution",
   },
 ];
 
 const TestLanding = () => (
-  <PageShell>
-    <LandingFrame>
-      <Header activeSection="landing" />
+    <PageShell>
+      <LandingPopup event={landingPopupEvent} />
+      <LandingFrame>
+        <Header activeSection="landing" />
 
-      <ContentRail>
-        <HeroTextRow>
-          <HeroCopy>
-            <KoreanTitle>경영과학연구실</KoreanTitle>
-            <EnglishTitle>
-              <BlueText>Operations Research</BlueText> Lab
-            </EnglishTitle>
-          </HeroCopy>
+        <ContentRail>
+          <HeroTextRow>
+            <HeroCopy>
+              <KoreanTitle>경영과학연구실</KoreanTitle>
+              <EnglishTitle>
+                <BlueText>Operations Research</BlueText> Lab
+              </EnglishTitle>
+            </HeroCopy>
 
-          <GhostCopy aria-hidden="true">
-            <div>Operations Research Lab</div>
-            <div>경영과학연구실</div>
-          </GhostCopy>
-        </HeroTextRow>
+            <GhostCopy aria-hidden="true">
+              <div>Operations Research Lab</div>
+              <div>경영과학연구실</div>
+            </GhostCopy>
+          </HeroTextRow>
 
-        <HeroImage
-          src={landingBackground}
-          alt="Yonsei University engineering building"
-        />
+          <HeroImage
+            src={landingBackground}
+            alt="Yonsei University engineering building"
+          />
 
-        <IntroText>
-          <p>
-            <strong>Operations Research Lab</strong> studies decision-making
-            problems arising in industrial systems by formulating them
-            mathematically and developing practical solutions through optimization
-            and artificial intelligence.
-          </p>
-          <p>
-            Based on the mathematical modeling and analytical methodologies of
-            operations research, we address a wide range of operational and
-            managerial problems across various industries, including manufacturing,
-            telecommunications, and finance.
-            <br />
-            In particular, we develop data-driven decision-making models and
-            algorithms using optimization, reinforcement learning, and deep
-            learning.
-            <br />
-            Our research aims to advance intelligent decision-making technologies
-            that can be effectively applied to real-world systems.
-          </p>
-          <p>
-            Our laboratory is currently exploring novel AI methodologies based on
-            optimization, reinforcement learning, and deep learning.
-            <br />
-            We warmly welcome passionate and motivated researchers to join our
-            laboratory.
-          </p>
-        </IntroText>
+          <IntroText>
+            <p>
+              <strong>Operations Research Lab</strong> studies decision-making
+              problems arising in industrial systems by formulating them
+              mathematically and developing practical solutions through optimization
+              and artificial intelligence.
+            </p>
+            <p>
+              Based on the mathematical modeling and analytical methodologies of
+              operations research, we address a wide range of operational and
+              managerial problems across various industries, including manufacturing,
+              telecommunications, and finance.
+              <br />
+              In particular, we develop data-driven decision-making models and
+              algorithms using optimization, reinforcement learning, and deep
+              learning.
+              <br />
+              Our research aims to advance intelligent decision-making technologies
+              that can be effectively applied to real-world systems.
+            </p>
+            <p>
+              Our laboratory is currently exploring novel AI methodologies based on
+              optimization, reinforcement learning, and deep learning.
+              <br />
+              We warmly welcome passionate and motivated researchers to join our
+              laboratory.
+            </p>
+          </IntroText>
 
-        <ProjectsTitle>Ongoing Projects</ProjectsTitle>
-        <ProjectGrid>
-          {projectCards.map((project) => (
-            <ProjectLink
-              key={project.title}
-              to={`/test/research/project/${project.notionId}`}
-              state={{
-                project: {
-                  name: project.title,
-                  organization: project.partner,
-                },
-              }}
-              aria-label={`${project.title} project detail`}
-            >
-              <ProjectCard>
-                <ProjectImage src={project.image} alt="" aria-hidden="true" />
-                <ProjectTitle>{project.title}</ProjectTitle>
-                <TagList>
-                  {project.tags.map((tag) => (
-                    <ProjectTag key={tag}>{tag}</ProjectTag>
-                  ))}
-                </TagList>
-                <Partner>
-                  <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
-                  <span>{project.partner}</span>
-                </Partner>
-              </ProjectCard>
-            </ProjectLink>
-          ))}
-        </ProjectGrid>
-      </ContentRail>
-    </LandingFrame>
-    <Footer />
-  </PageShell>
+          <ProjectsTitle>Ongoing Projects</ProjectsTitle>
+          <ProjectGrid>
+            {projectCards.map((project) => (
+              <ProjectLink
+                key={project.title}
+                to={`/subproject?pagecode=${project.pageCode}`}
+                aria-label={`${project.title} project detail`}
+              >
+                <ProjectCard>
+                  <ProjectImage src={project.image} alt="" aria-hidden="true" />
+                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <TagList>
+                    {project.tags.map((tag) => (
+                      <ProjectTag key={tag}>{tag}</ProjectTag>
+                    ))}
+                  </TagList>
+                  <Partner>
+                    <PartnerIcon src={companyIcon} alt="" aria-hidden="true" />
+                    <span>{project.partner}</span>
+                  </Partner>
+                </ProjectCard>
+              </ProjectLink>
+            ))}
+          </ProjectGrid>
+        </ContentRail>
+      </LandingFrame>
+      <Footer />
+    </PageShell>
 );
 
 const PageShell = styled.main`
